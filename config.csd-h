@@ -1,0 +1,7 @@
+
+sr = 48000
+kr = 480
+nchnls = 2
+0dbfs = 1
+
+#define VARIABLE_LOGGING_OUTPUT_DIRECTORY #"/Users/andy/-/var/log/csound"#

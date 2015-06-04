@@ -1,0 +1,94 @@
+
+; Return value is always 0.
+; i = note id
+; i = controller id
+; k = value
+; k = last k cycle (1 if last k cycle, otherwise 0)
+; j = number of decimal points to round value to (default = 3)
+;
+opcode udo__write_k, i, iikkj
+	i_Note_ID, i_Controller_ID, k_Value, k_Is_Last_K_Cycle, i_Round_To_Decimal_Point xin
+	
+	; Filename to print to.
+	i_id chnget "id"
+	S_filename sprintf "%s/id-%d--note-%d.txt", $VARIABLE_LOGGING_OUTPUT_DIRECTORY, i_id, i_Note_ID
+
+	; Flag for first k cycle.
+	;  1 if first k cycle, otherwise 0.
+	;  Turned off at end of first k cycle.
+	k_is_first_k_cycle init 1
+	
+	; Time in seconds.
+	k_time timek
+	k_time = k_time / kr
+	
+	; Value rounded to decimal point set in opcode's parameters.
+	k_value = k_Value
+	i_round_to_multiplier init 1
+	if (-1 == i_Round_To_Decimal_Point) then
+		i_Round_To_Decimal_Point = 3
+	endif
+	i_round_to_multiplier = 10 ^ i_Round_To_Decimal_Point
+	k_value = i_round_to_multiplier * k_Value
+	k_value round k_value
+	k_value = k_value / i_round_to_multiplier
+
+	; Print value if first or last k cycle, or if value changed since previous k cycle.
+	k_print init 0
+	k_print = 0
+	k_previous_value init 999999
+	if (1 == k_is_first_k_cycle) then
+		k_print = 1
+		k_previous_value = k_value
+	elseif (1 == k_Is_Last_K_Cycle) then
+		k_print = 1
+	elseif (k_value != k_previous_value) then
+		k_print = 1
+		k_previous_value = k_value
+	endif
+	if (1 == k_print) then
+		fprintks S_filename, "%d, %f, %f\n", i_Controller_ID, k_time, k_value
+	endif
+
+	; Turn off first k cycle flag.
+	if (1 == k_is_first_k_cycle) then
+		k_is_first_k_cycle = 0
+	endif	
+
+	; Done.
+	i_out init 0
+	xout i_out
+endop
+
+; Return value is 1 if last k cycle is detected.
+; i = release envelope duration, or extra time added after note off event.
+;
+opcode udo__is_last_k_cycle, k, i
+	i_Release_Duration xin
+	
+	; Return value.
+	k_is_last_k_cycle init 0
+	
+	k_is_releasing init 0
+	k_note_off_time init 0
+	k_last_k_time init 0
+	
+	if (0 == k_is_releasing) then
+		k_release release
+		if (1 == k_release) then
+			k_is_releasing = 1
+			k_note_off_time timek
+			k_note_off_time = (k_note_off_time - 2) / kr
+			k_last_k_time = k_note_off_time + k(i_Release_Duration)
+		endif
+	endif
+	if (0 < k_last_k_time) then
+		k_time timek
+		k_time = k_time / kr
+		if (k_last_k_time <= k_time) then
+			k_is_last_k_cycle = 1
+		endif
+	endif
+
+	xout k_is_last_k_cycle
+endop
