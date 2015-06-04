@@ -9,11 +9,13 @@ checkbox bounds(6, 45, 200, 25), text("Log Controllers"), channel("log_controlle
 line bounds(6, 80, 488, 1), colour("white")
 
 ; k_volume
+;===============================================================================
 rslider bounds(6, 90, 100, 100), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
 label bounds(35, 190, 42, 12), text("Volume")
 checkbox bounds(45, 207, 20, 20), channel("read_midi_volume"), value(0), colour("0, 255, 0")
 
 ; k_volume_envelope
+;===============================================================================
 rslider bounds(150, 90, 75, 75), channel("volume_envelope_attack_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
 rslider bounds(225, 90, 75, 75), channel("volume_envelope_decay_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
 rslider bounds(300, 90, 75, 75), channel("volume_envelope_sustain_level"), range(0, 1, 0.5, 1, 0.01), textBox(1)
@@ -42,6 +44,8 @@ keyboard bounds(0, 800, 500, 100)
 gi_NoteId = 1
 
 instr 1
+	; k_volume  [range: 0,1]
+	;===========================================================================
 	k_read_midi_volume chnget "read_midi_volume"
 	if (1 == k_read_midi_volume) then
 		k_volume_midi midictrl 7
@@ -50,17 +54,22 @@ instr 1
 	k_volume_channel chnget "volume"
 	k_volume port k_volume_channel, 0.05
 	
+	; k_volume_envelope  [range: 0,1]
+	;===========================================================================
 	i_volume_envelope_attack_time chnget "volume_envelope_attack_time"
 	i_volume_envelope_decay_time chnget "volume_envelope_decay_time"
 	i_volume_envelope_sustain_level chnget "volume_envelope_sustain_level"
 	i_volume_envelope_release_time chnget "volume_envelope_release_time"
 	k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
 	
+	; Output
+	;===========================================================================
 	k_out_volume = k_volume * k_volume_envelope
 	a1 oscili p5, p4, 1
 	outs k_out_volume * a1, k_out_volume * a1
 	
 	; Write envelope data
+	;===========================================================================
 	i_log_controllers init 0
 	i_log_controllers chnget "log_controllers"
 	if (1 == i_log_controllers) then
