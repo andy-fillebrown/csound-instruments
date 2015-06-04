@@ -36,8 +36,8 @@ keyboard bounds(0, 800, 500, 100)
 </CsOptions>
 <CsInstruments>
 
-#include "../../config.csd-h"
-#include "../../include/variable-logging-opcodes.csd-h"
+#include "../../../config.csd-h"
+#include "../../../include/variable-logging-opcodes.csd-h"
 
 gi_NoteId = 1
 
@@ -70,7 +70,7 @@ instr 1
 		i_ udo__write_k i_NoteId, 1, k_out_volume, k_is_last_k_cycle, 2
 	endif
 	
-	#include "../../include/midi-testing.csd-h"
+	#include "../../../include/midi-testing.csd-h"
 endin
 
 </CsInstruments>
