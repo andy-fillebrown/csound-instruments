@@ -44,6 +44,31 @@ keyboard bounds(0, 800, 500, 100)
 gi_NoteId = 1
 
 instr 1
+	; k_pitchbend  (units: cents/100) [range: -2,2]
+	;===========================================================================
+	k_pitchbend_midi init 0
+	k_read_midi_pitchbend init 1
+	if (1 == k_read_midi_pitchbend) then
+		READ_MIDI_PITCHBEND:
+		k_midi_in_status, k_, k_data1, k_data2 midiin
+		if (0 != k_midi_in_status) then
+			if (224 == k_midi_in_status) then
+				k_pitchbend_midi = (((128 * k_data1) + k_data2) - 8192) / 4096
+			else
+				kgoto READ_MIDI_PITCHBEND
+			endif
+		endif
+		chnset k_pitchbend_midi, "pitchbend"
+	endif
+	k_pitchbend_channel chnget "pitchbend"
+	k_pitchbend port k_pitchbend_channel, 0.01
+	
+	; k_pitch  (units: cps)
+	;===========================================================================
+	k_pitch_midi_cps init p4
+	k_pitchbend_cps_multiplier = 2 ^ (k_pitchbend_midi / 12)
+	k_pitch = k_pitchbend_cps_multiplier * k_pitch_midi_cps
+
 	; k_volume  [range: 0,1]
 	;===========================================================================
 	k_read_midi_volume chnget "read_midi_volume"
@@ -65,7 +90,7 @@ instr 1
 	; Output
 	;===========================================================================
 	k_out_volume = k_volume * k_volume_envelope
-	a1 oscili p5, p4, 1
+	a1 oscili p5, k_pitch, 1
 	outs k_out_volume * a1, k_out_volume * a1
 	
 	; Write envelope data
@@ -78,8 +103,6 @@ instr 1
 		k_is_last_k_cycle udo__is_last_k_cycle i_volume_envelope_release_time
 		i_ udo__write_k i_NoteId, 1, k_out_volume, k_is_last_k_cycle, 2
 	endif
-	
-	#include "../../../include/midi-testing.csd-h"
 endin
 
 </CsInstruments>
