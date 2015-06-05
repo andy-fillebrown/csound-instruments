@@ -5,13 +5,23 @@ checkbox bounds(5, 12, 200, 25), text("Log Variables"), channel("log_variables")
 label bounds(150, 18, 20, 12), text("ID")
 hslider bounds(175, 0, 240, 50), channel("id"), range(10, 99, 1, 1), textBox(1)
 
-groupbox bounds(0, 50, 450, 130), text("Volume"), plant("volume") {
+groupbox bounds(0, 50, 450, 130), text("Pitch Bend"), plant("pitch_bend") {
+	; k_pitchbend
+	;===========================================================================
+	label bounds(0, 30, 32, 10), text("MIDI")
+	label bounds(0, 40, 32, 10), text("in")
+	checkbox bounds(5, 55, 20, 20), channel("read_midi_pitchbend"), value(0)
+	rslider bounds(30, 25, 95, 95), channel("pitchbend"), range(-2, 2, 0, 1, 0.01), textBox(1)
+	hslider bounds(145, 34, 305, 65), channel("pitchbend"), range(-2, 2, 0, 1, 0.01)
+}
+
+groupbox bounds(0, 185, 450, 130), text("Volume"), plant("volume") {
 	; k_volume
 	;===========================================================================
-	rslider bounds(30, 25, 95, 95), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
 	label bounds(0, 30, 32, 10), text("MIDI")
 	label bounds(0, 40, 32, 10), text("in")
 	checkbox bounds(5, 55, 20, 20), channel("read_midi_volume"), value(0)
+	rslider bounds(30, 25, 95, 95), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
 	
 	; k_volume_envelope
 	;===========================================================================
@@ -46,7 +56,7 @@ instr 1
 	; k_pitchbend  (units: cents/100) [range: -2,2]
 	;===========================================================================
 	k_pitchbend_midi init 0
-	k_read_midi_pitchbend init 1
+	k_read_midi_pitchbend chnget "read_midi_pitchbend"
 	if (1 == k_read_midi_pitchbend) then
 		READ_MIDI_PITCHBEND:
 		k_midi_in_status, k_, k_data1, k_data2 midiin
@@ -60,12 +70,12 @@ instr 1
 		chnset k_pitchbend_midi, "pitchbend"
 	endif
 	k_pitchbend_channel chnget "pitchbend"
-	k_pitchbend port k_pitchbend_channel, 0.01
+	k_pitchbend port k_pitchbend_channel, 0.05
 	
 	; k_out_pitch  (units: cps)
 	;===========================================================================
 	k_pitch_midi_cps init p4
-	k_pitchbend_cps_multiplier = 2 ^ (k_pitchbend_midi / 12)
+	k_pitchbend_cps_multiplier = 2 ^ (k_pitchbend / 12)
 	k_out_pitch = k_pitchbend_cps_multiplier * k_pitch_midi_cps
 
 	; k_out_volume  [range: 0,1]
