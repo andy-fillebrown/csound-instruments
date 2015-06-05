@@ -1,33 +1,32 @@
 <Cabbage>
-form size(500, 900), caption("Test 1"), pluginID("plu1")
+form size(450, 900), caption("Test 1"), pluginID("plu1")
 
-label bounds(6, 18, 20, 12), text("ID")
-hslider bounds(30, 0, 460, 50), channel("id"), range(10, 99, 1, 1), textBox(1)
+checkbox bounds(5, 12, 200, 25), text("Log Variables"), channel("log_variables"), value(0)
+label bounds(150, 18, 20, 12), text("ID")
+hslider bounds(175, 0, 240, 50), channel("id"), range(10, 99, 1, 1), textBox(1)
 
-checkbox bounds(6, 45, 200, 25), text("Log Variables"), channel("log_variables"), value(0), colour("255, 0, 0")
+groupbox bounds(0, 50, 450, 130), text("Volume"), plant("volume") {
+	; k_volume
+	;===========================================================================
+	rslider bounds(30, 25, 95, 95), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
+	label bounds(0, 30, 32, 10), text("MIDI")
+	label bounds(0, 40, 32, 10), text("in")
+	checkbox bounds(5, 55, 20, 20), channel("read_midi_volume"), value(0)
+	
+	; k_volume_envelope
+	;===========================================================================
+	rslider bounds(145, 45, 75, 75), channel("volume_envelope_attack_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
+	rslider bounds(220, 45, 75, 75), channel("volume_envelope_decay_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
+	rslider bounds(295, 45, 75, 75), channel("volume_envelope_sustain_level"), range(0, 1, 0.5, 1, 0.01), textBox(1)
+	rslider bounds(370, 45, 75, 75), channel("volume_envelope_release_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
+	label bounds(145, 30, 75, 10), text("Attack")
+	label bounds(220, 30, 75, 10), text("Decay")
+	label bounds(295, 30, 75, 10), text("Sustain")
+	label bounds(370, 30, 75, 10), text("Release")
+}
 
-line bounds(6, 80, 488, 1), colour("white")
-
-; k_volume
-;===============================================================================
-rslider bounds(6, 90, 100, 100), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
-label bounds(35, 190, 42, 12), text("Volume")
-checkbox bounds(45, 207, 20, 20), channel("read_midi_volume"), value(0), colour("0, 255, 0")
-
-; k_volume_envelope
-;===============================================================================
-rslider bounds(150, 90, 75, 75), channel("volume_envelope_attack_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
-rslider bounds(225, 90, 75, 75), channel("volume_envelope_decay_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
-rslider bounds(300, 90, 75, 75), channel("volume_envelope_sustain_level"), range(0, 1, 0.5, 1, 0.01), textBox(1)
-rslider bounds(375, 90, 75, 75), channel("volume_envelope_release_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
-label bounds(150, 190, 300, 12), text("Volume Envelope")
-label bounds(150, 165, 75, 12), text("Attack")
-label bounds(225, 165, 75, 12), text("Decay")
-label bounds(300, 165, 75, 12), text("Sustain")
-label bounds(375, 165, 75, 12), text("Release")
-
-csoundoutput bounds(0, 600, 500, 200), text("")
-keyboard bounds(0, 800, 500, 100)
+csoundoutput bounds(0, 600, 450, 200), text("")
+keyboard bounds(0, 800, 450, 100)
 
 </Cabbage>
 <CsoundSynthesizer>
