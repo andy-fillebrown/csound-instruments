@@ -4,7 +4,7 @@ form size(500, 900), caption("Test 1"), pluginID("plu1")
 label bounds(6, 18, 20, 12), text("ID")
 hslider bounds(30, 0, 460, 50), channel("id"), range(10, 99, 1, 1), textBox(1)
 
-checkbox bounds(6, 45, 200, 25), text("Log Controllers"), channel("log_controllers"), value(0), colour("255, 0, 0")
+checkbox bounds(6, 45, 200, 25), text("Log Variables"), channel("log_variables"), value(0), colour("255, 0, 0")
 
 line bounds(6, 80, 488, 1), colour("white")
 
@@ -63,13 +63,13 @@ instr 1
 	k_pitchbend_channel chnget "pitchbend"
 	k_pitchbend port k_pitchbend_channel, 0.01
 	
-	; k_pitch  (units: cps)
+	; k_out_pitch  (units: cps)
 	;===========================================================================
 	k_pitch_midi_cps init p4
 	k_pitchbend_cps_multiplier = 2 ^ (k_pitchbend_midi / 12)
-	k_pitch = k_pitchbend_cps_multiplier * k_pitch_midi_cps
+	k_out_pitch = k_pitchbend_cps_multiplier * k_pitch_midi_cps
 
-	; k_volume  [range: 0,1]
+	; k_out_volume  [range: 0,1]
 	;===========================================================================
 	k_read_midi_volume chnget "read_midi_volume"
 	if (1 == k_read_midi_volume) then
@@ -90,14 +90,14 @@ instr 1
 	; Output
 	;===========================================================================
 	k_out_volume = k_volume * k_volume_envelope
-	a1 oscili p5, k_pitch, 1
+	a1 oscili p5, k_out_pitch, 1
 	outs k_out_volume * a1, k_out_volume * a1
 	
 	; Write envelope data
 	;===========================================================================
-	i_log_controllers init 0
-	i_log_controllers chnget "log_controllers"
-	if (1 == i_log_controllers) then
+	i_log_variables init 0
+	i_log_variables chnget "log_variables"
+	if (1 == i_log_variables) then
 		i_NoteId = gi_NoteId
 		gi_NoteId = gi_NoteId + 1
 		k_is_last_k_cycle udo__is_last_k_cycle i_volume_envelope_release_time
