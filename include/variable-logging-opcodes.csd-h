@@ -10,7 +10,8 @@ opcode udo__write_k, i, iikkj
 	i_Note_ID, i_Controller_ID, k_Value, k_Is_Last_K_Cycle, i_Round_To_Decimal_Point xin
 	
 	; Filename to print to.
-	i_id chnget "id"
+	i_id_channel chnget "id"
+	i_id = round (i_id_channel - 0.49999)
 	S_filename sprintf "%s/id-%d--note-%d.txt", $VARIABLE_LOGGING_OUTPUT_DIRECTORY, i_id, i_Note_ID
 
 	; Flag for first k cycle.
