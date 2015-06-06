@@ -10,7 +10,7 @@ groupbox bounds(0, 50, 450, 130), text("Pitch Bend"), plant("pitch_bend") {
 	;===========================================================================
 	label bounds(0, 30, 32, 10), text("MIDI")
 	label bounds(0, 40, 32, 10), text("in")
-	checkbox bounds(5, 55, 20, 20), channel("read_midi_pitchbend"), value(0)
+	checkbox bounds(4, 55, 20, 20), channel("read_midi_pitchbend"), value(0)
 	rslider bounds(30, 25, 95, 95), channel("pitchbend"), range(-2, 2, 0, 1, 0.01), textBox(1)
 	hslider bounds(145, 34, 305, 65), channel("pitchbend"), range(-2, 2, 0, 1, 0.01)
 }
@@ -20,7 +20,7 @@ groupbox bounds(0, 185, 450, 130), text("Volume"), plant("volume") {
 	;===========================================================================
 	label bounds(0, 30, 32, 10), text("MIDI")
 	label bounds(0, 40, 32, 10), text("in")
-	checkbox bounds(5, 55, 20, 20), channel("read_midi_volume"), value(0)
+	checkbox bounds(4, 55, 20, 20), channel("read_midi_volume"), value(0)
 	rslider bounds(30, 25, 95, 95), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
 	
 	; k_volume_envelope
