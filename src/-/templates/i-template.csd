@@ -88,6 +88,16 @@ instr 1
 	k_pitch_midi_note_number init p4
 	k_out_pitch_midi_note_number = k_pitch_midi_note_number + k_pitchbend_midi
 	k_out_pitch = cpsmidinn(k_out_pitch_midi_note_number)
+	
+	; k_out_modulation_wheel  [range: 0,1]
+	;===========================================================================
+	k_read_midi_modulation_wheel chnget "read_midi_modulation_wheel"
+	if (1 == k_read_midi_modulation_wheel) then
+		k_modulation_wheel_midi midictrl 1
+		chnset k_modulation_wheel_midi / 127, "modulation_wheel"
+	endif
+	k_modulation_wheel_channel chnget "modulation_wheel"
+	k_out_modulation_wheel port k_modulation_wheel_channel, 0.05
 
 	; k_out_volume  [range: 0,1]
 	;===========================================================================
