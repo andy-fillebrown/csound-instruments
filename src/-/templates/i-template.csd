@@ -42,7 +42,7 @@ keyboard bounds(0, 800, 450, 100)
 <CsoundSynthesizer>
 <CsOptions>
 
--n -d -+rtmidi=NULL -M0 --midi-key-cps=4 --midi-velocity-amp=5
+-n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5
 
 </CsOptions>
 <CsInstruments>
@@ -73,10 +73,11 @@ instr 1
 	k_pitchbend port k_pitchbend_channel, 0.05
 	
 	; k_out_pitch  (units: cps)
+	; k_out_pitch_midi_note_number  (units: MIDI note number)
 	;===========================================================================
-	k_pitch_midi_cps init p4
-	k_pitchbend_cps_multiplier = 2 ^ (k_pitchbend / 12)
-	k_out_pitch = k_pitchbend_cps_multiplier * k_pitch_midi_cps
+	k_pitch_midi_note_number init p4
+	k_out_pitch_midi_note_number = k_pitch_midi_note_number + k_pitchbend_midi
+	k_out_pitch = cpsmidinn(k_out_pitch_midi_note_number)
 
 	; k_out_volume  [range: 0,1]
 	;===========================================================================
