@@ -35,6 +35,16 @@ groupbox bounds(0, 185, 450, 130), text("Volume"), plant("volume") {
 	label bounds(370, 30, 75, 10), text("Release")
 }
 
+groupbox bounds(0, 320, 450, 130), text("Modulation Wheel"), plant("modulation_wheel") {
+	; k_modulation_wheel
+	;===========================================================================
+	label bounds(0, 30, 32, 10), text("MIDI")
+	label bounds(0, 40, 32, 10), text("in")
+	checkbox bounds(4, 55, 20, 20), channel("read_midi_modulation_wheel"), value(0)
+	rslider bounds(30, 25, 95, 95), channel("modulation_wheel"), range(0, 1, 0, 1, 0.01), textBox(1)
+	hslider bounds(145, 34, 305, 65), channel("modulation_wheel"), range(0, 1, 0, 1, 0.01)
+}
+
 csoundoutput bounds(0, 600, 450, 200), text("")
 keyboard bounds(0, 800, 450, 100)
 
