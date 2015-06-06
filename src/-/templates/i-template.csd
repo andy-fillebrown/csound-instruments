@@ -111,7 +111,8 @@ instr 1
 		i_NoteId = gi_NoteId
 		gi_NoteId = gi_NoteId + 1
 		k_is_last_k_cycle udo__is_last_k_cycle i_volume_envelope_release_time
-		i_ udo__write_k i_NoteId, 1, k_out_volume, k_is_last_k_cycle, 2
+		i_ udo__write_k i_NoteId, 1, k_out_pitch_midi_note_number, k_is_last_k_cycle, 2
+		i_ udo__write_k i_NoteId, 2, k_out_volume, k_is_last_k_cycle, 2
 	endif
 endin
 
