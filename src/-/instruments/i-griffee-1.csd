@@ -97,10 +97,9 @@ instr 1
 	k_read_midi_modulation_wheel chnget "read_midi_modulation_wheel"
 	if (1 == k_read_midi_modulation_wheel) then
 		k_modulation_wheel_midi midictrl 1
-		chnset k_modulation_wheel_midi / 127, "modulation_wheel"
+		chnset k_modulation_wheel_midi, "modulation_wheel"
 	endif
-	k_modulation_wheel_channel chnget "modulation_wheel"
-	k_out_modulation_wheel port k_modulation_wheel_channel, 0.05
+	k_out_modulation_wheel chnget "modulation_wheel"
 
 	; k_out_volume  [range: 0,1]
 	;===========================================================================
