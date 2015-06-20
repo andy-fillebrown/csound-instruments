@@ -20,8 +20,7 @@ opcode udo__write_k, i, iikkj
 	k_is_first_k_cycle init 1
 	
 	; Time in seconds.
-	k_time timek
-	k_time = k_time / kr
+	k_time times
 	
 	; Value rounded to decimal point set in opcode's parameters.
 	k_value = k_Value
