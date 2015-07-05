@@ -1,0 +1,9 @@
+	; k_out_volume  [range: 0,1]
+	;===========================================================================
+	k_read_midi_volume chnget "read_midi_volume"
+	if (1 == k_read_midi_volume) then
+		k_volume_midi midictrl 7
+		chnset k_volume_midi / 127, "volume"
+	endif
+	k_volume_channel chnget "volume"
+	k_volume port k_volume_channel, 0.05

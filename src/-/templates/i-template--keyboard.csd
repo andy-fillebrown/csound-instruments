@@ -65,49 +65,21 @@ gi_NoteId = 1
 instr 1
 	; k_pitchbend  (units: cents/100) [range: -2,2]
 	;===========================================================================
-	k_pitchbend_midi init 0
-	k_read_midi_pitchbend chnget "read_midi_pitchbend"
-	if (1 == k_read_midi_pitchbend) then
-		READ_MIDI_PITCHBEND:
-		k_midi_in_status, k_, k_data1, k_data2 midiin
-		if (0 != k_midi_in_status) then
-			if (224 == k_midi_in_status) then
-				k_pitchbend_midi = (((128 * k_data1) + k_data2) - 8192) / 4096
-			else
-				kgoto READ_MIDI_PITCHBEND
-			endif
-		endif
-		chnset k_pitchbend_midi, "pitchbend"
-	endif
-	k_pitchbend_channel chnget "pitchbend"
-	k_pitchbend port k_pitchbend_channel, 0.05
-	
+	#include "../../../include/read-pitchbend.csd-h"
+
 	; k_out_pitch  (units: cps)
-	; k_out_pitch_midi_note_number  (units: MIDI note number)
 	;===========================================================================
 	k_pitch_midi_note_number init p4
-	k_out_pitch_midi_note_number = k_pitch_midi_note_number + k_pitchbend_midi
+	k_out_pitch_midi_note_number = k_pitch_midi_note_number + k_pitchbend
 	k_out_pitch = cpsmidinn(k_out_pitch_midi_note_number)
-	
+
 	; k_out_modulation_wheel  [range: 0,1]
 	;===========================================================================
-	k_read_midi_modulation_wheel chnget "read_midi_modulation_wheel"
-	if (1 == k_read_midi_modulation_wheel) then
-		k_modulation_wheel_midi midictrl 1
-		chnset k_modulation_wheel_midi / 127, "modulation_wheel"
-	endif
-	k_modulation_wheel_channel chnget "modulation_wheel"
-	k_out_modulation_wheel port k_modulation_wheel_channel, 0.05
+	#include "../../../include/read-modulation-wheel.csd-h"
 
 	; k_out_volume  [range: 0,1]
 	;===========================================================================
-	k_read_midi_volume chnget "read_midi_volume"
-	if (1 == k_read_midi_volume) then
-		k_volume_midi midictrl 7
-		chnset k_volume_midi / 127, "volume"
-	endif
-	k_volume_channel chnget "volume"
-	k_volume port k_volume_channel, 0.05
+	#include "../../../include/read-volume.csd-h"
 	
 	; k_volume_envelope  [range: 0,1]
 	;===========================================================================
