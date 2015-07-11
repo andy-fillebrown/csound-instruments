@@ -1,9 +1,10 @@
 <Cabbage>
-form size(1100, 1100), caption("Akai MIDIMix"), pluginID("akaimm00")
+form size(1100, 1000), caption("Akai MIDIMix"), pluginID("akaimm00")
 
+; Akai MIDIMix
 groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 00") {
     ; Background Image
-	image bounds(0, 0, 1, 1), file("i-template--keyboard+midimix.jpg"), shape("sharp")
+	image bounds(0, 0, 1, 1), file("template--akai-midimix.jpg"), shape("sharp")
 
 	; Column 1
 	rslider  bounds(0.102727273, 0.115294118, 0.072727273, 0.094117647), channel("akai_midimix__knob_1a"),   range(0, 127, 0, 1, 1)
@@ -122,56 +123,24 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 00") {
 	checkbox bounds(0.850909091, 0.931764706, 0.014545455, 0.018823529), channel("akai_midimix__slider_9__read_midi"),  shape("circle")
 }
 
-keyboard bounds(0, 850, 450, 100)
+; M-Audio ProKeys Sono 61
+groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 00") {
+    ; Background Image
+	image bounds(0, 0, 1, 1), file("template--m-audio-prokeys.jpg"), shape("sharp")
 
-/*
-checkbox bounds(5, 12, 200, 25), text("Log Variables"), channel("log_variables"), value(0)
-label bounds(150, 18, 20, 12), text("ID")
-hslider bounds(175, 0, 240, 50), channel("id"), range(10, 99, 1, 1), textBox(1)
-
-groupbox bounds(0, 50, 450, 130), text("Pitch Bend"), plant("pitch_bend") {
-	; k_pitchbend
-	;===========================================================================
-	label bounds(0, 30, 32, 10), text("MIDI")
-	label bounds(0, 40, 32, 10), text("in")
-	checkbox bounds(4, 55, 20, 20), channel("read_midi_pitchbend"), value(0)
-	rslider bounds(30, 25, 95, 95), channel("pitchbend"), range(-2, 2, 0, 1, 0.01), textBox(1)
-	hslider bounds(145, 34, 305, 65), channel("pitchbend"), range(-2, 2, 0, 1, 0.01)
+    ; Controls
+    keyboard bounds(0.08000, 0.30000, 0.54725, 0.60000)
+    vslider  bounds(0.00200, 0.12500, 0.10000, 0.78000), channel("maudio_prokeys__slider_1"), range(0, 8191, 4095, 1, 1)
+    vslider  bounds(0.03175, 0.12500, 0.10000, 0.78000), channel("maudio_prokeys__slider_2"), range(0,  127,    0, 1, 1)
+    rslider  bounds(0.21500, 0.00000, 0.25000, 0.25000), channel("maudio_prokeys__knob"),     range(0,  127,    0, 1, 1)
+	checkbox bounds(0.020909091, 0.866666667, 0.014545455, 0.106666667), channel("maudio_prokeys__slider_1__read_midi"), shape("circle")
+	checkbox bounds(0.050000000, 0.866666667, 0.014545455, 0.106666667), channel("maudio_prokeys__slider_2__read_midi"), shape("circle")
+	checkbox bounds(0.223636364, 0.186666667, 0.014545455, 0.106666667), channel("maudio_prokeys__knob__read_midi"),     shape("circle")
 }
 
-groupbox bounds(0, 185, 450, 130), text("Volume"), plant("volume") {
-	; k_volume
-	;===========================================================================
-	label bounds(0, 30, 32, 10), text("MIDI")
-	label bounds(0, 40, 32, 10), text("in")
-	checkbox bounds(4, 55, 20, 20), channel("read_midi_volume"), value(0)
-	rslider bounds(30, 25, 95, 95), channel("volume"), range(0, 1, 0.9, 1, 0.01), textBox(1)
-	
-	; k_volume_envelope
-	;===========================================================================
-	rslider bounds(145, 45, 75, 75), channel("volume_envelope_attack_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
-	rslider bounds(220, 45, 75, 75), channel("volume_envelope_decay_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
-	rslider bounds(295, 45, 75, 75), channel("volume_envelope_sustain_level"), range(0, 1, 0.5, 1, 0.01), textBox(1)
-	rslider bounds(370, 45, 75, 75), channel("volume_envelope_release_time"), range(0, 10, 0.25, 1, 0.01), textBox(1)
-	label bounds(145, 30, 75, 10), text("Attack")
-	label bounds(220, 30, 75, 10), text("Decay")
-	label bounds(295, 30, 75, 10), text("Sustain")
-	label bounds(370, 30, 75, 10), text("Release")
+groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") {
+    csoundoutput bounds(0, 0, 1, 1)
 }
-
-groupbox bounds(0, 320, 450, 130), text("Modulation Wheel"), plant("modulation_wheel") {
-	; k_modulation_wheel
-	;===========================================================================
-	label bounds(0, 30, 32, 10), text("MIDI")
-	label bounds(0, 40, 32, 10), text("in")
-	checkbox bounds(4, 55, 20, 20), channel("read_midi_modulation_wheel"), value(0)
-	rslider bounds(30, 25, 95, 95), channel("modulation_wheel"), range(0, 1, 0, 1, 0.01), textBox(1)
-	hslider bounds(145, 34, 305, 65), channel("modulation_wheel"), range(0, 1, 0, 1, 0.01)
-}
-
-csoundoutput bounds(0, 600, 450, 200), text("")
-keyboard bounds(0, 800, 450, 100)
-*/
 
 </Cabbage>
 <CsoundSynthesizer>
