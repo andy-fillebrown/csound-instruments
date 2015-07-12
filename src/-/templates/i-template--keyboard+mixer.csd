@@ -456,6 +456,10 @@ instr update_channels
 	endif
 endin
 
+instr trace_midi_input
+    #include "../../../include/midi-testing.csd-h"
+endin
+
 </CsInstruments>
 <CsScore>
 
@@ -464,6 +468,7 @@ f0 3600
 
 i"set_midi_read_defaults" 0  0
 i"update_channels" 0 -1
+;i"trace_midi_input" 0 -1
 
 </CsScore>
 </CsoundSynthesizer>
