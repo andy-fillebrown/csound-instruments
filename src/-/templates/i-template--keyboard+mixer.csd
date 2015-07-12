@@ -146,7 +146,7 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 <CsoundSynthesizer>
 <CsOptions>
 
--n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5
+-n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --messagelevel=0
 
 </CsOptions>
 <CsInstruments>
