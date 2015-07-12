@@ -20,8 +20,7 @@ opcode udo__read_midi_controller, k, iS
     	k_value_midi midictrl i_controller_number
     	chnset k_value_midi, S_channel
     endif
-	k_value_channel chnget S_channel
-	k_value port k_value_channel, 0.05
+	k_value chnget S_channel
     xout k_value
 endop
 
@@ -43,7 +42,36 @@ opcode udo__read_midi_pitchbend, k, S
 		endif
 		chnset k_value_midi, S_channel
     endif
-    k_value_channel chnget S_channel
-    k_value port k_value_channel, 0.05
+    k_value chnget S_channel
     xout k_value
+endop
+
+
+opcode udo__set_channel_to_midi_value, i, kS
+    k_value, S_channel xin
+    S_channel__read_midi strcat S_channel, "__read_midi"
+    k_read_midi chnget S_channel__read_midi
+    if (1 == k_read_midi) then
+    	chnset k_value, S_channel
+    endif
+	i_ = 0
+	xout i_
+endop
+
+
+opcode udo__toggle_channel_to_midi_switch, i, kS
+    k_value, S_channel xin
+    S_channel__read_midi strcat S_channel, "__read_midi"
+    k_read_midi chnget S_channel__read_midi
+    if (1 == k_read_midi && 127 == k_value) then
+        k_toggle chnget S_channel
+        if (0 == k_toggle) then
+            k_toggle = 1
+        else
+            k_toggle = 0
+        endif
+    	chnset k_toggle, S_channel
+    endif
+	i_ = 0
+	xout i_
 endop
