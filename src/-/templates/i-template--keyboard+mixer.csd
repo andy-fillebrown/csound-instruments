@@ -1,8 +1,8 @@
 <Cabbage>
-form size(1100, 1000), caption("Akai MIDIMix"), pluginID("akaimm00")
+form size(1100, 1000), caption("Template - Keyboard + Mixer"), pluginID("template_keyboard_and_mixer_1")
 
 ; Akai MIDIMix
-groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 00") {
+groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
     ; Background Image
 	image bounds(0, 0, 1, 1), file("template--akai-midimix.jpg"), shape("sharp")
 
@@ -124,17 +124,17 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 00") {
 }
 
 ; M-Audio ProKeys Sono 61
-groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 00") {
+groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 1") {
     ; Background Image
 	image bounds(0, 0, 1, 1), file("template--m-audio-prokeys.jpg"), shape("sharp")
 
     ; Controls
-    keyboard bounds(.08, .3, .54725, .6)
+    keyboard bounds(.08, .3, .54725, .6), value(36)
     vslider bounds(.002, .125, .1, .78), channel("m_audio_prokeys__wheel_1"), range(0, 16383, 8191, 1, 1)
     vslider bounds(.03175, .125, .1, .78), channel("m_audio_prokeys__wheel_2"), range(0, 127, 0, 1, 1)
     rslider bounds(.215, 0, .25, .25), channel("m_audio_prokeys__knob"), range(0, 127, 0, 1, 1)
 	checkbox bounds(.020909091, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_1__read_midi"), shape("circle")
-	checkbox bounds(.050000000, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_2__read_midi"), shape("circle")
+	checkbox bounds(.05, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_2__read_midi"), shape("circle")
 	checkbox bounds(.223636364, .186666667, .014545455, .106666667), channel("m_audio_prokeys__knob__read_midi"), shape("circle")
 }
 
