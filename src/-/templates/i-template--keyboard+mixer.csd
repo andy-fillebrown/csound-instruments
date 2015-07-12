@@ -281,11 +281,77 @@ instr 1
 	endif
 endin
 
+instr 100
+    chnset 1, "m_audio_prokeys__slider_1__read_midi"
+    chnset 1, "m_audio_prokeys__slider_2__read_midi"
+    chnset 1, "m_audio_prokeys__knob__read_midi"
+    
+    chnset 1, "akai_midimix__knob_1a__read_midi"
+    chnset 1, "akai_midimix__knob_1b__read_midi"
+    chnset 1, "akai_midimix__knob_1c__read_midi"
+    chnset 1, "akai_midimix__button_1a__read_midi"
+    chnset 1, "akai_midimix__button_1b__read_midi"
+    chnset 1, "akai_midimix__slider_1__read_midi"
+    
+    chnset 1, "akai_midimix__knob_2a__read_midi"
+    chnset 1, "akai_midimix__knob_2b__read_midi"
+    chnset 1, "akai_midimix__knob_2c__read_midi"
+    chnset 1, "akai_midimix__button_2a__read_midi"
+    chnset 1, "akai_midimix__button_2b__read_midi"
+    chnset 1, "akai_midimix__slider_2__read_midi"
+    
+    chnset 1, "akai_midimix__knob_3a__read_midi"
+    chnset 1, "akai_midimix__knob_3b__read_midi"
+    chnset 1, "akai_midimix__knob_3c__read_midi"
+    chnset 1, "akai_midimix__button_3a__read_midi"
+    chnset 1, "akai_midimix__button_3b__read_midi"
+    chnset 1, "akai_midimix__slider_3__read_midi"
+    
+    chnset 1, "akai_midimix__knob_4a__read_midi"
+    chnset 1, "akai_midimix__knob_4b__read_midi"
+    chnset 1, "akai_midimix__knob_4c__read_midi"
+    chnset 1, "akai_midimix__button_4a__read_midi"
+    chnset 1, "akai_midimix__button_4b__read_midi"
+    chnset 1, "akai_midimix__slider_4__read_midi"
+    
+    chnset 1, "akai_midimix__knob_5a__read_midi"
+    chnset 1, "akai_midimix__knob_5b__read_midi"
+    chnset 1, "akai_midimix__knob_5c__read_midi"
+    chnset 1, "akai_midimix__button_5a__read_midi"
+    chnset 1, "akai_midimix__button_5b__read_midi"
+    chnset 1, "akai_midimix__slider_5__read_midi"
+    
+    chnset 1, "akai_midimix__knob_6a__read_midi"
+    chnset 1, "akai_midimix__knob_6b__read_midi"
+    chnset 1, "akai_midimix__knob_6c__read_midi"
+    chnset 1, "akai_midimix__button_6a__read_midi"
+    chnset 1, "akai_midimix__button_6b__read_midi"
+    chnset 1, "akai_midimix__slider_6__read_midi"
+    
+    chnset 1, "akai_midimix__knob_7a__read_midi"
+    chnset 1, "akai_midimix__knob_7b__read_midi"
+    chnset 1, "akai_midimix__knob_7c__read_midi"
+    chnset 1, "akai_midimix__button_7a__read_midi"
+    chnset 1, "akai_midimix__button_7b__read_midi"
+    chnset 1, "akai_midimix__slider_7__read_midi"
+    
+    chnset 1, "akai_midimix__knob_8a__read_midi"
+    chnset 1, "akai_midimix__knob_8b__read_midi"
+    chnset 1, "akai_midimix__knob_8c__read_midi"
+    chnset 1, "akai_midimix__button_8a__read_midi"
+    chnset 1, "akai_midimix__button_8b__read_midi"
+    chnset 1, "akai_midimix__slider_8__read_midi"
+    
+    chnset 1, "akai_midimix__slider_9__read_midi"
+endin
+
 </CsInstruments>
 <CsScore>
 
 f1 0 1024 10 1
 f0 3600
+
+i100 0 0
 
 </CsScore>
 </CsoundSynthesizer>
