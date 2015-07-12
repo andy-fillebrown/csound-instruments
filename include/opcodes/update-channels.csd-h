@@ -14,6 +14,8 @@ opcode udo__update_m_audio_channels, i, o
 		endif
 		kgoto READ_MIDI		
 	endif
+	i_ init 0
+	xout i_
 endop
 
 opcode udo__update_akai_midimix_channels, i, o
@@ -131,4 +133,6 @@ opcode udo__update_akai_midimix_channels, i, o
 		endif
 		kgoto READ_MIDI		
 	endif
+	i_ init 0
+	xout i_
 endop
