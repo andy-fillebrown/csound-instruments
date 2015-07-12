@@ -153,120 +153,15 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 
 #include "../../../config.csd-h"
 #include "../../../config-akai-midimix.csd-h"
-#include "../../../include/read-midi-opcodes.csd-h"
-#include "../../../include/variable-logging-opcodes.csd-h"
+#include "../../../include/opcodes/midi-testing.csd-h"
+#include "../../../include/opcodes/read-midi.csd-h"
+#include "../../../include/opcodes/update-channels.csd-h"
+#include "../../../include/opcodes/variable-logging.csd-h"
 
 massign 0, 1
 
 gi_NoteId = 1
 
-
-instr 1
-	; M-Audio ProKeys Values
-	;---------------------------------------------------------------------------
-   	k_m_audio_prokeys__wheel_1 udo__read_midi_pitchbend "m_audio_prokeys__wheel_1"
-   	k_m_audio_prokeys__wheel_2 udo__read_midi_controller 1, "m_audio_prokeys__wheel_2"
-   	k_m_audio_prokeys__knob udo__read_midi_controller 7, "m_audio_prokeys__knob"
-
-	; Akai MIDIMix Values
-	;---------------------------------------------------------------------------
-	k_akai_midimix__knob_1a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a"
-	k_akai_midimix__knob_1b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b"
-	k_akai_midimix__knob_1c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c"
-	k_akai_midimix__slider_1 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1"
-	
-	k_akai_midimix__knob_2a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a"
-	k_akai_midimix__knob_2b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b"
-	k_akai_midimix__knob_2c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2C_CC, "akai_midimix__knob_2c"
-	k_akai_midimix__slider_2 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_2_CC, "akai_midimix__slider_2"
-	
-	k_akai_midimix__knob_3a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_3A_CC, "akai_midimix__knob_3a"
-	k_akai_midimix__knob_3b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_3B_CC, "akai_midimix__knob_3b"
-	i_akai_midimix__knob_3c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_3C_CC, "akai_midimix__knob_3c"
-	k_akai_midimix__slider_3 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_3_CC, "akai_midimix__slider_3"
-	
-	k_akai_midimix__knob_4a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_4A_CC, "akai_midimix__knob_4a"
-	k_akai_midimix__knob_4b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_4B_CC, "akai_midimix__knob_4b"
-	i_akai_midimix__knob_4c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_4C_CC, "akai_midimix__knob_4c"
-	k_akai_midimix__slider_4 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_4_CC, "akai_midimix__slider_4"
-	
-	k_akai_midimix__knob_5a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_5A_CC, "akai_midimix__knob_5a"
-	k_akai_midimix__knob_5b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_5B_CC, "akai_midimix__knob_5b"
-	i_akai_midimix__knob_5c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_5C_CC, "akai_midimix__knob_5c"
-	k_akai_midimix__slider_5 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_5_CC, "akai_midimix__slider_5"
-	
-	k_akai_midimix__knob_6a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_6A_CC, "akai_midimix__knob_6a"
-	k_akai_midimix__knob_6b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_6B_CC, "akai_midimix__knob_6b"
-	i_akai_midimix__knob_6c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_6C_CC, "akai_midimix__knob_6c"
-	k_akai_midimix__slider_6 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_6_CC, "akai_midimix__slider_6"
-	
-	k_akai_midimix__knob_7a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_7A_CC, "akai_midimix__knob_7a"
-	k_akai_midimix__knob_7b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_7B_CC, "akai_midimix__knob_7b"
-	k_akai_midimix__knob_7c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_7C_CC, "akai_midimix__knob_7c"
-	k_akai_midimix__slider_7 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_7_CC, "akai_midimix__slider_7"
-	
-	k_akai_midimix__knob_8a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_8A_CC, "akai_midimix__knob_8a"
-	k_akai_midimix__knob_8b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_8B_CC, "akai_midimix__knob_8b"
-	k_akai_midimix__knob_8c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_8C_CC, "akai_midimix__knob_8c"
-	k_akai_midimix__slider_8 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_8_CC, "akai_midimix__slider_8"
-	
-	; Strip 9
-	k_akai_midimix__slider_9 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9"
-	
-;===============================================================================
-
-	; k_pitchbend  (units: cents/100) [range: -2,2]
-	;---------------------------------------------------------------------------
-	k_pitchbend init 0
-	k_m_audio_prokeys__wheel_1 = -2 + (k_m_audio_prokeys__wheel_1 / 4096)
-    k_pitchbend port k_m_audio_prokeys__wheel_1, .05
-
-	; k_pitch  (units: cps)
-	;---------------------------------------------------------------------------
-	k_pitch_midi_note_number = p4 + k_pitchbend
-	k_pitch = cpsmidinn(k_pitch_midi_note_number)
-
-	; k_out_modulation_wheel  [range: 0,127]
-	;---------------------------------------------------------------------------
-	k_modulation_wheel init 0
-	k_modulation_wheel port k_m_audio_prokeys__wheel_2, .05
-
-	; k_out_volume  [range: 0,1]
-	;---------------------------------------------------------------------------
-	k_volume init 0
-	k_m_audio_prokeys__knob = k_m_audio_prokeys__knob / 128
-	k_volume port k_m_audio_prokeys__knob, .05
-	
-	; k_volume_envelope  [range: 0,1]
-	;---------------------------------------------------------------------------
-	i_volume_envelope_attack_time = i_akai_midimix__knob_3c / 12.8
-	i_volume_envelope_decay_time = i_akai_midimix__knob_4c / 12.8
-	i_volume_envelope_sustain_level = i_akai_midimix__knob_5c / 128
-	i_volume_envelope_release_time = i_akai_midimix__knob_6c / 12.8
-	k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
-	
-;===============================================================================
-
-	; Audio Output
-	;---------------------------------------------------------------------------
-	k_volume = k_volume * k_volume_envelope
-	a1 oscili p5, k_pitch, 1
-	outs k_volume * a1, k_volume * a1
-
-	
-	; Write envelope data
-	;---------------------------------------------------------------------------
-	i_log_variables init 0
-	i_log_variables chnget "log_variables"
-	if (1 == i_log_variables) then
-		i_NoteId = gi_NoteId
-		gi_NoteId = gi_NoteId + 1
-		k_is_last_k_cycle udo__is_last_k_cycle i_volume_envelope_release_time
-		i_ udo__write_k i_NoteId, 0, k_pitch_midi_note_number, k_is_last_k_cycle, 2
-		i_ udo__write_k i_NoteId, 1, k_modulation_wheel, k_is_last_k_cycle, 2
-		i_ udo__write_k i_NoteId, 7, k_volume, k_is_last_k_cycle, 2
-	endif
-endin
 
 instr set_midi_read_defaults
     chnset 1, "m_audio_prokeys__wheel_1__read_midi"
@@ -333,131 +228,123 @@ instr set_midi_read_defaults
 endin
 
 instr update_channels
-    READ_MIDI:
-	k_status, k_channel, k_byte_1, k_byte_2 midiin
-	if (0 != k_status) then
-		if (224 == k_status) then
-			 i_ udo__set_channel_to_midi_value (128 * k_byte_1) + k_byte_2, "m_audio_prokeys__wheel_1"
-		elseif (176 == k_status) then
-			if (1 == k_byte_1) then
-			    i_ udo__set_channel_to_midi_value k_byte_2, "m_audio_prokeys__wheel_2"
-			elseif (7 == k_byte_1) then
-			    i_ udo__set_channel_to_midi_value k_byte_2, "m_audio_prokeys__knob"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_1A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_1a"
-            elseif ($AKAI_MIDIMIX__KNOB_1B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_1b"
-            elseif ($AKAI_MIDIMIX__KNOB_1C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_1c"
-            elseif ($AKAI_MIDIMIX__BUTTON_1A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_1a"
-            elseif ($AKAI_MIDIMIX__BUTTON_1B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_1b"
-            elseif ($AKAI_MIDIMIX__SLIDER_1_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_1"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_2A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_2a"
-            elseif ($AKAI_MIDIMIX__KNOB_2B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_2b"
-            elseif ($AKAI_MIDIMIX__KNOB_2C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_2c"
-            elseif ($AKAI_MIDIMIX__BUTTON_2A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_2a"
-            elseif ($AKAI_MIDIMIX__BUTTON_2B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_2b"
-            elseif ($AKAI_MIDIMIX__SLIDER_2_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_2"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_3A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_3a"
-            elseif ($AKAI_MIDIMIX__KNOB_3B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_3b"
-            elseif ($AKAI_MIDIMIX__KNOB_3C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_3c"
-            elseif ($AKAI_MIDIMIX__BUTTON_3A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_3a"
-            elseif ($AKAI_MIDIMIX__BUTTON_3B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_3b"
-            elseif ($AKAI_MIDIMIX__SLIDER_3_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_3"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_4A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_4a"
-            elseif ($AKAI_MIDIMIX__KNOB_4B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_4b"
-            elseif ($AKAI_MIDIMIX__KNOB_4C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_4c"
-            elseif ($AKAI_MIDIMIX__BUTTON_4A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_4a"
-            elseif ($AKAI_MIDIMIX__BUTTON_4B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_4b"
-            elseif ($AKAI_MIDIMIX__SLIDER_4_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_4"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_5A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_5a"
-            elseif ($AKAI_MIDIMIX__KNOB_5B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_5b"
-            elseif ($AKAI_MIDIMIX__KNOB_5C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_5c"
-            elseif ($AKAI_MIDIMIX__BUTTON_5A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_5a"
-            elseif ($AKAI_MIDIMIX__BUTTON_5B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_5b"
-            elseif ($AKAI_MIDIMIX__SLIDER_5_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_5"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_6A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_6a"
-            elseif ($AKAI_MIDIMIX__KNOB_6B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_6b"
-            elseif ($AKAI_MIDIMIX__KNOB_6C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_6c"
-            elseif ($AKAI_MIDIMIX__BUTTON_6A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_6a"
-            elseif ($AKAI_MIDIMIX__BUTTON_6B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_6b"
-            elseif ($AKAI_MIDIMIX__SLIDER_6_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_6"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_7A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_7a"
-            elseif ($AKAI_MIDIMIX__KNOB_7B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_7b"
-            elseif ($AKAI_MIDIMIX__KNOB_7C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_7c"
-            elseif ($AKAI_MIDIMIX__BUTTON_7A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_7a"
-            elseif ($AKAI_MIDIMIX__BUTTON_7B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_7b"
-            elseif ($AKAI_MIDIMIX__SLIDER_7_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_7"
-			    
-            elseif ($AKAI_MIDIMIX__KNOB_8A_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_8a"
-            elseif ($AKAI_MIDIMIX__KNOB_8B_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_8b"
-            elseif ($AKAI_MIDIMIX__KNOB_8C_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__knob_8c"
-            elseif ($AKAI_MIDIMIX__BUTTON_8A_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_8a"
-            elseif ($AKAI_MIDIMIX__BUTTON_8B_CC == k_byte_1) then
-                i_ udo__toggle_channel_to_midi_switch k_byte_2, "akai_midimix__button_8b"
-            elseif ($AKAI_MIDIMIX__SLIDER_8_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_8"
-			    
-            elseif ($AKAI_MIDIMIX__SLIDER_9_CC == k_byte_1) then
-                i_ udo__set_channel_to_midi_value k_byte_2, "akai_midimix__slider_9"
-			endif
-		endif
-		kgoto READ_MIDI		
-	endif
+    i_ udo__update_m_audio_channels
+    i_ udo__update_akai_midimix_channels
 endin
 
 instr trace_midi_input
-    #include "../../../include/midi-testing.csd-h"
+    i_ udo__trace_midi
+endin
+
+/*
+ *******************************************************************************
+ * Main Instrument
+ *******************************************************************************
+ */
+instr 1
+	; M-Audio ProKeys
+	;---------------------------------------------------------------------------
+   	k_m_audio_prokeys__wheel_1 udo__read_midi_pitchbend "m_audio_prokeys__wheel_1"
+   	k_m_audio_prokeys__wheel_2 udo__read_midi_controller 1, "m_audio_prokeys__wheel_2"
+   	k_m_audio_prokeys__knob udo__read_midi_controller 7, "m_audio_prokeys__knob"
+
+	; Akai MIDIMix
+	;---------------------------------------------------------------------------
+	k_akai_midimix__knob_1a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a"
+	k_akai_midimix__knob_1b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b"
+	k_akai_midimix__knob_1c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c"
+	k_akai_midimix__slider_1 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1"
+	
+	k_akai_midimix__knob_2a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a"
+	k_akai_midimix__knob_2b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b"
+	k_akai_midimix__knob_2c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2C_CC, "akai_midimix__knob_2c"
+	k_akai_midimix__slider_2 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_2_CC, "akai_midimix__slider_2"
+	
+	k_akai_midimix__knob_3a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_3A_CC, "akai_midimix__knob_3a"
+	k_akai_midimix__knob_3b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_3B_CC, "akai_midimix__knob_3b"
+	i_akai_midimix__knob_3c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_3C_CC, "akai_midimix__knob_3c"
+	k_akai_midimix__slider_3 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_3_CC, "akai_midimix__slider_3"
+	
+	k_akai_midimix__knob_4a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_4A_CC, "akai_midimix__knob_4a"
+	k_akai_midimix__knob_4b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_4B_CC, "akai_midimix__knob_4b"
+	i_akai_midimix__knob_4c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_4C_CC, "akai_midimix__knob_4c"
+	k_akai_midimix__slider_4 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_4_CC, "akai_midimix__slider_4"
+	
+	k_akai_midimix__knob_5a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_5A_CC, "akai_midimix__knob_5a"
+	k_akai_midimix__knob_5b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_5B_CC, "akai_midimix__knob_5b"
+	i_akai_midimix__knob_5c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_5C_CC, "akai_midimix__knob_5c"
+	k_akai_midimix__slider_5 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_5_CC, "akai_midimix__slider_5"
+	
+	k_akai_midimix__knob_6a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_6A_CC, "akai_midimix__knob_6a"
+	k_akai_midimix__knob_6b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_6B_CC, "akai_midimix__knob_6b"
+	i_akai_midimix__knob_6c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_6C_CC, "akai_midimix__knob_6c"
+	k_akai_midimix__slider_6 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_6_CC, "akai_midimix__slider_6"
+	
+	k_akai_midimix__knob_7a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_7A_CC, "akai_midimix__knob_7a"
+	k_akai_midimix__knob_7b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_7B_CC, "akai_midimix__knob_7b"
+	k_akai_midimix__knob_7c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_7C_CC, "akai_midimix__knob_7c"
+	k_akai_midimix__slider_7 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_7_CC, "akai_midimix__slider_7"
+	
+	k_akai_midimix__knob_8a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_8A_CC, "akai_midimix__knob_8a"
+	k_akai_midimix__knob_8b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_8B_CC, "akai_midimix__knob_8b"
+	k_akai_midimix__knob_8c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_8C_CC, "akai_midimix__knob_8c"
+	k_akai_midimix__slider_8 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_8_CC, "akai_midimix__slider_8"
+	
+	k_akai_midimix__slider_9 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9"
+	
+;===============================================================================
+
+	; k_pitchbend  (units: cents/100) [range: -2,2]
+	;---------------------------------------------------------------------------
+	k_pitchbend init 0
+	k_m_audio_prokeys__wheel_1 = -2 + (k_m_audio_prokeys__wheel_1 / 4096)
+    k_pitchbend port k_m_audio_prokeys__wheel_1, .05
+
+	; k_pitch  (units: cps)
+	;---------------------------------------------------------------------------
+	k_pitch_midi_note_number = p4 + k_pitchbend
+	k_pitch = cpsmidinn(k_pitch_midi_note_number)
+
+	; k_out_modulation_wheel  [range: 0,127]
+	;---------------------------------------------------------------------------
+	k_modulation_wheel init 0
+	k_modulation_wheel port k_m_audio_prokeys__wheel_2, .05
+
+	; k_out_volume  [range: 0,1]
+	;---------------------------------------------------------------------------
+	k_volume init 0
+	k_m_audio_prokeys__knob = k_m_audio_prokeys__knob / 128
+	k_volume port k_m_audio_prokeys__knob, .05
+	
+	; k_volume_envelope  [range: 0,1]
+	;---------------------------------------------------------------------------
+	i_volume_envelope_attack_time = i_akai_midimix__knob_3c / 12.8
+	i_volume_envelope_decay_time = i_akai_midimix__knob_4c / 12.8
+	i_volume_envelope_sustain_level = i_akai_midimix__knob_5c / 128
+	i_volume_envelope_release_time = i_akai_midimix__knob_6c / 12.8
+	k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
+	
+;===============================================================================
+
+	; Audio Output
+	;---------------------------------------------------------------------------
+	k_volume = k_volume * k_volume_envelope
+	a1 oscili p5, k_pitch, 1
+	outs k_volume * a1, k_volume * a1
+
+	
+	; Write envelope data
+	;---------------------------------------------------------------------------
+	i_log_variables init 0
+	i_log_variables chnget "log_variables"
+	if (1 == i_log_variables) then
+		i_NoteId = gi_NoteId
+		gi_NoteId = gi_NoteId + 1
+		k_is_last_k_cycle udo__is_last_k_cycle i_volume_envelope_release_time
+		i_ udo__write_k i_NoteId, 0, k_pitch_midi_note_number, k_is_last_k_cycle, 2
+		i_ udo__write_k i_NoteId, 1, k_modulation_wheel, k_is_last_k_cycle, 2
+		i_ udo__write_k i_NoteId, 7, k_volume, k_is_last_k_cycle, 2
+	endif
 endin
 
 </CsInstruments>

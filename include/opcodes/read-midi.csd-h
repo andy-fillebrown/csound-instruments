@@ -11,7 +11,6 @@ opcode udo__read_midi_controller, i, iS
     xout i_value
 endop
 
-
 opcode udo__read_midi_controller, k, iS
     i_controller_number, S_channel xin
     S_channel__read_midi strcat S_channel, "__read_midi"
@@ -23,7 +22,6 @@ opcode udo__read_midi_controller, k, iS
 	k_value chnget S_channel
     xout k_value
 endop
-
 
 opcode udo__read_midi_pitchbend, k, S
     S_channel xin
@@ -46,7 +44,6 @@ opcode udo__read_midi_pitchbend, k, S
     xout k_value
 endop
 
-
 opcode udo__set_channel_to_midi_value, i, kS
     k_value, S_channel xin
     S_channel__read_midi strcat S_channel, "__read_midi"
@@ -57,7 +54,6 @@ opcode udo__set_channel_to_midi_value, i, kS
 	i_ = 0
 	xout i_
 endop
-
 
 opcode udo__toggle_channel_to_midi_switch, i, kS
     k_value, S_channel xin

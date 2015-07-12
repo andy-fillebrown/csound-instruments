@@ -1,4 +1,6 @@
-READ_MIDI:
+
+opcode udo__trace_midi, i, o
+    READ_MIDI:
 	kstatus, kchan, kdata1, kdata2 midiin
 	knotelength init 0
 	knoteontime init 0
@@ -23,3 +25,6 @@ READ_MIDI:
 		endif
 		kgoto READ_MIDI		
 	endif
+    i_ init 0
+    xout i_
+endop
