@@ -32,7 +32,7 @@ opcode udo__read_midi_controller, k, iSjjj
         i_value_range = i_max_value - i_min_value
     endif
     i_default_value = (i_default_value - i_min_value) / i_value_range
-    initc7 1, i_controller_number, i_default_value
+    ctrlinit 1, i_controller_number, i_default_value
     S_channel__read_midi strcat S_channel, "__read_midi"
     k_read_midi chnget S_channel__read_midi
     if (1 == k_read_midi) then
