@@ -174,15 +174,6 @@ massign 0, 1
 
 gi_NoteId = -1
 
-gS_MidiControlChannels[] init 128
-gi_MidiControlRanges[][] init 128, 3
-
-i_controller = 0
-until 127 < i_controller do
-    gS_MidiControlChannels[i_controller] = ""
-    i_controller += 1
-od
-
 gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC] = "akai_midimix__knob_1a"
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][0] = 0
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][1] = 48000 * $128_OVER_127
