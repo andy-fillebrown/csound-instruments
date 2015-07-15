@@ -179,7 +179,7 @@ gi_MidiControlRanges[][] init 127, 3
 
 gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC] = "akai_midimix__knob_1a"
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][0] = 0
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][1] = 48000
+gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][1] = 48000 * $128_OVER_127
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][2] = 0
 
 gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_2A_CC] = "akai_midimix__knob_2a"
