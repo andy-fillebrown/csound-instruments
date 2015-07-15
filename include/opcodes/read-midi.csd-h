@@ -1,28 +1,22 @@
 
-opcode udo__read_midi_controller, i, iSjjj
-    i_controller_number, S_channel, i_min_value, i_max_value, i_default_value xin
-    if (-1 == i_min_value && -1 == i_max_value) then
-        i_min_value = 0
-        i_max_value = 127
-        i_default_value = 0
-        i_value_range = 127
-    else
-        i_value_range = i_max_value - i_min_value
+opcode udo__bind_midi_control, i, i
+    i_control xin
+    S_channel = gS_MidiControlChannels[i_control]
+    i_channel_name_length strlen S_channel
+    if (0 < i_channel_name_length) then
+        printf_i "binding midi control %d to %s\n", 1, i_control, S_channel
+        k_ udo__read_midi_control i_control, \
+            S_channel, \
+            gi_MidiControlRanges[i_control][0], \
+            gi_MidiControlRanges[i_control][1], \
+            gi_MidiControlRanges[i_control][2]
     endif
-    initc7 1, i_controller_number, (i_default_value - i_min_value) / i_value_range
-    S_channel__read_midi strcat S_channel, "__read_midi"
-    i_read_midi chnget S_channel__read_midi
-    if (1 == i_read_midi) then
-    	i_value_midi ctrl7 1, i_controller_number, 0, 1
-    	i_value_midi = i_min_value + (i_value_midi * i_value_range)
-    	chnset i_value_midi, S_channel
-    endif
-    ;i_ init 0
-    xout i_value_midi
+    i_ = 0
+    xout i_
 endop
 
-opcode udo__read_midi_controller, k, iSjjj
-    i_controller_number, S_channel, i_min_value, i_max_value, i_default_value xin
+opcode udo__read_midi_control, k, iSjjj
+    i_control, S_channel, i_min_value, i_max_value, i_default_value xin
     if (-1 == i_min_value && -1 == i_max_value) then
         i_min_value = 0
         i_max_value = 127
@@ -30,11 +24,11 @@ opcode udo__read_midi_controller, k, iSjjj
     endif
     i_value_range = i_max_value - i_min_value
     i_default_value = 127 * (i_default_value - i_min_value) / i_value_range
-    ctrlinit 1, i_controller_number, i_default_value
+    ctrlinit 1, i_control, i_default_value
     S_channel__read_midi strcat S_channel, "__read_midi"
     k_read_midi chnget S_channel__read_midi
     if (1 == k_read_midi) then
-    	k_value_midi ctrl7 1, i_controller_number, 0, 1
+    	k_value_midi ctrl7 1, i_control, 0, 1
     	k_value_midi = i_min_value + (k_value_midi * i_value_range)
     	chnset k_value_midi, S_channel
     endif
@@ -60,17 +54,6 @@ opcode udo__read_midi_pitchbend, k, S
     endif
     k_value chnget S_channel
     xout k_value
-endop
-
-opcode udo__set_channel_to_midi_value, i, kS
-    k_value, S_channel xin
-    S_channel__read_midi strcat S_channel, "__read_midi"
-    k_read_midi chnget S_channel__read_midi
-    if (1 == k_read_midi) then
-    	chnset k_value, S_channel
-    endif
-	i_ = 0
-	xout i_
 endop
 
 opcode udo__toggle_channel_to_midi_switch, i, kS

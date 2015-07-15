@@ -174,8 +174,14 @@ massign 0, 1
 
 gi_NoteId = -1
 
-gS_MidiControlChannels[] init 127
-gi_MidiControlRanges[][] init 127, 3
+gS_MidiControlChannels[] init 128
+gi_MidiControlRanges[][] init 128, 3
+
+i_controller = 0
+until 127 < i_controller do
+    gS_MidiControlChannels[i_controller] = ""
+    i_controller += 1
+od
 
 gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC] = "akai_midimix__knob_1a"
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][0] = 0
@@ -187,76 +193,6 @@ gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][0] = 0
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][1] = 127
 gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][2] = 0
 
-
-
-instr set_midi_read_defaults
-    chnset 1, "m_audio_prokeys__wheel_1__read_midi"
-    chnset 1, "m_audio_prokeys__wheel_2__read_midi"
-    chnset 1, "m_audio_prokeys__knob__read_midi"
-    
-    chnset 1, "akai_midimix__knob_1a__read_midi"
-    chnset 1, "akai_midimix__knob_1b__read_midi"
-    chnset 1, "akai_midimix__knob_1c__read_midi"
-    chnset 1, "akai_midimix__button_1a__read_midi"
-    chnset 1, "akai_midimix__button_1b__read_midi"
-    chnset 1, "akai_midimix__slider_1__read_midi"
-    
-    chnset 1, "akai_midimix__knob_2a__read_midi"
-    chnset 1, "akai_midimix__knob_2b__read_midi"
-    chnset 1, "akai_midimix__knob_2c__read_midi"
-    chnset 1, "akai_midimix__button_2a__read_midi"
-    chnset 1, "akai_midimix__button_2b__read_midi"
-    chnset 1, "akai_midimix__slider_2__read_midi"
-    
-    chnset 1, "akai_midimix__knob_3a__read_midi"
-    chnset 1, "akai_midimix__knob_3b__read_midi"
-    chnset 1, "akai_midimix__knob_3c__read_midi"
-    chnset 1, "akai_midimix__button_3a__read_midi"
-    chnset 1, "akai_midimix__button_3b__read_midi"
-    chnset 1, "akai_midimix__slider_3__read_midi"
-    
-    chnset 1, "akai_midimix__knob_4a__read_midi"
-    chnset 1, "akai_midimix__knob_4b__read_midi"
-    chnset 1, "akai_midimix__knob_4c__read_midi"
-    chnset 1, "akai_midimix__button_4a__read_midi"
-    chnset 1, "akai_midimix__button_4b__read_midi"
-    chnset 1, "akai_midimix__slider_4__read_midi"
-    
-    chnset 1, "akai_midimix__knob_5a__read_midi"
-    chnset 1, "akai_midimix__knob_5b__read_midi"
-    chnset 1, "akai_midimix__knob_5c__read_midi"
-    chnset 1, "akai_midimix__button_5a__read_midi"
-    chnset 1, "akai_midimix__button_5b__read_midi"
-    chnset 1, "akai_midimix__slider_5__read_midi"
-    
-    chnset 1, "akai_midimix__knob_6a__read_midi"
-    chnset 1, "akai_midimix__knob_6b__read_midi"
-    chnset 1, "akai_midimix__knob_6c__read_midi"
-    chnset 1, "akai_midimix__button_6a__read_midi"
-    chnset 1, "akai_midimix__button_6b__read_midi"
-    chnset 1, "akai_midimix__slider_6__read_midi"
-    
-    chnset 1, "akai_midimix__knob_7a__read_midi"
-    chnset 1, "akai_midimix__knob_7b__read_midi"
-    chnset 1, "akai_midimix__knob_7c__read_midi"
-    chnset 1, "akai_midimix__button_7a__read_midi"
-    chnset 1, "akai_midimix__button_7b__read_midi"
-    chnset 1, "akai_midimix__slider_7__read_midi"
-    
-    chnset 1, "akai_midimix__knob_8a__read_midi"
-    chnset 1, "akai_midimix__knob_8b__read_midi"
-    chnset 1, "akai_midimix__knob_8c__read_midi"
-    chnset 1, "akai_midimix__button_8a__read_midi"
-    chnset 1, "akai_midimix__button_8b__read_midi"
-    chnset 1, "akai_midimix__slider_8__read_midi"
-    
-    chnset 1, "akai_midimix__slider_9__read_midi"
-endin
-
-instr trace_midi_input
-    i_ udo__trace_midi
-endin
-
 /*
  *******************************************************************************
  * Main Instrument
@@ -267,21 +203,134 @@ instr 1
     gi_NoteId += 1
     
     if (0 == i_note_id) then
-        k_ udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1A_CC, \
-            gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC], \
-            gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][0], \
-            gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][1], \
-            gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][2]
-            
-        k_ udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2A_CC, \
-            gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_2A_CC], \
-            gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][0], \
-            gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][1], \
-            gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][2]
-        /*
-        k_ udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1A_CC, \
-            gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC]
-        */
+        i_ udo__bind_midi_control 0
+        i_ udo__bind_midi_control 1
+        i_ udo__bind_midi_control 2
+        i_ udo__bind_midi_control 3
+        i_ udo__bind_midi_control 4
+        i_ udo__bind_midi_control 5
+        i_ udo__bind_midi_control 6
+        i_ udo__bind_midi_control 7
+        i_ udo__bind_midi_control 8
+        i_ udo__bind_midi_control 9
+        i_ udo__bind_midi_control 10
+        i_ udo__bind_midi_control 11
+        i_ udo__bind_midi_control 12
+        i_ udo__bind_midi_control 13
+        i_ udo__bind_midi_control 14
+        i_ udo__bind_midi_control 15
+        i_ udo__bind_midi_control 16
+        i_ udo__bind_midi_control 17
+        i_ udo__bind_midi_control 18
+        i_ udo__bind_midi_control 19
+        i_ udo__bind_midi_control 20
+        i_ udo__bind_midi_control 21
+        i_ udo__bind_midi_control 22
+        i_ udo__bind_midi_control 23
+        i_ udo__bind_midi_control 24
+        i_ udo__bind_midi_control 25
+        i_ udo__bind_midi_control 26
+        i_ udo__bind_midi_control 27
+        i_ udo__bind_midi_control 28
+        i_ udo__bind_midi_control 29
+        i_ udo__bind_midi_control 30
+        i_ udo__bind_midi_control 31
+        i_ udo__bind_midi_control 32
+        i_ udo__bind_midi_control 33
+        i_ udo__bind_midi_control 34
+        i_ udo__bind_midi_control 35
+        i_ udo__bind_midi_control 36
+        i_ udo__bind_midi_control 37
+        i_ udo__bind_midi_control 38
+        i_ udo__bind_midi_control 39
+        i_ udo__bind_midi_control 40
+        i_ udo__bind_midi_control 41
+        i_ udo__bind_midi_control 42
+        i_ udo__bind_midi_control 43
+        i_ udo__bind_midi_control 44
+        i_ udo__bind_midi_control 45
+        i_ udo__bind_midi_control 46
+        i_ udo__bind_midi_control 47
+        i_ udo__bind_midi_control 48
+        i_ udo__bind_midi_control 49
+        i_ udo__bind_midi_control 50
+        i_ udo__bind_midi_control 51
+        i_ udo__bind_midi_control 52
+        i_ udo__bind_midi_control 53
+        i_ udo__bind_midi_control 54
+        i_ udo__bind_midi_control 55
+        i_ udo__bind_midi_control 56
+        i_ udo__bind_midi_control 57
+        i_ udo__bind_midi_control 58
+        i_ udo__bind_midi_control 59
+        i_ udo__bind_midi_control 60
+        i_ udo__bind_midi_control 61
+        i_ udo__bind_midi_control 62
+        i_ udo__bind_midi_control 63
+        i_ udo__bind_midi_control 64
+        i_ udo__bind_midi_control 65
+        i_ udo__bind_midi_control 66
+        i_ udo__bind_midi_control 67
+        i_ udo__bind_midi_control 68
+        i_ udo__bind_midi_control 69
+        i_ udo__bind_midi_control 70
+        i_ udo__bind_midi_control 71
+        i_ udo__bind_midi_control 72
+        i_ udo__bind_midi_control 73
+        i_ udo__bind_midi_control 74
+        i_ udo__bind_midi_control 75
+        i_ udo__bind_midi_control 76
+        i_ udo__bind_midi_control 77
+        i_ udo__bind_midi_control 78
+        i_ udo__bind_midi_control 79
+        i_ udo__bind_midi_control 80
+        i_ udo__bind_midi_control 81
+        i_ udo__bind_midi_control 82
+        i_ udo__bind_midi_control 83
+        i_ udo__bind_midi_control 84
+        i_ udo__bind_midi_control 85
+        i_ udo__bind_midi_control 86
+        i_ udo__bind_midi_control 87
+        i_ udo__bind_midi_control 88
+        i_ udo__bind_midi_control 89
+        i_ udo__bind_midi_control 90
+        i_ udo__bind_midi_control 91
+        i_ udo__bind_midi_control 92
+        i_ udo__bind_midi_control 93
+        i_ udo__bind_midi_control 94
+        i_ udo__bind_midi_control 95
+        i_ udo__bind_midi_control 96
+        i_ udo__bind_midi_control 97
+        i_ udo__bind_midi_control 98
+        i_ udo__bind_midi_control 99
+        i_ udo__bind_midi_control 100
+        i_ udo__bind_midi_control 101
+        i_ udo__bind_midi_control 102
+        i_ udo__bind_midi_control 103
+        i_ udo__bind_midi_control 104
+        i_ udo__bind_midi_control 105
+        i_ udo__bind_midi_control 106
+        i_ udo__bind_midi_control 107
+        i_ udo__bind_midi_control 108
+        i_ udo__bind_midi_control 109
+        i_ udo__bind_midi_control 110
+        i_ udo__bind_midi_control 111
+        i_ udo__bind_midi_control 112
+        i_ udo__bind_midi_control 113
+        i_ udo__bind_midi_control 114
+        i_ udo__bind_midi_control 115
+        i_ udo__bind_midi_control 116
+        i_ udo__bind_midi_control 117
+        i_ udo__bind_midi_control 118
+        i_ udo__bind_midi_control 119
+        i_ udo__bind_midi_control 120
+        i_ udo__bind_midi_control 121
+        i_ udo__bind_midi_control 122
+        i_ udo__bind_midi_control 123
+        i_ udo__bind_midi_control 124
+        i_ udo__bind_midi_control 125
+        i_ udo__bind_midi_control 126
+        i_ udo__bind_midi_control 127
     endif
 /*
 	; M-Audio ProKeys
@@ -292,12 +341,9 @@ instr 1
 
 	; Akai MIDIMix
 	;---------------------------------------------------------------------------
-	;k_akai_midimix__knob_1a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 0, $128_OVER_127 * 48000
-	;k_akai_midimix__knob_1b udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 0, $128_OVER_127 * 48000
-	;k_akai_midimix__knob_1c udo__read_midi_controller $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c", -1, 1
-	k_akai_midimix__knob_1a = 0; chnget "akai_midimix__knob_1a"
-	k_akai_midimix__knob_2a = 0; chnget "akai_midimix__knob_2a"
-	k_akai_midimix__knob_3a = 0; chnget "akai_midimix__knob_3a"
+	k_akai_midimix__knob_1a chnget gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC]
+	k_akai_midimix__knob_1b chnget gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1B_CC]
+	k_akai_midimix__knob_1c chnget gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1C_CC]
 	k_akai_midimix__slider_1 udo__read_midi_controller $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1"
 	
 	k_akai_midimix__knob_2a udo__read_midi_controller $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a"
@@ -407,6 +453,74 @@ instr 1
 		i_ udo__write_k i_note_id, 7, k_volume, k_is_last_k_cycle, 2
 	endif
 */
+endin
+
+instr set_midi_read_defaults
+    chnset 1, "m_audio_prokeys__wheel_1__read_midi"
+    chnset 1, "m_audio_prokeys__wheel_2__read_midi"
+    chnset 1, "m_audio_prokeys__knob__read_midi"
+    
+    chnset 1, "akai_midimix__knob_1a__read_midi"
+    chnset 1, "akai_midimix__knob_1b__read_midi"
+    chnset 1, "akai_midimix__knob_1c__read_midi"
+    chnset 1, "akai_midimix__button_1a__read_midi"
+    chnset 1, "akai_midimix__button_1b__read_midi"
+    chnset 1, "akai_midimix__slider_1__read_midi"
+    
+    chnset 1, "akai_midimix__knob_2a__read_midi"
+    chnset 1, "akai_midimix__knob_2b__read_midi"
+    chnset 1, "akai_midimix__knob_2c__read_midi"
+    chnset 1, "akai_midimix__button_2a__read_midi"
+    chnset 1, "akai_midimix__button_2b__read_midi"
+    chnset 1, "akai_midimix__slider_2__read_midi"
+    
+    chnset 1, "akai_midimix__knob_3a__read_midi"
+    chnset 1, "akai_midimix__knob_3b__read_midi"
+    chnset 1, "akai_midimix__knob_3c__read_midi"
+    chnset 1, "akai_midimix__button_3a__read_midi"
+    chnset 1, "akai_midimix__button_3b__read_midi"
+    chnset 1, "akai_midimix__slider_3__read_midi"
+    
+    chnset 1, "akai_midimix__knob_4a__read_midi"
+    chnset 1, "akai_midimix__knob_4b__read_midi"
+    chnset 1, "akai_midimix__knob_4c__read_midi"
+    chnset 1, "akai_midimix__button_4a__read_midi"
+    chnset 1, "akai_midimix__button_4b__read_midi"
+    chnset 1, "akai_midimix__slider_4__read_midi"
+    
+    chnset 1, "akai_midimix__knob_5a__read_midi"
+    chnset 1, "akai_midimix__knob_5b__read_midi"
+    chnset 1, "akai_midimix__knob_5c__read_midi"
+    chnset 1, "akai_midimix__button_5a__read_midi"
+    chnset 1, "akai_midimix__button_5b__read_midi"
+    chnset 1, "akai_midimix__slider_5__read_midi"
+    
+    chnset 1, "akai_midimix__knob_6a__read_midi"
+    chnset 1, "akai_midimix__knob_6b__read_midi"
+    chnset 1, "akai_midimix__knob_6c__read_midi"
+    chnset 1, "akai_midimix__button_6a__read_midi"
+    chnset 1, "akai_midimix__button_6b__read_midi"
+    chnset 1, "akai_midimix__slider_6__read_midi"
+    
+    chnset 1, "akai_midimix__knob_7a__read_midi"
+    chnset 1, "akai_midimix__knob_7b__read_midi"
+    chnset 1, "akai_midimix__knob_7c__read_midi"
+    chnset 1, "akai_midimix__button_7a__read_midi"
+    chnset 1, "akai_midimix__button_7b__read_midi"
+    chnset 1, "akai_midimix__slider_7__read_midi"
+    
+    chnset 1, "akai_midimix__knob_8a__read_midi"
+    chnset 1, "akai_midimix__knob_8b__read_midi"
+    chnset 1, "akai_midimix__knob_8c__read_midi"
+    chnset 1, "akai_midimix__button_8a__read_midi"
+    chnset 1, "akai_midimix__button_8b__read_midi"
+    chnset 1, "akai_midimix__slider_8__read_midi"
+    
+    chnset 1, "akai_midimix__slider_9__read_midi"
+endin
+
+instr trace_midi_input
+    i_ udo__trace_midi
 endin
 
 </CsInstruments>
