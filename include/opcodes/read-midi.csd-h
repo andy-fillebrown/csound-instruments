@@ -1,26 +1,46 @@
 
-opcode udo__read_midi_controller, i, iS
-    i_controller_number, S_channel xin
+opcode udo__read_midi_controller, i, iSjjj
+    i_controller_number, S_channel, i_min_value, i_max_value, i_default_value xin
+    if (-1 == i_min_value && -1 == i_max_value) then
+        i_min_value = 0
+        i_max_value = 127
+        i_default_value = 0
+        i_value_range = 127
+    else
+        i_value_range = i_max_value - i_min_value
+    endif
+    initc7 1, i_controller_number, (i_default_value - i_min_value) / i_value_range
     S_channel__read_midi strcat S_channel, "__read_midi"
     i_read_midi chnget S_channel__read_midi
     if (1 == i_read_midi) then
-    	i_value_midi midictrl i_controller_number
+    	i_value_midi ctrl7 1, i_controller_number, 0, 1
+    	i_value_midi = i_min_value + (i_value_midi * i_value_range)
     	chnset i_value_midi, S_channel
     endif
-	i_value chnget S_channel
-    xout i_value
+    ;i_ init 0
+    xout i_value_midi
 endop
 
-opcode udo__read_midi_controller, k, iS
-    i_controller_number, S_channel xin
+opcode udo__read_midi_controller, k, iSjjj
+    i_controller_number, S_channel, i_min_value, i_max_value, i_default_value xin
+    if (-1 == i_min_value && -1 == i_max_value) then
+        i_min_value = 0
+        i_max_value = 127
+        i_default_value = 0
+        i_value_range = 127
+    else
+        i_value_range = i_max_value - i_min_value
+    endif
+    i_default_value = (i_default_value - i_min_value) / i_value_range
+    initc7 1, i_controller_number, i_default_value
     S_channel__read_midi strcat S_channel, "__read_midi"
     k_read_midi chnget S_channel__read_midi
     if (1 == k_read_midi) then
-    	k_value_midi midictrl i_controller_number
+    	k_value_midi ctrl7 1, i_controller_number, 0, 1
+    	k_value_midi = i_min_value + (k_value_midi * i_value_range)
     	chnset k_value_midi, S_channel
     endif
-	k_value chnget S_channel
-    xout k_value
+    xout k_value_midi
 endop
 
 opcode udo__read_midi_pitchbend, k, S
