@@ -167,22 +167,11 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 #include "../../../include/constants.csd-h"
 #include "../../../include/opcodes/midi-testing.csd-h"
 #include "../../../include/opcodes/read-midi.csd-h"
-#include "../../../include/opcodes/update-channels.csd-h"
 #include "../../../include/opcodes/variable-logging.csd-h"
 
 massign 0, 1
 
 gi_NoteId = -1
-
-gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_1A_CC] = "akai_midimix__knob_1a"
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][0] = 0
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][1] = 48000 * $128_OVER_127
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_1A_CC][2] = 0
-
-gS_MidiControlChannels[$AKAI_MIDIMIX__KNOB_2A_CC] = "akai_midimix__knob_2a"
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][0] = 0
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][1] = 127
-gi_MidiControlRanges[$AKAI_MIDIMIX__KNOB_2A_CC][2] = 0
 
 /*
  *******************************************************************************
@@ -194,134 +183,199 @@ instr 1
     gi_NoteId += 1
     
     if (0 == i_note_id) then
-        i_ udo__bind_midi_control 0
-        i_ udo__bind_midi_control 1
-        i_ udo__bind_midi_control 2
-        i_ udo__bind_midi_control 3
-        i_ udo__bind_midi_control 4
-        i_ udo__bind_midi_control 5
-        i_ udo__bind_midi_control 6
-        i_ udo__bind_midi_control 7
-        i_ udo__bind_midi_control 8
-        i_ udo__bind_midi_control 9
-        i_ udo__bind_midi_control 10
-        i_ udo__bind_midi_control 11
-        i_ udo__bind_midi_control 12
-        i_ udo__bind_midi_control 13
-        i_ udo__bind_midi_control 14
-        i_ udo__bind_midi_control 15
-        i_ udo__bind_midi_control 16
-        i_ udo__bind_midi_control 17
-        i_ udo__bind_midi_control 18
-        i_ udo__bind_midi_control 19
-        i_ udo__bind_midi_control 20
-        i_ udo__bind_midi_control 21
-        i_ udo__bind_midi_control 22
-        i_ udo__bind_midi_control 23
-        i_ udo__bind_midi_control 24
-        i_ udo__bind_midi_control 25
-        i_ udo__bind_midi_control 26
-        i_ udo__bind_midi_control 27
-        i_ udo__bind_midi_control 28
-        i_ udo__bind_midi_control 29
-        i_ udo__bind_midi_control 30
-        i_ udo__bind_midi_control 31
-        i_ udo__bind_midi_control 32
-        i_ udo__bind_midi_control 33
-        i_ udo__bind_midi_control 34
-        i_ udo__bind_midi_control 35
-        i_ udo__bind_midi_control 36
-        i_ udo__bind_midi_control 37
-        i_ udo__bind_midi_control 38
-        i_ udo__bind_midi_control 39
-        i_ udo__bind_midi_control 40
-        i_ udo__bind_midi_control 41
-        i_ udo__bind_midi_control 42
-        i_ udo__bind_midi_control 43
-        i_ udo__bind_midi_control 44
-        i_ udo__bind_midi_control 45
-        i_ udo__bind_midi_control 46
-        i_ udo__bind_midi_control 47
-        i_ udo__bind_midi_control 48
-        i_ udo__bind_midi_control 49
-        i_ udo__bind_midi_control 50
-        i_ udo__bind_midi_control 51
-        i_ udo__bind_midi_control 52
-        i_ udo__bind_midi_control 53
-        i_ udo__bind_midi_control 54
-        i_ udo__bind_midi_control 55
-        i_ udo__bind_midi_control 56
-        i_ udo__bind_midi_control 57
-        i_ udo__bind_midi_control 58
-        i_ udo__bind_midi_control 59
-        i_ udo__bind_midi_control 60
-        i_ udo__bind_midi_control 61
-        i_ udo__bind_midi_control 62
-        i_ udo__bind_midi_control 63
-        i_ udo__bind_midi_control 64
-        i_ udo__bind_midi_control 65
-        i_ udo__bind_midi_control 66
-        i_ udo__bind_midi_control 67
-        i_ udo__bind_midi_control 68
-        i_ udo__bind_midi_control 69
-        i_ udo__bind_midi_control 70
-        i_ udo__bind_midi_control 71
-        i_ udo__bind_midi_control 72
-        i_ udo__bind_midi_control 73
-        i_ udo__bind_midi_control 74
-        i_ udo__bind_midi_control 75
-        i_ udo__bind_midi_control 76
-        i_ udo__bind_midi_control 77
-        i_ udo__bind_midi_control 78
-        i_ udo__bind_midi_control 79
-        i_ udo__bind_midi_control 80
-        i_ udo__bind_midi_control 81
-        i_ udo__bind_midi_control 82
-        i_ udo__bind_midi_control 83
-        i_ udo__bind_midi_control 84
-        i_ udo__bind_midi_control 85
-        i_ udo__bind_midi_control 86
-        i_ udo__bind_midi_control 87
-        i_ udo__bind_midi_control 88
-        i_ udo__bind_midi_control 89
-        i_ udo__bind_midi_control 90
-        i_ udo__bind_midi_control 91
-        i_ udo__bind_midi_control 92
-        i_ udo__bind_midi_control 93
-        i_ udo__bind_midi_control 94
-        i_ udo__bind_midi_control 95
-        i_ udo__bind_midi_control 96
-        i_ udo__bind_midi_control 97
-        i_ udo__bind_midi_control 98
-        i_ udo__bind_midi_control 99
-        i_ udo__bind_midi_control 100
-        i_ udo__bind_midi_control 101
-        i_ udo__bind_midi_control 102
-        i_ udo__bind_midi_control 103
-        i_ udo__bind_midi_control 104
-        i_ udo__bind_midi_control 105
-        i_ udo__bind_midi_control 106
-        i_ udo__bind_midi_control 107
-        i_ udo__bind_midi_control 108
-        i_ udo__bind_midi_control 109
-        i_ udo__bind_midi_control 110
-        i_ udo__bind_midi_control 111
-        i_ udo__bind_midi_control 112
-        i_ udo__bind_midi_control 113
-        i_ udo__bind_midi_control 114
-        i_ udo__bind_midi_control 115
-        i_ udo__bind_midi_control 116
-        i_ udo__bind_midi_control 117
-        i_ udo__bind_midi_control 118
-        i_ udo__bind_midi_control 119
-        i_ udo__bind_midi_control 120
-        i_ udo__bind_midi_control 121
-        i_ udo__bind_midi_control 122
-        i_ udo__bind_midi_control 123
-        i_ udo__bind_midi_control 124
-        i_ udo__bind_midi_control 125
-        i_ udo__bind_midi_control 126
-        i_ udo__bind_midi_control 127
+        i_ udo__set_midi_control_default 0
+        i_ udo__set_midi_control_default 1
+        i_ udo__set_midi_control_default 2
+        i_ udo__set_midi_control_default 3
+        i_ udo__set_midi_control_default 4
+        i_ udo__set_midi_control_default 5
+        i_ udo__set_midi_control_default 6
+        i_ udo__set_midi_control_default 7
+        i_ udo__set_midi_control_default 8
+        i_ udo__set_midi_control_default 9
+        i_ udo__set_midi_control_default 10
+        i_ udo__set_midi_control_default 11
+        i_ udo__set_midi_control_default 12
+        i_ udo__set_midi_control_default 13
+        i_ udo__set_midi_control_default 14
+        i_ udo__set_midi_control_default 15
+        i_ udo__set_midi_control_default 16
+        i_ udo__set_midi_control_default 17
+        i_ udo__set_midi_control_default 18
+        i_ udo__set_midi_control_default 19
+        i_ udo__set_midi_control_default 20
+        i_ udo__set_midi_control_default 21
+        i_ udo__set_midi_control_default 22
+        i_ udo__set_midi_control_default 23
+        i_ udo__set_midi_control_default 24
+        i_ udo__set_midi_control_default 25
+        i_ udo__set_midi_control_default 26
+        i_ udo__set_midi_control_default 27
+        i_ udo__set_midi_control_default 28
+        i_ udo__set_midi_control_default 29
+        i_ udo__set_midi_control_default 30
+        i_ udo__set_midi_control_default 31
+        i_ udo__set_midi_control_default 32
+        i_ udo__set_midi_control_default 33
+        i_ udo__set_midi_control_default 34
+        i_ udo__set_midi_control_default 35
+        i_ udo__set_midi_control_default 36
+        i_ udo__set_midi_control_default 37
+        i_ udo__set_midi_control_default 38
+        i_ udo__set_midi_control_default 39
+        i_ udo__set_midi_control_default 40
+        i_ udo__set_midi_control_default 41
+        i_ udo__set_midi_control_default 42
+        i_ udo__set_midi_control_default 43
+        i_ udo__set_midi_control_default 44
+        i_ udo__set_midi_control_default 45
+        i_ udo__set_midi_control_default 46
+        i_ udo__set_midi_control_default 47
+        i_ udo__set_midi_control_default 48
+        i_ udo__set_midi_control_default 49
+        i_ udo__set_midi_control_default 50
+        i_ udo__set_midi_control_default 51
+        i_ udo__set_midi_control_default 52
+        i_ udo__set_midi_control_default 53
+        i_ udo__set_midi_control_default 54
+        i_ udo__set_midi_control_default 55
+        i_ udo__set_midi_control_default 56
+        i_ udo__set_midi_control_default 57
+        i_ udo__set_midi_control_default 58
+        i_ udo__set_midi_control_default 59
+        i_ udo__set_midi_control_default 60
+        i_ udo__set_midi_control_default 61
+        i_ udo__set_midi_control_default 62
+        i_ udo__set_midi_control_default 63
+        i_ udo__set_midi_control_default 64
+        i_ udo__set_midi_control_default 65
+        i_ udo__set_midi_control_default 66
+        i_ udo__set_midi_control_default 67
+        i_ udo__set_midi_control_default 68
+        i_ udo__set_midi_control_default 69
+        i_ udo__set_midi_control_default 70
+        i_ udo__set_midi_control_default 71
+        i_ udo__set_midi_control_default 72
+        i_ udo__set_midi_control_default 73
+        i_ udo__set_midi_control_default 74
+        i_ udo__set_midi_control_default 75
+        i_ udo__set_midi_control_default 76
+        i_ udo__set_midi_control_default 77
+        i_ udo__set_midi_control_default 78
+        i_ udo__set_midi_control_default 79
+        i_ udo__set_midi_control_default 80
+        i_ udo__set_midi_control_default 81
+        i_ udo__set_midi_control_default 82
+        i_ udo__set_midi_control_default 83
+        i_ udo__set_midi_control_default 84
+        i_ udo__set_midi_control_default 85
+        i_ udo__set_midi_control_default 86
+        i_ udo__set_midi_control_default 87
+        i_ udo__set_midi_control_default 88
+        i_ udo__set_midi_control_default 89
+        i_ udo__set_midi_control_default 90
+        i_ udo__set_midi_control_default 91
+        i_ udo__set_midi_control_default 92
+        i_ udo__set_midi_control_default 93
+        i_ udo__set_midi_control_default 94
+        i_ udo__set_midi_control_default 95
+        i_ udo__set_midi_control_default 96
+        i_ udo__set_midi_control_default 97
+        i_ udo__set_midi_control_default 98
+        i_ udo__set_midi_control_default 99
+        i_ udo__set_midi_control_default 100
+        i_ udo__set_midi_control_default 101
+        i_ udo__set_midi_control_default 102
+        i_ udo__set_midi_control_default 103
+        i_ udo__set_midi_control_default 104
+        i_ udo__set_midi_control_default 105
+        i_ udo__set_midi_control_default 106
+        i_ udo__set_midi_control_default 107
+        i_ udo__set_midi_control_default 108
+        i_ udo__set_midi_control_default 109
+        i_ udo__set_midi_control_default 110
+        i_ udo__set_midi_control_default 111
+        i_ udo__set_midi_control_default 112
+        i_ udo__set_midi_control_default 113
+        i_ udo__set_midi_control_default 114
+        i_ udo__set_midi_control_default 115
+        i_ udo__set_midi_control_default 116
+        i_ udo__set_midi_control_default 117
+        i_ udo__set_midi_control_default 118
+        i_ udo__set_midi_control_default 119
+        i_ udo__set_midi_control_default 120
+        i_ udo__set_midi_control_default 121
+        i_ udo__set_midi_control_default 122
+        i_ udo__set_midi_control_default 123
+        i_ udo__set_midi_control_default 124
+        i_ udo__set_midi_control_default 125
+        i_ udo__set_midi_control_default 126
+        i_ udo__set_midi_control_default 127
+
+        i_ udo__add_midi_pitchbend "m_audio_prokeys__wheel_1"
+        i_ udo__add_midi_control 1, "m_audio_prokeys__wheel_2"
+        i_ udo__add_midi_control 7, "m_audio_prokeys__knob"
+        
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 0, 0, 48000 * $128_OVER_127, 0
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 0, 0, 48000 * $128_OVER_127, 48000
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c", 0, -1, 1, 0
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_1A_CC, "akai_midimix__button_1a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_1B_CC, "akai_midimix__button_1b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a", 0, 0, 9600 * $128_OVER_127, 4800
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b", 0, 0, 48000 * $128_OVER_127, 24000
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2C_CC, "akai_midimix__knob_2c", 0, -1, 1, 0
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_2A_CC, "akai_midimix__button_2a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_2B_CC, "akai_midimix__button_2b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_2_CC, "akai_midimix__slider_2", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3A_CC, "akai_midimix__knob_3a"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3B_CC, "akai_midimix__knob_3b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3C_CC, "akai_midimix__knob_3c"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_3A_CC, "akai_midimix__button_3a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_3B_CC, "akai_midimix__button_3b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_3_CC, "akai_midimix__slider_3", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4A_CC, "akai_midimix__knob_4a"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4B_CC, "akai_midimix__knob_4b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4C_CC, "akai_midimix__knob_4c"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_4A_CC, "akai_midimix__button_4a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_4B_CC, "akai_midimix__button_4b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_4_CC, "akai_midimix__slider_4", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5A_CC, "akai_midimix__knob_5a"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5B_CC, "akai_midimix__knob_5b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5C_CC, "akai_midimix__knob_5c"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_5A_CC, "akai_midimix__button_5a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_5B_CC, "akai_midimix__button_5b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_5_CC, "akai_midimix__slider_5", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6A_CC, "akai_midimix__knob_6a"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6B_CC, "akai_midimix__knob_6b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6C_CC, "akai_midimix__knob_6c"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_6A_CC, "akai_midimix__button_6a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_6B_CC, "akai_midimix__button_6b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_6_CC, "akai_midimix__slider_6", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_7A_CC, "akai_midimix__knob_7a"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_7B_CC, "akai_midimix__knob_7b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_7C_CC, "akai_midimix__knob_7c"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_7A_CC, "akai_midimix__button_7a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_7B_CC, "akai_midimix__button_7b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_7_CC, "akai_midimix__slider_7", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8A_CC, "akai_midimix__knob_8a"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8B_CC, "akai_midimix__knob_8b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8C_CC, "akai_midimix__knob_8c"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_8A_CC, "akai_midimix__button_8a", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_8B_CC, "akai_midimix__button_8b", 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_8_CC, "akai_midimix__slider_8", 0, 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9", 0, 0, 127, 0
+
+        i_ udo__update_midi_switches
+
     endif
 /*
 	; M-Audio ProKeys

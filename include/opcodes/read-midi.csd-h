@@ -1,22 +1,27 @@
 
+gS_MidiPitchBendChannel init ""
 gS_MidiControlChannels[] init 128
 gi_MidiControlRanges[][] init 128, 3
+gi_MidiControlSwitches[] init 128
 
-i_controller = 0
-until 127 < i_controller do
-    gS_MidiControlChannels[i_controller] = ""
-    i_controller += 1
-od
+opcode udo__set_midi_control_default, i, i
+    i_control xin
+    gS_MidiControlChannels[i_control] = ""
+    gi_MidiControlRanges[i_control][0] = 0
+    gi_MidiControlRanges[i_control][1] = 127
+    gi_MidiControlRanges[i_control][2] = 0
+    gi_MidiControlSwitches[i_control] = 0
+    i_ = 0
+    xout i_
+endop
 
-opcode udo__read_midi_control, k, iSjjj
-    i_control, S_channel, i_min_value, i_max_value, i_default_value xin
-    if (-1 == i_min_value && -1 == i_max_value) then
-        i_min_value = 0
-        i_max_value = 127
-        i_default_value = 0
-    endif
+opcode udo__read_midi_control, k, i
+    i_control xin
+    S_channel = gS_MidiControlChannels[i_control]
+    i_min_value = gi_MidiControlRanges[i_control][0]
+    i_max_value = gi_MidiControlRanges[i_control][1]
     i_value_range = i_max_value - i_min_value
-    i_default_value = 127 * (i_default_value - i_min_value) / i_value_range
+    i_default_value = 127 * (gi_MidiControlRanges[i_control][2] - i_min_value) / i_value_range
     ctrlinit 1, i_control, i_default_value
     S_channel__read_midi strcat S_channel, "__read_midi"
     k_read_midi chnget S_channel__read_midi
@@ -33,51 +38,222 @@ opcode udo__bind_midi_control, i, i
     S_channel = gS_MidiControlChannels[i_control]
     i_channel_name_length strlen S_channel
     if (0 < i_channel_name_length) then
-        printf_i "binding midi control %d to %s\n", 1, i_control, S_channel
-        k_ udo__read_midi_control i_control, \
-            S_channel, \
-            gi_MidiControlRanges[i_control][0], \
-            gi_MidiControlRanges[i_control][1], \
-            gi_MidiControlRanges[i_control][2]
+        printf_i "midi control %d using channel %s\n", 1, i_control, S_channel
+        k_ udo__read_midi_control i_control
     endif
     i_ = 0
     xout i_
 endop
 
-opcode udo__read_midi_pitchbend, k, S
-    S_channel xin
+opcode udo__add_midi_control, i, iSjjjj
+    i_control, S_channel, i_is_switch, i_min_value, i_max_value, i_default_value xin
+    gS_MidiControlChannels[i_control] = S_channel
+    if (-1 != i_is_switch) then
+        gi_MidiControlSwitches[i_control] = i_is_switch
+    endif
+    if (-1 != i_min_value || -1 != i_max_value) then
+        gi_MidiControlRanges[i_control][0] = i_min_value
+        gi_MidiControlRanges[i_control][1] = i_max_value
+        gi_MidiControlRanges[i_control][2] = i_default_value
+    endif
+    if (1 != i_is_switch) then
+        i_ udo__bind_midi_control i_control
+    endif
+    i_ = 0
+    xout i_
+endop
+
+opcode udo__set_channel_to_midi_value, i, Sk
+    S_channel, k_value xin
     S_channel__read_midi strcat S_channel, "__read_midi"
     k_read_midi chnget S_channel__read_midi
     if (1 == k_read_midi) then
-        k_value_midi init 8191
-		READ_MIDI_PITCHBEND:
-		k_midi_in_status, k_, k_data1, k_data2 midiin
-		if (0 != k_midi_in_status) then
-			if (224 == k_midi_in_status) then
-				k_value_midi = (128 * k_data1) + k_data2
-			else
-				kgoto READ_MIDI_PITCHBEND
-			endif
-		endif
-		chnset k_value_midi, S_channel
-    endif
-    k_value chnget S_channel
-    xout k_value
-endop
-
-opcode udo__toggle_channel_to_midi_switch, i, kS
-    k_value, S_channel xin
-    S_channel__read_midi strcat S_channel, "__read_midi"
-    k_read_midi chnget S_channel__read_midi
-    if (1 == k_read_midi && 127 == k_value) then
-        k_toggle chnget S_channel
-        if (0 == k_toggle) then
-            k_toggle = 1
-        else
-            k_toggle = 0
-        endif
-    	chnset k_toggle, S_channel
+    	chnset k_value, S_channel
     endif
 	i_ = 0
+	xout i_
+endop
+
+opcode udo__read_midi_pitchbend, i, o
+    i_midi_pitchbend_channel_length strlen gS_MidiPitchBendChannel
+    if (0 < i_midi_pitchbend_channel_length) then
+        READ_MIDI:
+    	k_status, k_channel, k_byte_1, k_byte_2 midiin
+    	if (0 != k_status) then
+    		if (224 == k_status) then
+    			 i_ udo__set_channel_to_midi_value gS_MidiPitchBendChannel, (128 * k_byte_1) + k_byte_2
+    		endif
+    		kgoto READ_MIDI		
+    	endif
+    endif
+	i_ = 0
+	xout i_
+endop
+
+opcode udo__add_midi_pitchbend, i, S
+    gS_MidiPitchBendChannel xin
+    i_ udo__read_midi_pitchbend
+    xout i_
+endop
+
+opcode udo__toggle_channel_to_midi_switch, i, ikk
+    i_control, k_control, k_value xin
+    if (1 == gi_MidiControlSwitches[i_control]) then
+        if (i_control == k_control) then
+            S_channel = gS_MidiControlChannels[i_control]
+            S_channel__read_midi strcat S_channel, "__read_midi"
+            k_read_midi chnget S_channel__read_midi
+            if (1 == k_read_midi && 127 == k_value) then
+                k_toggle chnget S_channel
+                if (0 == k_toggle) then
+                    k_toggle = 1
+                else
+                    k_toggle = 0
+                endif
+            	chnset k_toggle, S_channel
+            endif
+        endif
+    endif
+	i_ = 0
+	xout i_
+endop
+
+opcode udo__update_midi_switches, i, o
+    READ_MIDI:
+	k_status, k_channel, k_byte_1, k_byte_2 midiin
+	if (0 != k_status) then
+		if (176 == k_status) then
+            i_ udo__toggle_channel_to_midi_switch 0, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 1, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 2, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 3, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 4, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 5, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 6, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 7, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 8, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 9, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 10, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 11, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 12, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 13, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 14, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 15, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 16, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 17, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 18, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 19, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 20, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 21, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 22, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 23, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 24, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 25, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 26, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 27, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 28, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 29, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 30, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 31, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 32, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 33, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 34, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 35, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 36, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 37, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 38, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 39, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 40, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 41, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 42, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 43, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 44, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 45, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 46, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 47, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 48, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 49, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 50, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 51, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 52, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 53, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 54, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 55, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 56, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 57, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 58, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 59, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 60, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 61, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 62, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 63, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 64, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 65, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 66, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 67, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 68, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 69, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 70, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 71, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 72, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 73, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 74, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 75, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 76, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 77, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 78, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 79, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 80, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 81, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 82, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 83, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 84, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 85, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 86, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 87, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 88, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 89, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 90, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 91, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 92, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 93, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 94, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 95, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 96, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 97, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 98, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 99, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 100, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 101, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 102, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 103, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 104, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 105, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 106, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 107, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 108, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 109, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 110, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 111, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 112, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 113, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 114, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 115, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 116, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 117, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 118, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 119, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 120, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 121, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 122, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 123, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 124, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 125, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 126, k_byte_1, k_byte_2
+            i_ udo__toggle_channel_to_midi_switch 127, k_byte_1, k_byte_2
+		endif
+		kgoto READ_MIDI		
+	endif
+	i_ init 0
 	xout i_
 endop
