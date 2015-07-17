@@ -60,20 +60,28 @@ opcode udo__bind_midi_control, i, i
     xout i_
 endop
 
-opcode udo__add_midi_control, i, iSjjjj
-    i_control, S_channel, i_is_switch, i_min_value, i_max_value, i_default_value xin
+opcode udo__add_midi_control, i, iSjjj
+    i_control, S_channel, i_min_value, i_max_value, i_default_value xin
     gS_MidiControlChannels[i_control] = S_channel
-    if (-1 != i_is_switch) then
-        gi_MidiControlSwitches[i_control] = i_is_switch
-    endif
     if (-1 != i_min_value || -1 != i_max_value) then
         gi_MidiControlRanges[i_control][0] = i_min_value
         gi_MidiControlRanges[i_control][1] = i_max_value
         gi_MidiControlRanges[i_control][2] = i_default_value
     endif
-    if (1 != i_is_switch) then
-        i_ udo__bind_midi_control i_control
+    i_ udo__bind_midi_control i_control
+    i_ = 0
+    xout i_
+endop
+
+opcode udo__add_midi_switch, i, iSj
+    i_control, S_channel, i_default_value xin
+    if (-1 == i_default_value) then
+        i_default_value = 0
     endif
+    gS_MidiControlChannels[i_control] = S_channel
+    gi_MidiControlSwitches[i_control] = $IS_SWITCH
+    printf_i "midi switch %d using channel %s\n", 1, i_control, S_channel
+    chnset i_default_value, S_channel
     i_ = 0
     xout i_
 endop

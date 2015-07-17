@@ -142,7 +142,7 @@ groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 1") {
     keyboard bounds(.08, .3, .54725, .6), value(36)
     vslider bounds(.002, .125, .1, .78), channel("m_audio_prokeys__wheel_1"), range(0, 16383, 8191, 1, 1)
     vslider bounds(.03175, .125, .1, .78), channel("m_audio_prokeys__wheel_2"), range(0, 127, 0, 1, 1)
-    rslider bounds(.215, 0, .25, .25), channel("m_audio_prokeys__knob"), range(0, 127, 0, 1, 1)
+    rslider bounds(.215, 0, .25, .25), channel("m_audio_prokeys__knob"), range(0, 127, 127, 1, 1)
 	checkbox bounds(.020909091, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_1__read_midi"), shape("circle")
 	checkbox bounds(.05, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_2__read_midi"), shape("circle")
 	checkbox bounds(.223636364, .186666667, .014545455, .106666667), channel("m_audio_prokeys__knob__read_midi"), shape("circle")
@@ -181,7 +181,7 @@ gi_NoteId = -1
 instr 1
     i_note_id = gi_NoteId
     gi_NoteId += 1
-    
+
     ; Always on.
 	;---------------------------------------------------------------------------
     if (0 == i_note_id) then
@@ -189,68 +189,68 @@ instr 1
 
         i_ udo__add_midi_pitchbend "m_audio_prokeys__wheel_1"
         i_ udo__add_midi_control 1, "m_audio_prokeys__wheel_2"
-        i_ udo__add_midi_control 7, "m_audio_prokeys__knob"
-        
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", $IS_RANGE, 0, $SCALED_TO_128(48000), 0
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", $IS_RANGE, 0, $SCALED_TO_128(48000), 48000
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c", $IS_RANGE, -1, 1, 0
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_1A_CC, "akai_midimix__button_1a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_1B_CC, "akai_midimix__button_1b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_control 7, "m_audio_prokeys__knob", 0, 127, 127
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a", $IS_RANGE, 0, $SCALED_TO_128(9600), 4800
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b", $IS_RANGE, 0, $SCALED_TO_128(48000), 24000
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2C_CC, "akai_midimix__knob_2c", $IS_RANGE, -1, 1, 0
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_2A_CC, "akai_midimix__button_2a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_2B_CC, "akai_midimix__button_2b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_2_CC, "akai_midimix__slider_2", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 0, $SCALED_TO_128(48000), 0
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 0, $SCALED_TO_128(48000), 48000
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c", -1, 1, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1A_CC, "akai_midimix__button_1a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1B_CC, "akai_midimix__button_1b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1", 0, 127, 0
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3A_CC, "akai_midimix__knob_3a", $IS_RANGE, .01, 10, 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a", 0, $SCALED_TO_128(9600), 4800
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b", 0, $SCALED_TO_128(48000), 24000
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2C_CC, "akai_midimix__knob_2c", -1, 1, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_2A_CC, "akai_midimix__button_2a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_2B_CC, "akai_midimix__button_2b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_2_CC, "akai_midimix__slider_2", 0, 127, 0
+
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3A_CC, "akai_midimix__knob_3a", .01, 10, 1
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3B_CC, "akai_midimix__knob_3b"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3C_CC, "akai_midimix__knob_3c"
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_3A_CC, "akai_midimix__button_3a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_3B_CC, "akai_midimix__button_3b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_3_CC, "akai_midimix__slider_3", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_3A_CC, "akai_midimix__button_3a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_3B_CC, "akai_midimix__button_3b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_3_CC, "akai_midimix__slider_3", 0, 127, 0
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4A_CC, "akai_midimix__knob_4a", $IS_RANGE, .01, 10, 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4A_CC, "akai_midimix__knob_4a", .01, 10, 1
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4B_CC, "akai_midimix__knob_4b"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4C_CC, "akai_midimix__knob_4c"
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_4A_CC, "akai_midimix__button_4a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_4B_CC, "akai_midimix__button_4b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_4_CC, "akai_midimix__slider_4", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_4A_CC, "akai_midimix__button_4a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_4B_CC, "akai_midimix__button_4b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_4_CC, "akai_midimix__slider_4", 0, 127, 0
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5A_CC, "akai_midimix__knob_5a", $IS_RANGE, 0, 1, .5
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5A_CC, "akai_midimix__knob_5a", 0, 1, .5
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5B_CC, "akai_midimix__knob_5b"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5C_CC, "akai_midimix__knob_5c"
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_5A_CC, "akai_midimix__button_5a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_5B_CC, "akai_midimix__button_5b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_5_CC, "akai_midimix__slider_5", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_5A_CC, "akai_midimix__button_5a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_5B_CC, "akai_midimix__button_5b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_5_CC, "akai_midimix__slider_5", 0, 127, 0
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6A_CC, "akai_midimix__knob_6a", $IS_RANGE, .01, 10, 1
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6A_CC, "akai_midimix__knob_6a", .01, 10, 1
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6B_CC, "akai_midimix__knob_6b"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_6C_CC, "akai_midimix__knob_6c"
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_6A_CC, "akai_midimix__button_6a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_6B_CC, "akai_midimix__button_6b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_6_CC, "akai_midimix__slider_6", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_6A_CC, "akai_midimix__button_6a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_6B_CC, "akai_midimix__button_6b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_6_CC, "akai_midimix__slider_6", 0, 127, 0
 
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_7A_CC, "akai_midimix__knob_7a"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_7B_CC, "akai_midimix__knob_7b"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_7C_CC, "akai_midimix__knob_7c"
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_7A_CC, "akai_midimix__button_7a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_7B_CC, "akai_midimix__button_7b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_7_CC, "akai_midimix__slider_7", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_7A_CC, "akai_midimix__button_7a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_7B_CC, "akai_midimix__button_7b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_7_CC, "akai_midimix__slider_7", 0, 127, 0
 
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8A_CC, "akai_midimix__knob_8a"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8B_CC, "akai_midimix__knob_8b"
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8C_CC, "akai_midimix__knob_8c"
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_8A_CC, "akai_midimix__button_8a", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__BUTTON_8B_CC, "akai_midimix__button_8b", $IS_SWITCH
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_8_CC, "akai_midimix__slider_8", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_8A_CC, "akai_midimix__button_8a"
+        i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_8B_CC, "akai_midimix__button_8b"
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_8_CC, "akai_midimix__slider_8", 0, 127, 0
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9", $IS_RANGE, 0, 127, 0
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9", 0, 127, 0
 
         i_ udo__update_midi_switches
-        
+
         goto ENDIN
     endif
 
@@ -275,7 +275,7 @@ instr 1
 	;---------------------------------------------------------------------------
 	k_volume init 0
 	k_volume port gk_MidiControlValues[7] / 127, .05
-	
+
 	; k_volume_envelope  [range: 0,1]
 	;---------------------------------------------------------------------------
 	i_volume_envelope_attack_time = i(gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_3A_CC])
@@ -288,12 +288,12 @@ instr 1
 	;---------------------------------------------------------------------------
     k_hipass_hz init 0
     k_hipass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], .05
-	
+
 	; k_lopass_hz  [range: 0,48000]
 	;---------------------------------------------------------------------------
     k_lopass_hz init 0
     k_lopass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2A_CC], .05
-	
+
 ;===============================================================================
 
 	; Audio Output
