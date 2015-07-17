@@ -4,6 +4,9 @@ gS_MidiControlChannels[] init 128
 gi_MidiControlRanges[][] init 128, 3
 gi_MidiControlSwitches[] init 128
 
+gk_MidiPitchBend init 8191
+gk_MidiControlValues[] init 128
+
 opcode udo__set_midi_control_default, i, i
     i_control xin
     gS_MidiControlChannels[i_control] = ""
@@ -11,6 +14,16 @@ opcode udo__set_midi_control_default, i, i
     gi_MidiControlRanges[i_control][1] = 127
     gi_MidiControlRanges[i_control][2] = 0
     gi_MidiControlSwitches[i_control] = 0
+    i_ = 0
+    xout i_
+endop
+
+opcode udo__set_midi_control_defaults, i, o
+    i_control = 0
+    until 127 < i_control do
+        i_ udo__set_midi_control_default i_control
+        i_control += 1
+    od
     i_ = 0
     xout i_
 endop
@@ -30,7 +43,9 @@ opcode udo__read_midi_control, k, i
     	k_value_midi = i_min_value + (k_value_midi * i_value_range)
     	chnset k_value_midi, S_channel
     endif
-    xout k_value_midi
+    gk_MidiControlValues[i_control] chnget S_channel
+    k_ init 0
+    xout k_
 endop
 
 opcode udo__bind_midi_control, i, i
@@ -77,6 +92,7 @@ endop
 opcode udo__read_midi_pitchbend, i, o
     i_midi_pitchbend_channel_length strlen gS_MidiPitchBendChannel
     if (0 < i_midi_pitchbend_channel_length) then
+        printf_i "midi pitch bend using channel %s\n", 1, gS_MidiPitchBendChannel
         READ_MIDI:
     	k_status, k_channel, k_byte_1, k_byte_2 midiin
     	if (0 != k_status) then
@@ -85,6 +101,7 @@ opcode udo__read_midi_pitchbend, i, o
     		endif
     		kgoto READ_MIDI		
     	endif
+    	gk_MidiPitchBend chnget gS_MidiPitchBendChannel
     endif
 	i_ = 0
 	xout i_

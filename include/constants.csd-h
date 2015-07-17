@@ -1,2 +1,5 @@
 
-#define 128_OVER_127 # 1.007874015748031 #
+#define SCALED_TO_128(value) # 1.007874015748031 * $value #
+
+#define IS_RANGE  # 0 #
+#define IS_SWITCH # 1 #
