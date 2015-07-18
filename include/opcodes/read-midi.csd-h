@@ -103,11 +103,11 @@ opcode udo__read_midi_pitchbend, i, o
         printf_i "midi pitch bend using channel %s\n", 1, gS_MidiPitchBendChannel
         READ_MIDI:
     	k_status, k_channel, k_byte_1, k_byte_2 midiin
-    	if (0 != k_status) then
-    		if (224 == k_status) then
-    			 i_ udo__set_channel_to_midi_value gS_MidiPitchBendChannel, (128 * k_byte_1) + k_byte_2
-    		endif
-    		kgoto READ_MIDI		
+		if (224 == k_status) then
+			 i_ udo__set_channel_to_midi_value gS_MidiPitchBendChannel, (128 * k_byte_1) + k_byte_2
+    		kgoto READ_MIDI
+        elseif (0 != k_status) then
+            kgoto READ_MIDI
     	endif
     	gk_MidiPitchBend chnget gS_MidiPitchBendChannel
     endif
@@ -275,6 +275,7 @@ opcode udo__update_midi_switches, i, o
         i_ udo__toggle_channel_to_midi_switch 125, k_byte_1, k_byte_2
         i_ udo__toggle_channel_to_midi_switch 126, k_byte_1, k_byte_2
         i_ udo__toggle_channel_to_midi_switch 127, k_byte_1, k_byte_2
+        kgoto READ_MIDI
 	elseif (0 != k_status) then
 		kgoto READ_MIDI		
 	endif
