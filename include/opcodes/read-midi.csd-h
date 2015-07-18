@@ -275,6 +275,7 @@ opcode udo__update_midi_switches, i, o
         i_ udo__toggle_channel_to_midi_switch 125, k_byte_1, k_byte_2
         i_ udo__toggle_channel_to_midi_switch 126, k_byte_1, k_byte_2
         i_ udo__toggle_channel_to_midi_switch 127, k_byte_1, k_byte_2
+        kgoto READ_MIDI
 	elseif (0 != k_status) then
 		kgoto READ_MIDI		
 	endif
