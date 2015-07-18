@@ -1,0 +1,4 @@
+
+#define SCALED_TO_128(value) # 1.007874015748031 * $value #
+
+#define IS_SWITCH # 1 #
