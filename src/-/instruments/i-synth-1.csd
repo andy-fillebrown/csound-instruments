@@ -24,7 +24,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 
 	; Column 3
 	rslider bounds(.284545455, .115294118, .072727273, .094117647), channel("akai_midimix__knob_3a"), range(.01, 10, 1, 1, .01) ; A
-	rslider bounds(.284545455, .261176471, .072727273, .094117647), channel("akai_midimix__knob_3b"), range(-10.0, 10, 0, 1, .2) ; Osc.1:Hz
+	rslider bounds(.284545455, .261176471, .072727273, .094117647), channel("akai_midimix__knob_3b"), range(-1, 1, 0, 1, .02) ; Osc.1:Hz
 	rslider bounds(.284545455, .408235294, .072727273, .094117647), channel("akai_midimix__knob_3c"), range(0, 1, 1, 1, .01) ; Osc.1:dB
 	checkbox bounds(.3, .577647059, .043636364, .030588235), channel("akai_midimix__button_3a"), value(1) ; Osc.1:On/Off
 	checkbox bounds(.3, .648235294, .043636364, .030588235), channel("akai_midimix__button_3b") ; Osc.1:2x
@@ -32,7 +32,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	
 	; Column 4
 	rslider bounds(.373636364, .115294118, .072727273, .094117647), channel("akai_midimix__knob_4a"), range(.01, 10, 1, 1, .01) ; D
-	rslider bounds(.373636364, .261176471, .072727273, .094117647), channel("akai_midimix__knob_4b"), range(-10.0, 10, 0, 1, .2) ; Osc.2:Hz
+	rslider bounds(.373636364, .261176471, .072727273, .094117647), channel("akai_midimix__knob_4b"), range(-1, 1, 0, 1, .02) ; Osc.2:Hz
 	rslider bounds(.373636364, .408235294, .072727273, .094117647), channel("akai_midimix__knob_4c"), range(0, 1, 1, 1, .01) ; Osc.2:dB
 	checkbox bounds(.389090909, .577647059, .043636364, .030588235), channel("akai_midimix__button_4a") ; Osc.2:On/Off
 	checkbox bounds(.389090909, .648235294, .043636364, .030588235), channel("akai_midimix__button_4b") ; Osc.2:2x
@@ -40,7 +40,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	
 	; Column 5
 	rslider bounds(.462727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_5a"), range(0, 1, .5, 1, .01) ; S
-	rslider bounds(.462727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_5b"), range(-10.0, 10, 0, 1, .2) ; Osc.3:Hz
+	rslider bounds(.462727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_5b"), range(-1, 1, 0, 1, .02) ; Osc.3:Hz
 	rslider bounds(.462727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_5c"), range(0, 1, 1, 1, .01) ; Osc.3:dB
 	checkbox bounds(.478181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_5a") ; Osc.3:On/Off
 	checkbox bounds(.478181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_5b") ; Osc.3:2x
@@ -74,14 +74,14 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	vslider bounds(.820909091, .690588235, .074545455, .247058824), channel("akai_midimix__slider_9"), range(0, 1, 0, 1, .01) ; Reverb:dB
 	
 	; Oscillator Combo-boxes
-	combobox bounds(.84, .270588235, .11, .017647059), channel("akai_midimix__osc_1_combobox"), items("sine", "triangle", "square", "saw", "pulse"), colour("white"), fontcolour(127, 127, 0) ; Osc.1:Shape
-	combobox bounds(.84, .288235294, .11, .017647059), channel("akai_midimix__osc_2_combobox"), items("sine", "triangle", "square", "saw", "pulse"), colour("white"), fontcolour(127, 127, 0) ; Osc.2:Shape
-	combobox bounds(.84, .305882353, .11, .017647059), channel("akai_midimix__osc_3_combobox"), items("sine", "triangle", "square", "saw", "pulse"), colour("white"), fontcolour(127, 127, 0) ; Osc.3:Shape
+	combobox bounds(.84, .270588235, .11, .017647059), channel("akai_midimix__osc_1_shape"), items("sine", "triangle", "square", "saw", "pulse"), colour("white"), fontcolour(127, 127, 0) ; Osc.1:Shape
+	combobox bounds(.84, .288235294, .11, .017647059), channel("akai_midimix__osc_2_shape"), items("sine", "triangle", "square", "saw", "pulse"), colour("white"), fontcolour(127, 127, 0) ; Osc.2:Shape
+	combobox bounds(.84, .305882353, .11, .017647059), channel("akai_midimix__osc_3_shape"), items("sine", "triangle", "square", "saw", "pulse"), colour("white"), fontcolour(127, 127, 0) ; Osc.3:Shape
 
 	; LFO Combo-boxes
-	combobox bounds(.84, .418823529, .11, .017647059), channel("akai_midimix__lfo_1_combobox"), items("sine", "triangle", "square [bipolar]", "square [unipolar]", "saw", "saw [down]"), colour("white"), fontcolour(127, 63, 63) ; LFO.1:Shape
-	combobox bounds(.84, .436470588, .11, .017647059), channel("akai_midimix__lfo_2_combobox"), items("sine", "triangle", "square [bipolar]", "square [unipolar]", "saw", "saw [down]"), colour("white"), fontcolour(127, 63, 63) ; LFO.2:Shape
-	combobox bounds(.84, .454117647, .11, .017647059), channel("akai_midimix__lfo_3_combobox"), items("sine", "triangle", "square [bipolar]", "square [unipolar]", "saw", "saw [down]"), colour("white"), fontcolour(127, 63, 63) ; LFO.3:Shape
+	combobox bounds(.84, .418823529, .11, .017647059), channel("akai_midimix__lfo_1_shape"), items("sine", "triangle", "square [bipolar]", "square [unipolar]", "saw", "saw [down]"), colour("white"), fontcolour(127, 63, 63) ; LFO.1:Shape
+	combobox bounds(.84, .436470588, .11, .017647059), channel("akai_midimix__lfo_2_shape"), items("sine", "triangle", "square [bipolar]", "square [unipolar]", "saw", "saw [down]"), colour("white"), fontcolour(127, 63, 63) ; LFO.2:Shape
+	combobox bounds(.84, .454117647, .11, .017647059), channel("akai_midimix__lfo_3_shape"), items("sine", "triangle", "square [bipolar]", "square [unipolar]", "saw", "saw [down]"), colour("white"), fontcolour(127, 63, 63) ; LFO.3:Shape
 	
 	checkbox bounds(.132727273, .198823529, .014545455, .018823529), channel("akai_midimix__knob_1a__read_midi"), shape("circle")
 	checkbox bounds(.132727273, .344705882, .014545455, .018823529), channel("akai_midimix__knob_1b__read_midi"), shape("circle")
@@ -158,8 +158,8 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 <CsoundSynthesizer>
 <CsOptions>
 
--n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5
-;-n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --messagelevel=0
+;-n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5
+-n -d -+rtmidi=NULL -M0 --midi-key=4 --midi-velocity-amp=5 --messagelevel=0
 
 </CsOptions>
 <CsInstruments>
@@ -175,6 +175,9 @@ massign 0, 1
 
 gi_NoteId = -1
 
+#define OSC_2X_5VA # 0 #
+#define OSC_2X_8VA # 1 #
+
 /*
  *******************************************************************************
  * Main Instrument
@@ -186,7 +189,7 @@ instr 1
 
     ; Always on.
 	;---------------------------------------------------------------------------
-    if (0 == i_note_id) then
+    if (0 == i_note_id) then        
         i_ udo__set_midi_control_defaults
 
         i_ udo__add_midi_pitchbend "m_audio_prokeys__wheel_1"
@@ -208,21 +211,21 @@ instr 1
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_2_CC, "akai_midimix__slider_2", 0, 127, 0 ; EQ:Randomize
 
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3A_CC, "akai_midimix__knob_3a", .01, 10, 1 ; A
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3B_CC, "akai_midimix__knob_3b", -10, 10, 0 ; Osc.1:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3B_CC, "akai_midimix__knob_3b", -1, 1, 0 ; Osc.1:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_3C_CC, "akai_midimix__knob_3c", 0, 1, 1 ; Osc.1:dB
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_3A_CC, "akai_midimix__button_3a", $ON ; Osc.1:On/Off
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_3B_CC, "akai_midimix__button_3b" ; Osc.1:2x
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_3_CC, "akai_midimix__slider_3", 0, 127, 0 ; Osc.1:Randomize
 
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4A_CC, "akai_midimix__knob_4a", .01, 10, 1 ; D
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4B_CC, "akai_midimix__knob_4b", -10, 10, 0 ; Osc.2:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4B_CC, "akai_midimix__knob_4b", -1, 1, 0 ; Osc.2:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_4C_CC, "akai_midimix__knob_4c", 0, 1, 1 ; Osc.2:dB
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_4A_CC, "akai_midimix__button_4a" ; Osc.2:On/Off
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_4B_CC, "akai_midimix__button_4b" ; Osc.2:2x
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_4_CC, "akai_midimix__slider_4", 0, 127, 0 ; Osc.2:Randomize
 
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5A_CC, "akai_midimix__knob_5a", 0, 1, .5 ; S
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5B_CC, "akai_midimix__knob_5b", -10, 10, 0 ; Osc.3:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5B_CC, "akai_midimix__knob_5b", -1, 1, 0 ; Osc.3:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_5C_CC, "akai_midimix__knob_5c", 0, 1, 1 ; Osc.3:dB
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_5A_CC, "akai_midimix__button_5a" ; Osc.3:On/Off
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_5B_CC, "akai_midimix__button_5b" ; Osc.3:2x
@@ -258,15 +261,158 @@ instr 1
 
 ;===============================================================================
 
-	; k_pitchbend  (units: cents/100) [range: -2,2]
+    ; Pitch
 	;---------------------------------------------------------------------------
+	; k_pitchbend  (units: cents/100) [range: -2,2]
 	k_pitchbend init 0
     k_pitchbend port -2 + (gk_MidiPitchBend / 4096), .05
 
 	; k_pitch  (units: cps)
-	;---------------------------------------------------------------------------
 	k_pitch_midi_note_number = p4 + k_pitchbend
 	k_pitch = cpsmidinn(k_pitch_midi_note_number)
+
+    ; Common Oscillator Variables
+	;---------------------------------------------------------------------------
+	a_osc = 0
+	k_osc_2x_interval = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6B_CC]
+	
+	; Oscillator 1
+	;---------------------------------------------------------------------------
+    k_osc_1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_3A_CC]
+    k_osc_1_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_3B_CC]
+    k_osc_1_shape chnget "akai_midimix__osc_1_shape"
+    k_osc_1_db = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_3C_CC]
+    k_osc_1_is_2x = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_3B_CC]
+    if ($ON == k_osc_1_is_on) then
+        k_osc_1_hz_1 = k_pitch + k_osc_1_hz
+        a_ = 0
+        if (1 == k_osc_1_shape) then
+            a_ poscil3 k_osc_1_db, k_osc_1_hz_1
+        elseif (2 == k_osc_1_shape) then
+            a_ vco2 k_osc_1_db, k_osc_1_hz_1, 12
+        elseif (3 == k_osc_1_shape) then
+            a_ vco2 k_osc_1_db, k_osc_1_hz_1, 10
+        elseif (4 == k_osc_1_shape) then
+            a_ vco2 k_osc_1_db, k_osc_1_hz_1, 8
+        elseif (5 == k_osc_1_shape) then
+            a_ vco2 k_osc_1_db, k_osc_1_hz_1, 6
+        endif
+        a_osc += a_
+        if ($ON == k_osc_1_is_2x) then
+            k_osc_1_hz_2 = k_pitch
+            if ($OSC_2X_5VA == k_osc_2x_interval) then
+                k_osc_1_hz_2 *= 1.5
+            elseif ($OSC_2X_8VA == k_osc_2x_interval) then
+                k_osc_1_hz_2 *= 2
+            endif
+            k_osc_1_hz_2 += k_osc_1_hz
+            a_ = 0
+            if (1 == k_osc_1_shape) then
+                a_ poscil3 k_osc_1_db, k_osc_1_hz_2
+            elseif (2 == k_osc_1_shape) then
+                a_ vco2 k_osc_1_db, k_osc_1_hz_2, 12
+            elseif (3 == k_osc_1_shape) then
+                a_ vco2 k_osc_1_db, k_osc_1_hz_2, 10
+            elseif (4 == k_osc_1_shape) then
+                a_ vco2 k_osc_1_db, k_osc_1_hz_2, 8
+            elseif (5 == k_osc_1_shape) then
+                a_ vco2 k_osc_1_db, k_osc_1_hz_2, 6
+            endif
+            a_osc += a_
+        endif
+    endif
+
+	; Oscillator 2
+	;---------------------------------------------------------------------------
+    k_osc_2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_4A_CC]
+    k_osc_2_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_4B_CC]
+    k_osc_2_shape chnget "akai_midimix__osc_2_shape"
+    k_osc_2_db = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_4C_CC]
+    k_osc_2_is_2x = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_4B_CC]
+    if ($ON == k_osc_2_is_on) then
+        k_osc_2_hz_1 = k_pitch + k_osc_2_hz
+        a_ = 0
+        if (1 == k_osc_2_shape) then
+            a_ poscil3 k_osc_2_db, k_osc_2_hz_1
+        elseif (2 == k_osc_2_shape) then
+            a_ vco2 k_osc_2_db, k_osc_2_hz_1, 12
+        elseif (3 == k_osc_2_shape) then
+            a_ vco2 k_osc_2_db, k_osc_2_hz_1, 10
+        elseif (4 == k_osc_2_shape) then
+            a_ vco2 k_osc_2_db, k_osc_2_hz_1, 8
+        elseif (5 == k_osc_2_shape) then
+            a_ vco2 k_osc_2_db, k_osc_2_hz_1, 6
+        endif
+        a_osc += a_
+        if ($ON == k_osc_2_is_2x) then
+            k_osc_2_hz_2 = k_pitch
+            if ($OSC_2X_5VA == k_osc_2x_interval) then
+                k_osc_2_hz_2 *= 1.5
+            elseif ($OSC_2X_8VA == k_osc_2x_interval) then
+                k_osc_2_hz_2 *= 2
+            endif
+            k_osc_2_hz_2 += k_osc_2_hz
+            a_ = 0
+            if (1 == k_osc_2_shape) then
+                a_ poscil3 k_osc_2_db, k_osc_2_hz_2
+            elseif (2 == k_osc_2_shape) then
+                a_ vco2 k_osc_2_db, k_osc_2_hz_2, 12
+            elseif (3 == k_osc_2_shape) then
+                a_ vco2 k_osc_2_db, k_osc_2_hz_2, 10
+            elseif (4 == k_osc_2_shape) then
+                a_ vco2 k_osc_2_db, k_osc_2_hz_2, 8
+            elseif (5 == k_osc_2_shape) then
+                a_ vco2 k_osc_2_db, k_osc_2_hz_2, 6
+            endif
+            a_osc += a_
+        endif
+    endif
+
+	; Oscillator 3
+	;---------------------------------------------------------------------------
+    k_osc_3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_5A_CC]
+    k_osc_3_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_5B_CC]
+    k_osc_3_shape chnget "akai_midimix__osc_3_shape"
+    k_osc_3_db = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_5C_CC]
+    k_osc_3_is_2x = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_5B_CC]
+    if ($ON == k_osc_3_is_on) then
+        k_osc_3_hz_1 = k_pitch + k_osc_3_hz
+        a_ = 0
+        if (1 == k_osc_3_shape) then
+            a_ poscil3 k_osc_3_db, k_osc_3_hz_1
+        elseif (2 == k_osc_3_shape) then
+            a_ vco2 k_osc_3_db, k_osc_3_hz_1, 12
+        elseif (3 == k_osc_3_shape) then
+            a_ vco2 k_osc_3_db, k_osc_3_hz_1, 10
+        elseif (4 == k_osc_3_shape) then
+            a_ vco2 k_osc_3_db, k_osc_3_hz_1, 8
+        elseif (5 == k_osc_3_shape) then
+            a_ vco2 k_osc_3_db, k_osc_3_hz_1, 6
+        endif
+        a_osc += a_
+        if ($ON == k_osc_3_is_2x) then
+            k_osc_3_hz_2 = k_pitch
+            if ($OSC_2X_5VA == k_osc_2x_interval) then
+                k_osc_3_hz_2 *= 1.5
+            elseif ($OSC_2X_8VA == k_osc_2x_interval) then
+                k_osc_3_hz_2 *= 2
+            endif
+            k_osc_3_hz_2 += k_osc_3_hz
+            a_ = 0
+            if (1 == k_osc_3_shape) then
+                a_ poscil3 k_osc_3_db, k_osc_3_hz_2
+            elseif (2 == k_osc_3_shape) then
+                a_ vco2 k_osc_3_db, k_osc_3_hz_2, 12
+            elseif (3 == k_osc_3_shape) then
+                a_ vco2 k_osc_3_db, k_osc_3_hz_2, 10
+            elseif (4 == k_osc_3_shape) then
+                a_ vco2 k_osc_3_db, k_osc_3_hz_2, 8
+            elseif (5 == k_osc_3_shape) then
+                a_ vco2 k_osc_3_db, k_osc_3_hz_2, 6
+            endif
+            a_osc += a_
+        endif
+    endif
 
 	; k_out_modulation_wheel  [range: 0,127]
 	;---------------------------------------------------------------------------
@@ -276,7 +422,7 @@ instr 1
 	; k_out_volume  [range: 0,1]
 	;---------------------------------------------------------------------------
 	k_volume init 0
-	k_volume port gk_MidiControlValues[7] / 127, .05
+	k_volume port gk_MidiControlValues[7], .05
 
 	; k_volume_envelope  [range: 0,1]
 	;---------------------------------------------------------------------------
@@ -301,8 +447,8 @@ instr 1
 	; Audio Output
 	;---------------------------------------------------------------------------
 	k_volume = k_volume * k_volume_envelope
-	a1 oscili p5, k_pitch, 1
-	outs k_volume * a1, k_volume * a1
+	a_out = k_volume * a_osc
+	outs a_out, a_out
 
 	; Write envelope data
 	;---------------------------------------------------------------------------
