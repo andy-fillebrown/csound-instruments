@@ -436,16 +436,6 @@ instr 1
 	i_volume_envelope_release_time = i(gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6A_CC])
 	k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
 
-	; k_hipass_hz  [range: 0,48000]
-	;---------------------------------------------------------------------------
-    k_hipass_hz init 0
-    k_hipass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], .05
-
-	; k_lopass_hz  [range: 0,48000]
-	;---------------------------------------------------------------------------
-    k_lopass_hz init 0
-    k_lopass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2A_CC], .05
-
 ;===============================================================================
 
 	; Audio Output
