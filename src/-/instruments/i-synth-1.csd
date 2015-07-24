@@ -7,8 +7,8 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	image bounds(0, 0, 1, 1), file("overlay--synth-1--akai-midimix.jpg"), shape("sharp")
 
 	; Column 1
-	rslider bounds(.102727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_1a"), range(0, 48000, 0, 1, 10) ; Hi-Pass:Hz
-	rslider bounds(.102727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_1b"), range(0, 48000, 48000, 1, 10) ; Lo-Pass:Hz
+	rslider bounds(.102727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_1a"), range(0, 10000, 0, 1, 10) ; Hi-Pass:Hz
+	rslider bounds(.102727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_1b"), range(0, 10000, 10000, 1, 10) ; Lo-Pass:Hz
 	rslider bounds(.102727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_1c"), range(-1, 1, 0, 1, .02) ; Pan
 	checkbox bounds(.118181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_1a") ; Hi-Pass:On/Off
 	checkbox bounds(.118181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_1b") ; Lo-Pass:On/Off
@@ -178,7 +178,7 @@ massign 0, 1
 
 gi_NoteId = -1
 
-ga_ReverbInput init 0
+ga_InstrumentOutput init 0
 
 /*
  *******************************************************************************
@@ -198,8 +198,8 @@ instr 1
         i_ udo__add_midi_control 1, "m_audio_prokeys__wheel_2"
         i_ udo__add_midi_control 7, "m_audio_prokeys__knob", 0, 1, 1
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 0, $SCALED_TO_128(48000), 0 ; Hi-Pass:Hz
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 0, $SCALED_TO_128(48000), 48000 ; Lo-Pass:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 0, $SCALED_TO_128(10000), 0 ; Hi-Pass:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 0, $SCALED_TO_128(10000), 10000 ; Lo-Pass:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c", -1, 1, 0 ; Pan
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1A_CC, "akai_midimix__button_1a" ; Hi-Pass:On/Off
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1B_CC, "akai_midimix__button_1b" ; Lo-Pass:On/Off
@@ -258,7 +258,7 @@ instr 1
 
         i_ udo__update_midi_switches
         
-        ga_ReverbInput = 0
+        ga_InstrumentOutput = 0
 
         goto ENDIN
     endif
@@ -452,7 +452,7 @@ instr 1
 	;---------------------------------------------------------------------------
 	k_volume = k_volume * k_volume_envelope
 	a_out = k_volume * a_osc
-	ga_ReverbInput += a_out
+	ga_InstrumentOutput += a_out
 
 	; Write envelope data
 	;---------------------------------------------------------------------------
@@ -467,15 +467,38 @@ instr 1
 ENDIN:
 endin
 
-instr reverb
+instr instrument_output
+    a_out = ga_InstrumentOutput
+
+    ; Hi-Pass
+	;---------------------------------------------------------------------------
+	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1A_CC]) then
+        k_hi_pass_hz init 0
+        k_hi_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], .05
+        a_out butterhp a_out, k_hi_pass_hz
+    endif
+
+    ; Lo-Pass
+	;---------------------------------------------------------------------------
+	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1B_CC]) then
+        k_lo_pass_hz init 0
+        k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], .05
+        a_out butterlp a_out, k_lo_pass_hz
+    endif
+
+    ; Reverb
+	;---------------------------------------------------------------------------
 	k_reverb_size init 0.75
 	k_reverb_size port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7A_CC], .05
 	k_reverb_cutoff_hz init 48000
 	k_reverb_cutoff_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8A_CC], .05
 	k_reverb_db init 0
 	k_reverb_db port gk_MidiControlValues[$AKAI_MIDIMIX__SLIDER_9_CC], .05
-    a_reverb_left, a_reverb_right reverbsc ga_ReverbInput, ga_ReverbInput, k_reverb_size, k_reverb_cutoff_hz
-	outs ga_ReverbInput + (k_reverb_db * a_reverb_left), ga_ReverbInput + (k_reverb_db * a_reverb_right)
+    a_reverb_left, a_reverb_right reverbsc a_out, a_out, k_reverb_size, k_reverb_cutoff_hz
+    
+	; Audio Output
+	;---------------------------------------------------------------------------
+	outs a_out + (k_reverb_db * a_reverb_left), a_out + (k_reverb_db * a_reverb_right)
 endin
 
 instr set_midi_read_defaults
@@ -553,7 +576,7 @@ f1 0 1024 10 1
 f0 3600
 
 i1 0 -1
-i"reverb" 0 -1
+i"instrument_output" 0 -1
 i"set_midi_read_defaults" 0  0
 ;i"trace_midi_input" 0 -1
 
