@@ -15,8 +15,8 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	vslider bounds(.102727273, .690588235, .074545455, .247058824), channel("akai_midimix__slider_1"), range(0, 127, 0, 1, 1) ; Pan:Randomize
 
 	; Column 2
-	rslider bounds(.194545455, .115294118, .072727273, .094117647), channel("akai_midimix__knob_2a"), range(0, 9600, 4800, 1, 10) ; EQ:Q
-	rslider bounds(.194545455, .261176471, .072727273, .094117647), channel("akai_midimix__knob_2b"), range(0, 48000, 24000, 1, 10) ; EQ:Hz
+	rslider bounds(.194545455, .115294118, .072727273, .094117647), channel("akai_midimix__knob_2a"), range(0, 1, 0, 1, .01) ; EQ:Q
+	rslider bounds(.194545455, .261176471, .072727273, .094117647), channel("akai_midimix__knob_2b"), range(10, 11980, 1000, 1, 5) ; EQ:Hz
 	rslider bounds(.194545455, .408235294, .072727273, .094117647), channel("akai_midimix__knob_2c"), range(-1, 1, 0, 1, .02) ; EQ:dB
 	checkbox bounds(.21, .577647059, .043636364, .030588235), channel("akai_midimix__button_2a") ; EQ:On/Off
 	checkbox bounds(.21, .648235294, .043636364, .030588235), channel("akai_midimix__button_2b") ; EQ:2x
@@ -205,8 +205,8 @@ instr 1
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1B_CC, "akai_midimix__button_1b" ; Lo-Pass:On/Off
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_1_CC, "akai_midimix__slider_1", 0, 127, 0 ; Pan:Randomize
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a", 0, $SCALED_TO_128(9600), 4800 ; EQ:Q
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b", 0, $SCALED_TO_128(48000), 24000 ; EQ:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2A_CC, "akai_midimix__knob_2a", 0, 1, 0 ; EQ:Q
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2B_CC, "akai_midimix__knob_2b", 20, $SCALED_TO_128(11980), 1000 ; EQ:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_2C_CC, "akai_midimix__knob_2c", -1, 1, 0 ; EQ:dB
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_2A_CC, "akai_midimix__button_2a" ; EQ:On/Off
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_2B_CC, "akai_midimix__button_2b" ; EQ:2x
@@ -484,6 +484,21 @@ instr instrument_output
         k_lo_pass_hz init 0
         k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], .05
         a_out butterlp a_out, k_lo_pass_hz
+    endif
+    
+    ; EQ
+	;---------------------------------------------------------------------------
+    if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_2A_CC]) then
+        k_eq_q init 4800
+        k_eq_q port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2A_CC], .05
+        k_eq_hz init 24000
+        k_eq_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2B_CC], .05
+        k_eq_db init 0
+        k_eq_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2C_CC], .05
+        a_out pareq a_out, k_eq_hz, k_eq_db + 1, 1 - k_eq_q, 0
+        if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_2B_CC]) then
+            a_out pareq a_out, k_eq_hz, k_eq_db + 1, 1 - k_eq_q, 0
+        endif
     endif
 
     ; Reverb
