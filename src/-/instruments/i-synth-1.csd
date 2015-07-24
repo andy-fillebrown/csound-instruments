@@ -71,7 +71,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	vslider bounds(.731818182, .690588235, .074545455, .247058824), channel("akai_midimix__slider_8"), range(0, 127, 0, 1, 1) ; LFO.2:Randomize
 	
 	; Column 9
-	vslider bounds(.820909091, .690588235, .074545455, .247058824), channel("akai_midimix__slider_9"), range(0, 1, 0, 1, .01) ; Reverb:dB
+	vslider bounds(.820909091, .690588235, .074545455, .247058824), channel("akai_midimix__slider_9"), range(0, 1, 1, 1, .01) ; Reverb:dB
 	
 	; Oscillator Combo-boxes
 	combobox bounds(.84, .270588235, .11, .017647059), channel("akai_midimix__osc_1_shape"), items("sine", "triangle", "square", "saw", "pulse"), value(3), colour("white"), fontcolour(127, 127, 0) ; Osc.1:Shape
@@ -178,6 +178,7 @@ massign 0, 1
 
 gi_NoteId = -1
 
+ga_ReverbInput init 0
 
 /*
  *******************************************************************************
@@ -253,9 +254,11 @@ instr 1
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_8B_CC, "akai_midimix__button_8b" ; Toggle Read MIDI
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_8_CC, "akai_midimix__slider_8", 0, 127, 0 ; LFO.2:Randomize
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9", 0, 127, 0 ; Reverb:dB
+        i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9", 0, 1, 1 ; Reverb:dB
 
         i_ udo__update_midi_switches
+        
+        ga_ReverbInput = 0
 
         goto ENDIN
     endif
@@ -449,7 +452,7 @@ instr 1
 	;---------------------------------------------------------------------------
 	k_volume = k_volume * k_volume_envelope
 	a_out = k_volume * a_osc
-	outs a_out, a_out
+	ga_ReverbInput += a_out
 
 	; Write envelope data
 	;---------------------------------------------------------------------------
@@ -462,6 +465,17 @@ instr 1
 		i_ udo__write_k i_note_id, 7, k_volume, k_is_last_k_cycle, 2
 	endif
 ENDIN:
+endin
+
+instr reverb
+	k_reverb_size init 0.75
+	k_reverb_size port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7A_CC], .05
+	k_reverb_cutoff_hz init 48000
+	k_reverb_cutoff_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8A_CC], .05
+	k_reverb_db init 0
+	k_reverb_db port gk_MidiControlValues[$AKAI_MIDIMIX__SLIDER_9_CC], .05
+    a_reverb_left, a_reverb_right reverbsc ga_ReverbInput, ga_ReverbInput, k_reverb_size, k_reverb_cutoff_hz
+	outs ga_ReverbInput + (k_reverb_db * a_reverb_left), ga_ReverbInput + (k_reverb_db * a_reverb_right)
 endin
 
 instr set_midi_read_defaults
@@ -539,6 +553,7 @@ f1 0 1024 10 1
 f0 3600
 
 i1 0 -1
+i"reverb" 0 -1
 i"set_midi_read_defaults" 0  0
 ;i"trace_midi_input" 0 -1
 
