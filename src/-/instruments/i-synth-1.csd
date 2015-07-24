@@ -434,14 +434,14 @@ instr 1
 	i_volume_envelope_decay_time = i(gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_4A_CC])
 	i_volume_envelope_sustain_level = i(gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_5A_CC])
 	i_volume_envelope_release_time = i(gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6A_CC])
-	k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
+	a_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
 
 ;===============================================================================
 
 	; Audio Output
 	;---------------------------------------------------------------------------
-	k_volume = k_volume * k_volume_envelope
-	a_out = k_volume * a_osc
+	a_volume = k_volume * a_volume_envelope
+	a_out = a_volume * a_osc
 	ga_InstrumentOutput += a_out
 
 	; Write envelope data
