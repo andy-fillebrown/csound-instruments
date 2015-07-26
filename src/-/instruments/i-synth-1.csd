@@ -269,7 +269,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 	;---------------------------------------------------------------------------
 	; k_pitchbend  (units: cents/100) [range: -2,2]
 	k_pitchbend init 0
-    k_pitchbend port -2 + (gk_MidiPitchBend / 4096), .05
+    k_pitchbend port -2 + (gk_MidiPitchBend / 4096), $CONTROLLER_INPUT_PORTAMENTO_TIME
 
 	; k_pitch  (units: cps)
 	k_pitch_midi_note_number = p4 + k_pitchbend
@@ -421,12 +421,12 @@ instr $MAIN_INSTRUMENT_NUMBER
 	; k_out_modulation_wheel  [range: 0,127]
 	;---------------------------------------------------------------------------
 	k_modulation_wheel init 0
-	k_modulation_wheel port gk_MidiControlValues[1], .05
+	k_modulation_wheel port gk_MidiControlValues[1], $CONTROLLER_INPUT_PORTAMENTO_TIME
 
 	; k_out_volume  [range: 0,1]
 	;---------------------------------------------------------------------------
 	k_volume init 0
-	k_volume port gk_MidiControlValues[7], .05
+	k_volume port gk_MidiControlValues[7], $CONTROLLER_INPUT_PORTAMENTO_TIME
 
 	; k_volume_envelope  [range: 0,1]
 	;---------------------------------------------------------------------------
@@ -464,7 +464,7 @@ instr instrument_output
 	;---------------------------------------------------------------------------
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1A_CC]) then
         k_hi_pass_hz init 0
-        k_hi_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], .05
+        k_hi_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
         a_out butterhp a_out, k_hi_pass_hz
     endif
 
@@ -472,7 +472,7 @@ instr instrument_output
 	;---------------------------------------------------------------------------
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1B_CC]) then
         k_lo_pass_hz init 0
-        k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], .05
+        k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
         a_out butterlp a_out, k_lo_pass_hz
     endif
     
@@ -480,11 +480,11 @@ instr instrument_output
 	;---------------------------------------------------------------------------
     if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_2A_CC]) then
         k_eq_q init 4800
-        k_eq_q port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2A_CC], .05
+        k_eq_q port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
         k_eq_hz init 24000
-        k_eq_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2B_CC], .05
+        k_eq_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
         k_eq_db init 0
-        k_eq_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2C_CC], .05
+        k_eq_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
         a_out pareq a_out, k_eq_hz, k_eq_db + 1, 1 - k_eq_q, 0
         if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_2B_CC]) then
             a_out pareq a_out, k_eq_hz, k_eq_db + 1, 1 - k_eq_q, 0
@@ -495,23 +495,23 @@ instr instrument_output
 	;---------------------------------------------------------------------------
 	k_polyphony_scaling init 1
 	k_note_count active $MAIN_INSTRUMENT_NUMBER - 1
-	k_polyphony_scaling port 1 / sqrt(k_note_count), .01
+	k_polyphony_scaling port 1 / sqrt(k_note_count), $CONTROLLER_INPUT_PORTAMENTO_TIME
 	a_out *= k_polyphony_scaling
 	
 	; Pan
 	;---------------------------------------------------------------------------
 	k_pan init 0
-    k_pan port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1C_CC], .05
+    k_pan port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
     a_out_left, a_out_right pan2 a_out, (k_pan + 1) / 2
 
     ; Reverb
 	;---------------------------------------------------------------------------
 	k_reverb_size init 0.75
-	k_reverb_size port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7A_CC], .05
+	k_reverb_size port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
 	k_reverb_cutoff_hz init 48000
-	k_reverb_cutoff_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8A_CC], .05
+	k_reverb_cutoff_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
 	k_reverb_db init 0
-	k_reverb_db port gk_MidiControlValues[$AKAI_MIDIMIX__SLIDER_9_CC], .05
+	k_reverb_db port gk_MidiControlValues[$AKAI_MIDIMIX__SLIDER_9_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
     a_reverb_left, a_reverb_right reverbsc a_out_left, a_out_right, k_reverb_size, k_reverb_cutoff_hz
     
 	; Audio Output
