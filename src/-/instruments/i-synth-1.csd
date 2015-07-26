@@ -491,6 +491,13 @@ instr instrument_output
         endif
     endif
 
+    ; Lower volume as number of notes increases.
+	;---------------------------------------------------------------------------
+	k_polyphony_scaling init 1
+	k_note_count active $MAIN_INSTRUMENT_NUMBER - 1
+	k_polyphony_scaling port 1 / sqrt(k_note_count), .01
+	a_out *= k_polyphony_scaling
+
     ; Reverb
 	;---------------------------------------------------------------------------
 	k_reverb_size init 0.75
