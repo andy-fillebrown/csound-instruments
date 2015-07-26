@@ -497,6 +497,12 @@ instr instrument_output
 	k_note_count active $MAIN_INSTRUMENT_NUMBER - 1
 	k_polyphony_scaling port 1 / sqrt(k_note_count), .01
 	a_out *= k_polyphony_scaling
+	
+	; Pan
+	;---------------------------------------------------------------------------
+	k_pan init 0
+    k_pan port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1C_CC], .05
+    a_out_left, a_out_right pan2 a_out, (k_pan + 1) / 2
 
     ; Reverb
 	;---------------------------------------------------------------------------
@@ -506,11 +512,11 @@ instr instrument_output
 	k_reverb_cutoff_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8A_CC], .05
 	k_reverb_db init 0
 	k_reverb_db port gk_MidiControlValues[$AKAI_MIDIMIX__SLIDER_9_CC], .05
-    a_reverb_left, a_reverb_right reverbsc a_out, a_out, k_reverb_size, k_reverb_cutoff_hz
+    a_reverb_left, a_reverb_right reverbsc a_out_left, a_out_right, k_reverb_size, k_reverb_cutoff_hz
     
 	; Audio Output
 	;---------------------------------------------------------------------------
-	outs a_out + (k_reverb_db * a_reverb_left), a_out + (k_reverb_db * a_reverb_right)
+	outs a_out_left + (k_reverb_db * a_reverb_left), a_out_right + (k_reverb_db * a_reverb_right)
 endin
 
 instr set_midi_read_defaults
