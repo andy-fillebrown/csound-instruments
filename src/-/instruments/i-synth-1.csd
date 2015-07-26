@@ -166,7 +166,7 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 
 #include "../../../config.csd-h"
 #include "../../../config-akai-midimix.csd-h"
-#include "../../../include/constants.csd-h"
+#include "../../../include/definitions.csd-h"
 #include "../../../include/opcodes/midi-testing.csd-h"
 #include "../../../include/opcodes/read-midi.csd-h"
 #include "../../../include/opcodes/variable-logging.csd-h"
@@ -174,7 +174,7 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 #define OSC_2X_5VA # 0 #
 #define OSC_2X_8VA # 1 #
 
-massign 0, 1
+massign 0, $MAIN_INSTRUMENT_NUMBER
 
 gi_NoteId = -1
 
@@ -185,7 +185,7 @@ ga_InstrumentOutput init 0
  * Main Instrument
  *******************************************************************************
  */
-instr 1
+instr $MAIN_INSTRUMENT_NUMBER
     i_note_id = gi_NoteId
     gi_NoteId += 1
 
@@ -579,8 +579,9 @@ endin
 
 f1 0 1024 10 1
 f0 3600
+#include "../../../include/definitions.csd-h"
 
-i1 0 -1
+i$MAIN_INSTRUMENT_NUMBER 0 -1
 i"instrument_output" 0 -1
 i"set_midi_read_defaults" 0  0
 ;i"trace_midi_input" 0 -1

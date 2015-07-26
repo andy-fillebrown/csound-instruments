@@ -1,4 +1,6 @@
 
+#define MAIN_INSTRUMENT_NUMBER # 1 #
+
 #define SCALED_TO_128(value) # 1.007874015748031 * $value #
 
 #define ON # 1 #
