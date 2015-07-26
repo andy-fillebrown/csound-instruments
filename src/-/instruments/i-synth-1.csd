@@ -7,8 +7,8 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	image bounds(0, 0, 1, 1), file("overlay--synth-1--akai-midimix.jpg"), shape("sharp")
 
 	; Column 1
-	rslider bounds(.102727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_1a"), range(0, 10000, 0, 1, 10) ; Hi-Pass:Hz
-	rslider bounds(.102727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_1b"), range(0, 10000, 10000, 1, 10) ; Lo-Pass:Hz
+	rslider bounds(.102727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_1a"), range(10, 9990, 0, 1, 10) ; Hi-Pass:Hz
+	rslider bounds(.102727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_1b"), range(10, 9990, 9990, 1, 10) ; Lo-Pass:Hz
 	rslider bounds(.102727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_1c"), range(-1, 1, 0, 1, .02) ; Pan
 	checkbox bounds(.118181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_1a") ; Hi-Pass:On/Off
 	checkbox bounds(.118181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_1b") ; Lo-Pass:On/Off
@@ -198,8 +198,8 @@ instr $MAIN_INSTRUMENT_NUMBER
         i_ udo__add_midi_control 1, "m_audio_prokeys__wheel_2"
         i_ udo__add_midi_control 7, "m_audio_prokeys__knob", 0, 1, 1
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 0, $SCALED_TO_128(10000), 0 ; Hi-Pass:Hz
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 0, $SCALED_TO_128(10000), 10000 ; Lo-Pass:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1A_CC, "akai_midimix__knob_1a", 10, $SCALED_TO_128(9990), 0 ; Hi-Pass:Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1B_CC, "akai_midimix__knob_1b", 10, $SCALED_TO_128(9990), 9990 ; Lo-Pass:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_1C_CC, "akai_midimix__knob_1c", -1, 1, 0 ; Pan
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1A_CC, "akai_midimix__button_1a" ; Hi-Pass:On/Off
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_1B_CC, "akai_midimix__button_1b" ; Lo-Pass:On/Off
