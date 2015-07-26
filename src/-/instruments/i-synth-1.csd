@@ -577,9 +577,9 @@ endin
 </CsInstruments>
 <CsScore>
 
-f1 0 1024 10 1
-f0 3600
 #include "../../../include/definitions.csd-h"
+
+f0 999999999
 
 i$MAIN_INSTRUMENT_NUMBER 0 -1
 i"instrument_output" 0 -1
