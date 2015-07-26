@@ -584,11 +584,9 @@ endin
 </CsInstruments>
 <CsScore>
 
-#include "../../../include/definitions.csd-h"
-
 f0 999999999
 
-i$MAIN_INSTRUMENT_NUMBER 0 -1
+i1 0 -1
 i"instrument_output" 0 -1
 i"set_midi_read_defaults" 0  0
 ;i"trace_midi_input" 0 -1
