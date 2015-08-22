@@ -3,3 +3,5 @@
 
 *.vst
 ~$*.xlsx
+
+/examples
