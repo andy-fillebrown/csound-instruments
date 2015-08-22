@@ -211,7 +211,7 @@ gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_3B_CC] = $LFO_ROUTE__OSC_1_HZ
 gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_3C_CC] = $LFO_ROUTE__OSC_1_DB
 gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_4B_CC] = $LFO_ROUTE__OSC_2_HZ
 gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_4C_CC] = $LFO_ROUTE__OSC_2_DB
-gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_5A_CC] = $LFO_ROUTE__OSC_3_HZ
+gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_5B_CC] = $LFO_ROUTE__OSC_3_HZ
 gi_MidiControlLfoRouteNumbers[$AKAI_MIDIMIX__KNOB_5C_CC] = $LFO_ROUTE__OSC_3_DB
 gi_MidiControlLfoRouteNumbers[1]                         = $LFO_ROUTE__MODULATION
 gi_MidiControlLfoRouteNumbers[7]                         = $LFO_ROUTE__VOLUME
@@ -315,38 +315,45 @@ endop
 opcode udo__add_lfos, k, kj
     k_signal, i_controller_number xin
     i_midi_control_lfo_route_number init -1
-    if (-1 != i_controller_number) then
+    if (-1 == i_controller_number) then
+        i_midi_control_lfo_route_number = $LFO_ROUTE__PITCHBEND
+    else
         i_midi_control_lfo_route_number = gi_MidiControlLfoRouteNumbers[i_controller_number]
     endif
-    print i_midi_control_lfo_route_number
 
     k_lfo_1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6A_CC]
     if ($ON == k_lfo_1_is_on) then
         if (i_midi_control_lfo_route_number == gk_Lfo1Route) then
-            k_signal udo__add_control_lfo k_signal, 1, i_controller_number
-        elseif ($LFO_ROUTE__PITCHBEND == gk_Lfo1Route) then
-            k_signal udo__add_pitchbend_lfo k_signal, 1
+            if ($LFO_ROUTE__PITCHBEND == i_midi_control_lfo_route_number) then
+                k_signal udo__add_pitchbend_lfo k_signal, 1
+            else
+                k_signal udo__add_control_lfo k_signal, 1, i_controller_number
+            endif
         endif
     endif
-/*
+
     k_lfo_2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_7A_CC]
     if ($ON == k_lfo_2_is_on) then
         if (i_midi_control_lfo_route_number == gk_Lfo2Route) then
-            k_signal udo__add_control_lfo k_signal, 2, i_controller_number
-        elseif ($LFO_ROUTE__PITCHBEND == gk_Lfo2Route) then
-            k_signal udo__add_pitchbend_lfo k_signal, 2
+            if ($LFO_ROUTE__PITCHBEND == i_midi_control_lfo_route_number) then
+                k_signal udo__add_pitchbend_lfo k_signal, 2
+            else
+                k_signal udo__add_control_lfo k_signal, 2, i_controller_number
+            endif
         endif
     endif
 
     k_lfo_3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_8A_CC]
     if ($ON == k_lfo_3_is_on) then
         if (i_midi_control_lfo_route_number == gk_Lfo3Route) then
-            k_signal udo__add_control_lfo k_signal, 3, i_controller_number
-        elseif ($LFO_ROUTE__PITCHBEND == gk_Lfo3Route) then
-            k_signal udo__add_pitchbend_lfo k_signal, 3
+            if ($LFO_ROUTE__PITCHBEND == i_midi_control_lfo_route_number) then
+                k_signal udo__add_pitchbend_lfo k_signal, 3
+            else
+                k_signal udo__add_control_lfo k_signal, 3, i_controller_number
+            endif
         endif
     endif
-*/
+
     xout k_signal
 endop
 
@@ -450,7 +457,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 	; k_pitchbend  (units: cents/100) [range: -2,2]
 	k_pitchbend init 0
     k_pitchbend port -2 + (gk_MidiPitchBend / 4096), $CONTROLLER_INPUT_PORTAMENTO_TIME
-    ;k_pitchbend udo__add_lfos k_pitchbend    
+    k_pitchbend udo__add_lfos k_pitchbend
 
 	; k_pitch  (units: cps)
 	k_pitch_midi_note_number = p4 + k_pitchbend
@@ -466,7 +473,7 @@ instr $MAIN_INSTRUMENT_NUMBER
     k_osc_1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_3A_CC]
     if ($ON == k_osc_1_is_on) then
         k_osc_1_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_3B_CC]
-        ;k_osc_1_hz udo__add_lfos k_osc_1_hz, $AKAI_MIDIMIX__KNOB_3B_CC
+        k_osc_1_hz udo__add_lfos k_osc_1_hz, $AKAI_MIDIMIX__KNOB_3B_CC
         k_osc_1_db = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_3C_CC]
         k_osc_1_db udo__add_lfos k_osc_1_db, $AKAI_MIDIMIX__KNOB_3C_CC
         k_osc_1_is_2x = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_3B_CC]
@@ -515,9 +522,9 @@ instr $MAIN_INSTRUMENT_NUMBER
     k_osc_2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_4A_CC]
     if ($ON == k_osc_2_is_on) then
         k_osc_2_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_4B_CC]
-        ;k_osc_2_hz udo__add_lfos k_osc_2_hz, $AKAI_MIDIMIX__KNOB_4B_CC
+        k_osc_2_hz udo__add_lfos k_osc_2_hz, $AKAI_MIDIMIX__KNOB_4B_CC
         k_osc_2_db = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_4C_CC]
-        ;k_osc_2_db udo__add_lfos k_osc_2_db, $AKAI_MIDIMIX__KNOB_4C_CC
+        k_osc_2_db udo__add_lfos k_osc_2_db, $AKAI_MIDIMIX__KNOB_4C_CC
         k_osc_2_is_2x = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_4B_CC]
         k_osc_2_shape chnget "akai_midimix__osc_2_shape"
 
@@ -564,9 +571,9 @@ instr $MAIN_INSTRUMENT_NUMBER
     k_osc_3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_5A_CC]
     if ($ON == k_osc_3_is_on) then
         k_osc_3_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_5B_CC]
-        ;k_osc_3_hz udo__add_lfos k_osc_3_hz, $AKAI_MIDIMIX__KNOB_5B_CC
+        k_osc_3_hz udo__add_lfos k_osc_3_hz, $AKAI_MIDIMIX__KNOB_5B_CC
         k_osc_3_db = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_5C_CC]
-        ;k_osc_3_db udo__add_lfos k_osc_3_db, $AKAI_MIDIMIX__KNOB_5C_CC
+        k_osc_3_db udo__add_lfos k_osc_3_db, $AKAI_MIDIMIX__KNOB_5C_CC
         k_osc_3_is_2x = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_5B_CC]
         k_osc_3_shape chnget "akai_midimix__osc_3_shape"
 
@@ -612,13 +619,13 @@ instr $MAIN_INSTRUMENT_NUMBER
 	;---------------------------------------------------------------------------
 	k_modulation_wheel init 0
 	k_modulation_wheel port gk_MidiControlValues[1], $CONTROLLER_INPUT_PORTAMENTO_TIME
-	;k_modulation_wheel udo__add_lfos k_modulation_wheel, 1
+	k_modulation_wheel udo__add_lfos k_modulation_wheel, 1
 
 	; k_out_volume  [range: 0,1]
 	;---------------------------------------------------------------------------
 	k_volume init 0
 	k_volume port gk_MidiControlValues[7], $CONTROLLER_INPUT_PORTAMENTO_TIME
-	;k_volume udo__add_lfos k_volume, 7
+	k_volume udo__add_lfos k_volume, 7
 
 	; k_volume_envelope  [range: 0,1]
 	;---------------------------------------------------------------------------
@@ -657,7 +664,7 @@ instr instrument_output
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1A_CC]) then
         k_hi_pass_hz init 0
         k_hi_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        ;k_hi_pass_hz udo__add_lfos k_hi_pass_hz, $AKAI_MIDIMIX__KNOB_1A_CC
+        k_hi_pass_hz udo__add_lfos k_hi_pass_hz, $AKAI_MIDIMIX__KNOB_1A_CC
         a_out butterhp a_out, k_hi_pass_hz
     endif
 
@@ -666,7 +673,7 @@ instr instrument_output
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1B_CC]) then
         k_lo_pass_hz init 0
         k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        ;k_lo_pass_hz udo__add_lfos k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
+        k_lo_pass_hz udo__add_lfos k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
         a_out butterlp a_out, k_lo_pass_hz
     endif
     
@@ -675,13 +682,14 @@ instr instrument_output
     if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_2A_CC]) then
         k_eq_q init 4800
         k_eq_q port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        ;k_eq_q udo__add_lfos k_eq_q, $AKAI_MIDIMIX__KNOB_2A_CC
+        k_eq_q udo__add_lfos k_eq_q, $AKAI_MIDIMIX__KNOB_2A_CC
+        k_eq_q limit k_eq_q, 0.001, 0.999
         k_eq_hz init 24000
         k_eq_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        ;k_eq_hz udo__add_lfos k_eq_hz, $AKAI_MIDIMIX__KNOB_2B_CC
+        k_eq_hz udo__add_lfos k_eq_hz, $AKAI_MIDIMIX__KNOB_2B_CC
         k_eq_db init 0
         k_eq_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_2C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        ;k_eq_db udo__add_lfos k_eq_db, $AKAI_MIDIMIX__KNOB_2C_CC
+        k_eq_db udo__add_lfos k_eq_db, $AKAI_MIDIMIX__KNOB_2C_CC
         a_out pareq a_out, k_eq_hz, k_eq_db + 1, 1 - k_eq_q, 0
         if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_2B_CC]) then
             a_out pareq a_out, k_eq_hz, k_eq_db + 1, 1 - k_eq_q, 0
@@ -699,7 +707,7 @@ instr instrument_output
 	;---------------------------------------------------------------------------
 	k_pan init 0
     k_pan port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-    ;k_pan udo__add_lfos k_pan, $AKAI_MIDIMIX__KNOB_1C_CC
+    k_pan udo__add_lfos k_pan, $AKAI_MIDIMIX__KNOB_1C_CC
     a_out_left, a_out_right pan2 a_out, (k_pan + 1) / 2
 
     ; Reverb
