@@ -672,7 +672,7 @@ instr instrument_output
 	;---------------------------------------------------------------------------
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1B_CC]) then
         k_lo_pass_hz init 0
-        k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], 2 * $CONTROLLER_INPUT_PORTAMENTO_TIME
         k_lo_pass_hz udo__add_lfos k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
         a_out butterlp a_out, k_lo_pass_hz
     endif
