@@ -63,7 +63,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	vslider bounds(.641818182, .690588235, .074545455, .247058824), channel("akai_midimix__slider_7"), range(0, 127, 0, 1, 1) ; LFO.2:Randomize
 	
 	; Column 8
-	rslider bounds(.732727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_8a"), range(0, 48000, 48000, 1, 10) ; Reverb:Cutoff-Hz
+	rslider bounds(.732727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_8a"), range(0, 24000, 24000, 1, 10) ; Reverb:Cutoff-Hz
 	rslider bounds(.732727273, .261176471, .072727273, .094117647), channel("akai_midimix__knob_8b"), range(.0, 10, 0, 1, .1) ; LFO.3:Hz
 	rslider bounds(.732727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_8c"), range(0, 1, 1, 1, .01) ; LFO.3:dB
 	checkbox bounds(.748181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_8a") ; LFO.3:On/Off
@@ -430,7 +430,7 @@ instr $MAIN_INSTRUMENT_NUMBER
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_7B_CC, "akai_midimix__button_7b" ; Log Values
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_7_CC, "akai_midimix__slider_7", 0, 127, 0 ; LFO.2:Randomize
 
-        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8A_CC, "akai_midimix__knob_8a", 0, 48000, 48000 ; Reverb:Cutoff-Hz
+        i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8A_CC, "akai_midimix__knob_8a", 0, 24000, 24000 ; Reverb:Cutoff-Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8B_CC, "akai_midimix__knob_8b", 0, 10, 0 ; LFO.3:Hz
         i_ udo__add_midi_control $AKAI_MIDIMIX__KNOB_8C_CC, "akai_midimix__knob_8c", 0, 1, 1 ; LFO.3:dB
         i_ udo__add_midi_switch $AKAI_MIDIMIX__BUTTON_8A_CC, "akai_midimix__button_8a" ; LFO.3:On/Off
