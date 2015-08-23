@@ -145,6 +145,12 @@ opcode udo__toggle_channel_to_midi_switch, i, ikk
 	xout i_
 endop
 
+opcode udo__limit_midi_control, k, ki
+    k_value, i_control xin
+    k_value limit k_value, k(gi_MidiControlRanges[i_control][0]), k(gi_MidiControlRanges[i_control][1])
+    xout k_value
+endop
+
 opcode udo__update_midi_switches, i, o
     READ_MIDI:
 	k_status, k_channel, k_byte_1, k_byte_2 midiin

@@ -665,6 +665,7 @@ instr instrument_output
         k_hi_pass_hz init 0
         k_hi_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
         k_hi_pass_hz udo__add_lfos k_hi_pass_hz, $AKAI_MIDIMIX__KNOB_1A_CC
+        k_hi_pass_hz udo__limit_midi_control k_hi_pass_hz, $AKAI_MIDIMIX__KNOB_1A_CC
         a_out butterhp a_out, k_hi_pass_hz
     endif
 
@@ -674,6 +675,7 @@ instr instrument_output
         k_lo_pass_hz init 0
         k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], 2 * $CONTROLLER_INPUT_PORTAMENTO_TIME
         k_lo_pass_hz udo__add_lfos k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
+        k_lo_pass_hz udo__limit_midi_control k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
         a_out butterlp a_out, k_lo_pass_hz
     endif
     
