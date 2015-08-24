@@ -314,6 +314,7 @@ endop
 
 opcode udo__add_lfos, k, kj
     k_signal, i_controller_number xin
+
     i_midi_control_lfo_route_number init -1
     if (-1 == i_controller_number) then
         i_midi_control_lfo_route_number = $LFO_ROUTE__PITCHBEND
