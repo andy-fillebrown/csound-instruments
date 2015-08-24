@@ -221,48 +221,30 @@ gk_Lfo1Route init 0
 gk_Lfo2Route init 0
 gk_Lfo3Route init 0
 
+gk_Lfo1Value init 0
+gk_Lfo2Value init 0
+gk_Lfo3Value init 0
+
 opcode udo__add_control_lfo, k, kii
     k_signal, i_lfo_number, i_controller_number xin
     
     if (-1 != i_controller_number) then
-        k_lfo_db init 1
-        k_lfo_hz init 0
-        k_lfo_shape init 0
+        k_lfo_signal init 0
         if (1 == i_lfo_number) then
-            k_lfo_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo_shape chnget "akai_midimix__lfo_1_shape"
+            k_lfo_signal = gk_Lfo1Value
         elseif (2 == i_lfo_number) then
-            k_lfo_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo_shape chnget "akai_midimix__lfo_2_shape"
+            k_lfo_signal = gk_Lfo2Value
         elseif (3 == i_lfo_number) then
-            k_lfo_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo_shape chnget "akai_midimix__lfo_3_shape"
+            k_lfo_signal = gk_Lfo3Value
         endif
-        if ($LFO_SHAPE__SINE == k_lfo_shape) then
-            k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SINE - 1
-        elseif ($LFO_SHAPE__TRIANGLE == k_lfo_shape) then
-            k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__TRIANGLE - 1
-        elseif ($LFO_SHAPE__SQUARE_BIPOLAR == k_lfo_shape) then
-            k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SQUARE_BIPOLAR - 1
-        elseif ($LFO_SHAPE__SQUARE_UNIPOLAR == k_lfo_shape) then
-            k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SQUARE_UNIPOLAR - 1
-        elseif ($LFO_SHAPE__SAW == k_lfo_shape) then
-            k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SAW - 1
-        elseif ($LFO_SHAPE__SAW_DOWN == k_lfo_shape) then
-            k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SAW_DOWN - 1
-        endif
-    
+
         i_min_value = gi_MidiControlRanges[i_controller_number][0]
         i_max_value = gi_MidiControlRanges[i_controller_number][1]
         i_value_range = i_max_value - i_min_value
         k_lfo_signal *= i_value_range
         
         k_signal += k_lfo_signal
-        k_signal max k_signal, i_min_value
-        k_signal min k_signal, i_max_value
+        k_signal limit k_signal, i_min_value, i_max_value
     endif
 
     xout k_signal
@@ -271,44 +253,21 @@ endop
 opcode udo__add_pitchbend_lfo, k, ki
     k_signal, i_lfo_number xin
 
-    k_lfo_db init 1
-    k_lfo_hz init 0
-    k_lfo_shape init 0
+    k_lfo_signal init 0
     if (1 == i_lfo_number) then
-        k_lfo_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        k_lfo_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        k_lfo_shape chnget "akai_midimix__lfo_1_shape"
+        k_lfo_signal = gk_Lfo1Value
     elseif (2 == i_lfo_number) then
-        k_lfo_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        k_lfo_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        k_lfo_shape chnget "akai_midimix__lfo_2_shape"
+        k_lfo_signal = gk_Lfo2Value
     elseif (3 == i_lfo_number) then
-        k_lfo_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        k_lfo_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-        k_lfo_shape chnget "akai_midimix__lfo_3_shape"
-    endif
-    if ($LFO_SHAPE__SINE == k_lfo_shape) then
-        k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SINE - 1
-    elseif ($LFO_SHAPE__TRIANGLE == k_lfo_shape) then
-        k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__TRIANGLE - 1
-    elseif ($LFO_SHAPE__SQUARE_BIPOLAR == k_lfo_shape) then
-        k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SQUARE_BIPOLAR - 1
-    elseif ($LFO_SHAPE__SQUARE_UNIPOLAR == k_lfo_shape) then
-        k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SQUARE_UNIPOLAR - 1
-    elseif ($LFO_SHAPE__SAW == k_lfo_shape) then
-        k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SAW - 1
-    elseif ($LFO_SHAPE__SAW_DOWN == k_lfo_shape) then
-        k_lfo_signal lfo k_lfo_db, k_lfo_hz, $LFO_SHAPE__SAW_DOWN - 1
+        k_lfo_signal = gk_Lfo3Value
     endif
 
     i_min_value = -2
     i_max_value = 2
     i_value_range = i_max_value - i_min_value
     k_lfo_signal *= i_value_range
-    
+
     k_signal += k_lfo_signal
-    k_signal max k_signal, i_min_value
-    k_signal min k_signal, i_max_value
 
     xout k_signal
 endop
@@ -323,8 +282,8 @@ opcode udo__add_lfos, k, kj
         i_midi_control_lfo_route_number = gi_MidiControlLfoRouteNumbers[i_controller_number]
     endif
 
-    k_lfo_1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6A_CC]
-    if ($ON == k_lfo_1_is_on) then
+    k_lfo1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6A_CC]
+    if ($ON == k_lfo1_is_on) then
         if (i_midi_control_lfo_route_number == gk_Lfo1Route) then
             if ($LFO_ROUTE__PITCHBEND == i_midi_control_lfo_route_number) then
                 k_signal udo__add_pitchbend_lfo k_signal, 1
@@ -334,8 +293,8 @@ opcode udo__add_lfos, k, kj
         endif
     endif
 
-    k_lfo_2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_7A_CC]
-    if ($ON == k_lfo_2_is_on) then
+    k_lfo2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_7A_CC]
+    if ($ON == k_lfo2_is_on) then
         if (i_midi_control_lfo_route_number == gk_Lfo2Route) then
             if ($LFO_ROUTE__PITCHBEND == i_midi_control_lfo_route_number) then
                 k_signal udo__add_pitchbend_lfo k_signal, 2
@@ -345,8 +304,8 @@ opcode udo__add_lfos, k, kj
         endif
     endif
 
-    k_lfo_3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_8A_CC]
-    if ($ON == k_lfo_3_is_on) then
+    k_lfo3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_8A_CC]
+    if ($ON == k_lfo3_is_on) then
         if (i_midi_control_lfo_route_number == gk_Lfo3Route) then
             if ($LFO_ROUTE__PITCHBEND == i_midi_control_lfo_route_number) then
                 k_signal udo__add_pitchbend_lfo k_signal, 3
@@ -447,6 +406,28 @@ instr $MAIN_INSTRUMENT_NUMBER
         gk_Lfo2Route chnget "akai_midimix__lfo_2_route"
         gk_Lfo3Route chnget "akai_midimix__lfo_3_route"
 
+        k_lfo1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6A_CC]
+        if ($ON == k_lfo1_is_on) then
+            k_lfo1_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+            k_lfo1_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+            k_lfo1_shape chnget "akai_midimix__lfo_1_shape"
+            gk_Lfo1Value lfo k_lfo1_db, k_lfo1_hz, k_lfo1_shape - 1
+        endif
+        k_lfo2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_7A_CC]
+        if ($ON == k_lfo2_is_on) then
+            k_lfo2_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+            k_lfo2_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+            k_lfo2_shape chnget "akai_midimix__lfo_1_shape"
+            gk_Lfo2Value lfo k_lfo2_db, k_lfo2_hz, k_lfo2_shape - 1
+        endif
+        k_lfo3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_8A_CC]
+        if ($ON == k_lfo3_is_on) then
+            k_lfo3_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+            k_lfo3_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+            k_lfo3_shape chnget "akai_midimix__lfo_1_shape"
+            gk_Lfo3Value lfo k_lfo3_db, k_lfo3_hz, k_lfo3_shape - 1
+        endif
+
         ga_InstrumentOutput = 0
 
         goto ENDIN
@@ -458,7 +439,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 	;---------------------------------------------------------------------------
 	; k_pitchbend  (units: cents/100) [range: -2,2]
 	k_pitchbend init 0
-    k_pitchbend port -2 + (gk_MidiPitchBend / 4096), $CONTROLLER_INPUT_PORTAMENTO_TIME
+    k_pitchbend = -2 + (gk_MidiPitchBend / 4096), $CONTROLLER_INPUT_PORTAMENTO_TIME
     k_pitchbend udo__add_lfos k_pitchbend
 
 	; k_pitch  (units: cps)
@@ -664,11 +645,10 @@ instr instrument_output
     ; Hi-Pass
 	;---------------------------------------------------------------------------
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1A_CC]) then
-        k_hi_pass_hz init 0
-        k_hi_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_hi_pass_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1A_CC]
         k_hi_pass_hz udo__add_lfos k_hi_pass_hz, $AKAI_MIDIMIX__KNOB_1A_CC
-        k_hi_pass_hz udo__limit_midi_control k_hi_pass_hz, $AKAI_MIDIMIX__KNOB_1A_CC
-        a_out butterhp a_out, k_hi_pass_hz
+        a_hi_pass_hz port k_hi_pass_hz, $CONTROLLER_INPUT_PORTAMENTO_TIME
+        a_out butterhp a_out, a_hi_pass_hz
     endif
 
     ; Lo-Pass
@@ -676,7 +656,6 @@ instr instrument_output
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1B_CC]) then
         k_lo_pass_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC]
         k_lo_pass_hz udo__add_lfos k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
-        k_lo_pass_hz udo__limit_midi_control k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
         a_lo_pass_hz port k_lo_pass_hz, $CONTROLLER_INPUT_PORTAMENTO_TIME
         a_out butterlp a_out, a_lo_pass_hz
     endif
