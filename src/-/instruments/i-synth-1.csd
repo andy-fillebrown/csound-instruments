@@ -170,6 +170,7 @@ groupbox bounds(700, 875, 375, 113), plant("Csound Output 00"), colour("white") 
 #include "../../../config.csd-h"
 #include "../../../config-akai-midimix.csd-h"
 #include "../../../include/definitions.csd-h"
+#include "../../../include/opcodes/csound-extensions.csd-h"
 #include "../../../include/opcodes/midi-testing.csd-h"
 #include "../../../include/opcodes/read-midi.csd-h"
 #include "../../../include/opcodes/variable-logging.csd-h"
@@ -673,11 +674,11 @@ instr instrument_output
     ; Lo-Pass
 	;---------------------------------------------------------------------------
 	if ($ON == gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_1B_CC]) then
-        k_lo_pass_hz init 0
-        k_lo_pass_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC], 2 * $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lo_pass_hz = gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_1B_CC]
         k_lo_pass_hz udo__add_lfos k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
         k_lo_pass_hz udo__limit_midi_control k_lo_pass_hz, $AKAI_MIDIMIX__KNOB_1B_CC
-        a_out butterlp a_out, k_lo_pass_hz
+        a_lo_pass_hz port k_lo_pass_hz, $CONTROLLER_INPUT_PORTAMENTO_TIME
+        a_out butterlp a_out, a_lo_pass_hz
     endif
     
     ; EQ

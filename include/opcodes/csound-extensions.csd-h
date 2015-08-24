@@ -1,0 +1,8 @@
+
+opcode port, a, ki
+    setksmps 1
+    k_signal, i_half_time xin
+    k_port_signal port k_signal, i_half_time
+    a_signal = k_port_signal
+    xout a_signal
+endop
