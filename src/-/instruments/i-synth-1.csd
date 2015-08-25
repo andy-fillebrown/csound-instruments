@@ -337,7 +337,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 	;---------------------------------------------------------------------------
     if (0 == i_note_id) then        
         i_ udo__set_midi_control_defaults
-
+        
         i_ udo__add_midi_pitchbend "m_audio_prokeys__wheel_1"
         i_ udo__add_midi_control 1, "m_audio_prokeys__wheel_2"
         i_ udo__add_midi_control 7, "m_audio_prokeys__knob", 0, 1, 1
@@ -400,33 +400,24 @@ instr $MAIN_INSTRUMENT_NUMBER
 
         i_ udo__add_midi_control $AKAI_MIDIMIX__SLIDER_9_CC, "akai_midimix__slider_9", 0, 1, 1 ; Reverb:dB
 
+        i_ udo__add_midi_switch $GLOBAL_TIMING__SEQUENCE_START_CC, "global_timing__sequence_start" 
+        i_ udo__add_midi_switch $GLOBAL_TIMING__BEAT_START_CC, "global_timing__beat_start" 
+        i_ udo__add_midi_switch $GLOBAL_TIMING__BEAT_END_CC, "global_timing__beat_end" 
+        i_ udo__add_midi_switch $GLOBAL_TIMING__TICK_START_CC, "global_timing__tick_start"
+        i_ udo__add_midi_switch $GLOBAL_TIMING__TICK_END_CC, "global_timing__tick_end" 
+
         i_ udo__update_midi_switches
+
+        k_global_sequence_start_trigger = gk_MidiControlValues[$GLOBAL_TIMING__SEQUENCE_START_CC]
+        if ($ON == k_global_sequence_start_trigger) then
+            i_sequence_start_instrument_number nstrnum "sequence_start"
+            turnoff2 i_sequence_start_instrument_number, 0, 0
+            schedkwhen 1, 0, 1, i_sequence_start_instrument_number, 0, -1
+        endif
 
         gk_Lfo1Route chnget "akai_midimix__lfo_1_route"
         gk_Lfo2Route chnget "akai_midimix__lfo_2_route"
         gk_Lfo3Route chnget "akai_midimix__lfo_3_route"
-
-        k_lfo1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6A_CC]
-        if ($ON == k_lfo1_is_on) then
-            k_lfo1_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo1_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo1_shape chnget "akai_midimix__lfo_1_shape"
-            gk_Lfo1Value lfo k_lfo1_db, k_lfo1_hz, k_lfo1_shape - 1
-        endif
-        k_lfo2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_7A_CC]
-        if ($ON == k_lfo2_is_on) then
-            k_lfo2_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo2_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo2_shape chnget "akai_midimix__lfo_1_shape"
-            gk_Lfo2Value lfo k_lfo2_db, k_lfo2_hz, k_lfo2_shape - 1
-        endif
-        k_lfo3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_8A_CC]
-        if ($ON == k_lfo3_is_on) then
-            k_lfo3_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo3_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
-            k_lfo3_shape chnget "akai_midimix__lfo_1_shape"
-            gk_Lfo3Value lfo k_lfo3_db, k_lfo3_hz, k_lfo3_shape - 1
-        endif
 
         ga_InstrumentOutput = 0
 
@@ -708,6 +699,32 @@ instr instrument_output
 	outs a_out_left + (k_reverb_db * a_reverb_left), a_out_right + (k_reverb_db * a_reverb_right)
 endin
 
+instr sequence_start
+    i_start_time times
+    print i_start_time
+    k_lfo1_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_6A_CC]
+    if ($ON == k_lfo1_is_on) then
+        k_lfo1_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lfo1_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_6B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lfo1_shape chnget "akai_midimix__lfo_1_shape"
+        gk_Lfo1Value lfo k_lfo1_db, k_lfo1_hz, k_lfo1_shape - 1
+    endif
+    k_lfo2_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_7A_CC]
+    if ($ON == k_lfo2_is_on) then
+        k_lfo2_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lfo2_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_7B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lfo2_shape chnget "akai_midimix__lfo_1_shape"
+        gk_Lfo2Value lfo k_lfo2_db, k_lfo2_hz, k_lfo2_shape - 1
+    endif
+    k_lfo3_is_on = gk_MidiControlValues[$AKAI_MIDIMIX__BUTTON_8A_CC]
+    if ($ON == k_lfo3_is_on) then
+        k_lfo3_db port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8C_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lfo3_hz port gk_MidiControlValues[$AKAI_MIDIMIX__KNOB_8B_CC], $CONTROLLER_INPUT_PORTAMENTO_TIME
+        k_lfo3_shape chnget "akai_midimix__lfo_1_shape"
+        gk_Lfo3Value lfo k_lfo3_db, k_lfo3_hz, k_lfo3_shape - 1
+    endif
+endin
+
 instr set_midi_read_defaults
     chnset 1, "m_audio_prokeys__wheel_1__read_midi"
     chnset 1, "m_audio_prokeys__wheel_2__read_midi"
@@ -770,6 +787,8 @@ instr set_midi_read_defaults
     chnset 1, "akai_midimix__slider_8__read_midi"
     
     chnset 1, "akai_midimix__slider_9__read_midi"
+    
+    chnset 1, "global_timing__sequence_start__read_midi"
 endin
 
 instr trace_midi_input

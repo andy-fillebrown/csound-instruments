@@ -1,4 +1,4 @@
-<REAPER_PROJECT 0.1 "5.0/OSX" 1440365269
+<REAPER_PROJECT 0.1 "5.0/OSX" 1440471438
   RIPPLE 0
   GROUPOVERRIDE 0 0 0
   AUTOXFADE 1
@@ -106,7 +106,7 @@
     MAINSEND 1 0
     <FXCHAIN
       WNDRECT 425 0 1332 1057
-      SHOW 0
+      SHOW 1
       LASTSEL 0
       DOCKED 0
       BYPASS 0 0 0
@@ -236,7 +236,7 @@
     SHOWINMIX 1 0.6667 0.5 1 0.5 0 -1 0
     FREEMODE 0
     SEL 0
-    REC 0 -1 1 0 0 0 0
+    REC 1 5088 1 0 0 0 0
     VU 2
     TRACKHEIGHT 101 0
     INQ 0 0 0 0.5 100 0 0 100
@@ -255,7 +255,7 @@
       FADEIN 1 0 0 1 0 0
       FADEOUT 1 0 0 1 0 0
       MUTE 0
-      SEL 0
+      SEL 1
       IGUID {55E82102-A99E-0141-AFA4-2F340C261D76}
       IID 9
       NAME "02-settings-Recorded MIDI"
@@ -268,8 +268,8 @@
       <SOURCE MIDI
         HASDATA 1 960 QN
         POOLEDEVTS {79FBC9AA-49D1-A34E-8AC6-E7920FE4700A}
-        e 0 b0 66 00
-        E 0 b0 36 30
+        E 0 b0 66 00
+        E 0 b0 36 19
         E 0 b0 2e 3f
         E 0 b0 14 00
         E 0 b0 67 2b
@@ -301,7 +301,9 @@
         E 0 b0 35 40
         E 0 b0 1b 00
         E 0 b0 1c 7f
-        E 460800 b0 7b 00
+        E 0 b0 6e 7f
+        e 48 b0 6e 7f 3792
+        E 460752 b0 7b 00
         GUID {4D1D789B-53FD-0F4C-8FE6-103EBA2BB0F8}
         IGNTEMPO 0 120 4 4
         SRCCOLOR 27
@@ -309,8 +311,8 @@
         CFGEDITVIEW 0 0.131131 61 12 0 0 0 0 0
         KEYSNAP 0 0 102034050607 0 Major
         TRACKSEL 0 0 0 ""
-        EVTFILTER 0 -1 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 0 -1 -1
-        CFGEDIT 1 1 0 1 0 4 1 1 1 0 1 0.125 366 122 1341 702 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
+        EVTFILTER 0 176 -1 -1 -1 0 0 0 0 -1 -1 -1 -1 0 -1 1 -1 -1
+        CFGEDIT 1 1 0 1 0 4 1 1 1 0 1 0.125 558 225 1533 805 0 0 0 0 0 0 0 0 0 0.5 0 0 1 64
       >
     >
   >
