@@ -439,7 +439,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 	;---------------------------------------------------------------------------
 	; k_pitchbend  (units: cents/100) [range: -2,2]
 	k_pitchbend init 0
-    k_pitchbend = -2 + (gk_MidiPitchBend / 4096), $CONTROLLER_INPUT_PORTAMENTO_TIME
+    k_pitchbend port -2 + (gk_MidiPitchBend / 4096), $CONTROLLER_INPUT_PORTAMENTO_TIME
     k_pitchbend udo__add_lfos k_pitchbend
 
 	; k_pitch  (units: cps)
