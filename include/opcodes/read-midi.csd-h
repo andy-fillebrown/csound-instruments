@@ -82,6 +82,7 @@ opcode udo__add_midi_switch, i, iSj
     gi_MidiControlSwitches[i_control] = $IS_SWITCH
     printf_i "midi switch %d using channel %s\n", 1, i_control, S_channel
     chnset i_default_value, S_channel
+    gk_MidiControlValues[i_control] chnget S_channel
     i_ = 0
     xout i_
 endop
@@ -136,11 +137,18 @@ opcode udo__toggle_channel_to_midi_switch, i, ikk
                     k_toggle = 0
                 endif
             	chnset k_toggle, S_channel
+            	gk_MidiControlValues[i_control] chnget S_channel
             endif
         endif
     endif
 	i_ = 0
 	xout i_
+endop
+
+opcode udo__limit_midi_control, k, ki
+    k_value, i_control xin
+    k_value limit k_value, k(gi_MidiControlRanges[i_control][0]), k(gi_MidiControlRanges[i_control][1])
+    xout k_value
 endop
 
 opcode udo__update_midi_switches, i, o

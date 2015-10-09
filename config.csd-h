@@ -1,7 +1,14 @@
 
-sr = 96000
+sr = 48000
 kr = 960
 nchnls = 2
 0dbfs = 1
 
+#define CONTROLLER_INPUT_PORTAMENTO_TIME # .1 #
 #define VARIABLE_LOGGING_OUTPUT_DIRECTORY #"/Users/andy/-/var/log/csound"#
+
+#define GLOBAL_TIMING__SEQUENCE_START_CC # 110 #
+#define GLOBAL_TIMING__BEAT_START_CC     # 111 #
+#define GLOBAL_TIMING__BEAT_END_CC       # 112 #
+#define GLOBAL_TIMING__TICK_START_CC     # 113 #
+#define GLOBAL_TIMING__TICK_END_CC       # 114 #

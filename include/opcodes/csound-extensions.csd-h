@@ -1,0 +1,56 @@
+
+/******************************************************************************
+lfo:
+    This opcode is the same as Csound's lfo opcode except it takes a k-rate
+    waveform type variable instead of an i-rate waveform type variable.
+ ******************************************************************************/
+opcode lfo, k, kkk
+    k_amplitude, k_frequency, k_waveform_type xin
+    k_signal init 0
+    if (0 == k_waveform_type) then
+        k_signal lfo k_amplitude, k_frequency, 0
+    elseif (1 == k_waveform_type) then
+        k_signal lfo k_amplitude, k_frequency, 1
+    elseif (2 == k_waveform_type) then
+        k_signal lfo k_amplitude, k_frequency, 2
+    elseif (3 == k_waveform_type) then
+        k_signal lfo k_amplitude, k_frequency, 3
+    elseif (4 == k_waveform_type) then
+        k_signal lfo k_amplitude, k_frequency, 4
+    elseif (5 == k_waveform_type) then
+        k_signal lfo k_amplitude, k_frequency, 5
+    endif
+    xout k_signal
+endop
+
+opcode lfo, a, kkk
+    k_amplitude, k_frequency, k_waveform_type xin
+    a_signal init 0
+    if (0 == k_waveform_type) then
+        a_signal lfo k_amplitude, k_frequency, 0
+    elseif (1 == k_waveform_type) then
+        a_signal lfo k_amplitude, k_frequency, 1
+    elseif (2 == k_waveform_type) then
+        a_signal lfo k_amplitude, k_frequency, 2
+    elseif (3 == k_waveform_type) then
+        a_signal lfo k_amplitude, k_frequency, 3
+    elseif (4 == k_waveform_type) then
+        a_signal lfo k_amplitude, k_frequency, 4
+    elseif (5 == k_waveform_type) then
+        a_signal lfo k_amplitude, k_frequency, 5
+    endif
+    xout a_signal
+endop
+
+/******************************************************************************
+port:
+    This opcode is the same as Csound's port opcode except it returns an a-rate
+    variable instead of a k-rate variable.
+ ******************************************************************************/
+opcode port, a, ki
+    setksmps 1
+    k_signal, i_half_time xin
+    k_port_signal port k_signal, i_half_time
+    a_signal = k_port_signal
+    xout a_signal
+endop

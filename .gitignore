@@ -3,3 +3,7 @@
 
 *.vst
 ~$*.xlsx
+
+/examples
+/samples
+/sequences/*.wav
