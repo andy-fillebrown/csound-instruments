@@ -69,10 +69,128 @@ instr $MAIN_INSTRUMENT_NUMBER
 	i_midi_note_number = p4
 	
 	S_sample = ""
-	if 48 == i_midi_note_number then
+	if 36 == i_midi_note_number then
 	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 00.wav"
+	elseif 37 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 01.wav"
+	elseif 38 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 02.wav"
+	elseif 39 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 03.wav"
+	elseif 40 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 04.wav"
+	elseif 41 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 05.wav"
+	elseif 42 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 06.wav"
+	elseif 43 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 07.wav"
+	elseif 44 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 08.wav"
+	elseif 45 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 09.wav"
+	elseif 46 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 10.wav"
+	elseif 47 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 12.wav"
+	elseif 48 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 13.wav"
+	elseif 49 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 14.wav"
+	elseif 50 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 15.wav"
+	elseif 51 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 16.wav"
+	elseif 52 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 17.wav"
+	elseif 53 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 18.wav"
+	elseif 54 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 19.wav"
+	elseif 55 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 20.wav"
+	elseif 56 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 21.wav"
+	elseif 57 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 22.wav"
+	elseif 58 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 23.wav"
+	elseif 59 == i_midi_note_number then
+	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 24.wav"
     elseif 60 == i_midi_note_number then
         S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/01.wav"
+    elseif 61 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/02.wav"
+    elseif 62 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/03.wav"
+    elseif 63 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/04.wav"
+    elseif 64 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/05.wav"
+    elseif 65 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/06.wav"
+    elseif 66 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/07.wav"
+    elseif 67 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/08.wav"
+    elseif 68 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/09.wav"
+    elseif 69 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/10.wav"
+    elseif 70 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/11.wav"
+    elseif 71 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/12.wav"
+    elseif 72 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/13.wav"
+    elseif 73 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/14.wav"
+    elseif 74 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/15.wav"
+    elseif 75 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/16.wav"
+    elseif 76 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/17.wav"
+    elseif 77 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/18.wav"
+    elseif 78 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/19.wav"
+    elseif 79 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/20.wav"
+    elseif 80 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/21.wav"
+    elseif 81 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/22.wav"
+    elseif 82 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/23.wav"
+    elseif 83 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/24.wav"
+    elseif 84 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/25.wav"
+    elseif 85 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/26.wav"
+    elseif 86 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/27.wav"
+    elseif 87 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/28.wav"
+    elseif 88 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/29.wav"
+    elseif 89 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/30.wav"
+    elseif 90 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/31.wav"
+    elseif 91 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/32.wav"
+    elseif 92 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/33.wav"
+    elseif 93 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/34.wav"
+    elseif 94 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/35.wav"
+    elseif 95 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/36.wav"
+    elseif 96 == i_midi_note_number then
+        S_sample strcat $SAMPLE_DIRECTORY, "snares+claps/37.wav"
 	endif
 	if 0 == strlen(S_sample) then
 	    goto ENDIN
