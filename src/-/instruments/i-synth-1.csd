@@ -594,6 +594,10 @@ instr $MAIN_INSTRUMENT_NUMBER
 	k_modulation_wheel init 0
 	k_modulation_wheel port gk_MidiControlValues[1], $CONTROLLER_INPUT_PORTAMENTO_TIME
 	k_modulation_wheel udo__add_lfos k_modulation_wheel, 1
+	
+	; Velocity  [range: 0,1]
+	;---------------------------------------------------------------------------
+    i_velocity veloc 0, 1
 
 	; k_out_volume  [range: 0,1]
 	;---------------------------------------------------------------------------
@@ -613,7 +617,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 
 	; Audio Output
 	;---------------------------------------------------------------------------
-	a_volume = k_volume * a_volume_envelope
+	a_volume = i_velocity * k_volume * a_volume_envelope
 	a_out = a_volume * a_osc
 	ga_InstrumentOutput += a_out
 
