@@ -203,6 +203,10 @@ instr $MAIN_INSTRUMENT_NUMBER
     elseif 2 == i_sample_channel_count then
         a_sample_left, a_sample_right diskin2 S_sample, 1
     endif
+    
+    ; Velocity  [range: 0,1]
+    ;---------------------------------------------------------------------------
+    i_velocity veloc 0, 1
 
 	; k_out_volume  [range: 0,1]
 	;---------------------------------------------------------------------------
@@ -213,7 +217,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 
 	; Audio Output
 	;---------------------------------------------------------------------------
-	a_volume = k_volume
+	a_volume = i_velocity * k_volume
 	a_out_left = a_volume * a_sample_left
 	a_out_right = a_volume * a_sample_right
 	outs a_out_left, a_out_right
