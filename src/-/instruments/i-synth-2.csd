@@ -68,6 +68,8 @@ instr $MAIN_INSTRUMENT_NUMBER
 	;---------------------------------------------------------------------------
 	i_midi_note_number = p4
 	
+	; Sample
+	;---------------------------------------------------------------------------
 	S_sample = ""
 	if 36 == i_midi_note_number then
 	    S_sample strcat $SAMPLE_DIRECTORY, "bass-drums/6BD Analog 00.wav"
@@ -195,7 +197,7 @@ instr $MAIN_INSTRUMENT_NUMBER
 	if 0 == strlen(S_sample) then
 	    goto ENDIN
     endif
-    
+
     i_sample_channel_count filenchnls S_sample
     if 1 == i_sample_channel_count then
         a_sample_left diskin2 S_sample, 1
@@ -203,8 +205,16 @@ instr $MAIN_INSTRUMENT_NUMBER
     elseif 2 == i_sample_channel_count then
         a_sample_left, a_sample_right diskin2 S_sample, 1
     endif
+    
+    ; Add extra time to play entire sample.
+    i_sample_length filelen S_sample
+    xtratim i_sample_length
 
-	; k_out_volume  [range: 0,1]
+    ; Velocity  [range: 0,1]
+    ;---------------------------------------------------------------------------
+    i_velocity veloc 0, 1
+
+	; Volume  [range: 0,1]
 	;---------------------------------------------------------------------------
 	k_volume init 0
 	k_volume port gk_MidiControlValues[7], $CONTROLLER_INPUT_PORTAMENTO_TIME
@@ -213,17 +223,12 @@ instr $MAIN_INSTRUMENT_NUMBER
 
 	; Audio Output
 	;---------------------------------------------------------------------------
-	a_volume = k_volume
+	a_volume = i_velocity * k_volume
 	a_out_left = a_volume * a_sample_left
 	a_out_right = a_volume * a_sample_right
 	outs a_out_left, a_out_right
 
-    ; Play entire sample
-    ;---------------------------------------------------------------------------
-    i_sample_length filelen S_sample
-    xtratim i_sample_length
-
-	; Write envelope data
+	; Envelope Log Output
 	;---------------------------------------------------------------------------
 	i_log_variables init 0
 	i_log_variables chnget "log_variables"
