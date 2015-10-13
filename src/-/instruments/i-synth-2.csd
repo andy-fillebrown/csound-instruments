@@ -445,7 +445,7 @@ endin
 
 f0 999999999
 
-i1 0 -1
+i1 0 -1 0
 i"set_midi_read_defaults" 0  0
 
 </CsScore>
