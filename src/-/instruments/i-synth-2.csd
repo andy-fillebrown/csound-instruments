@@ -46,77 +46,84 @@ massign 0, $MAIN_INSTRUMENT_NUMBER
 
 gi_NoteId = -1
 
-opcode udo__load_sample, iii, S
-    S_sample xin
+; [x] = MIDI Note Number
+; [x][0] = Table
+; [x][1] = Length
+; [x][2] = Channel Count
+gi_Samples[][] init 128, 3
+
+opcode udo__load_sample, i, iS
+    i_midi_note_number, S_sample xin
     i_sample_table ftgen 0, 0, 0, -1, S_sample, 0, 0, 0
     i_sample_length filelen S_sample
     i_sample_channel_count filenchnls S_sample
-    xout i_sample_table, i_sample_length, i_sample_channel_count
+    gi_Samples[i_midi_note_number][0] = i_sample_table
+    gi_Samples[i_midi_note_number][1] = i_sample_length
+    gi_Samples[i_midi_note_number][2] = i_sample_channel_count
+    i_ init 0
+    xout i_
 endop
 
-gi_bass_drum_00_table, gi_bass_drum_00_length, gi_bass_drum_00_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 00.wav")
-gi_bass_drum_01_table, gi_bass_drum_01_length, gi_bass_drum_01_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 01.wav")
-gi_bass_drum_02_table, gi_bass_drum_02_length, gi_bass_drum_02_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 02.wav")
-gi_bass_drum_03_table, gi_bass_drum_03_length, gi_bass_drum_03_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 03.wav")
-gi_bass_drum_04_table, gi_bass_drum_04_length, gi_bass_drum_04_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 04.wav")
-gi_bass_drum_05_table, gi_bass_drum_05_length, gi_bass_drum_05_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 05.wav")
-gi_bass_drum_06_table, gi_bass_drum_06_length, gi_bass_drum_06_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 06.wav")
-gi_bass_drum_07_table, gi_bass_drum_07_length, gi_bass_drum_07_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 07.wav")
-gi_bass_drum_08_table, gi_bass_drum_08_length, gi_bass_drum_08_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 08.wav")
-gi_bass_drum_09_table, gi_bass_drum_09_length, gi_bass_drum_09_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 09.wav")
-gi_bass_drum_10_table, gi_bass_drum_10_length, gi_bass_drum_10_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 10.wav")
-gi_bass_drum_11_table, gi_bass_drum_11_length, gi_bass_drum_11_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 11.wav")
-gi_bass_drum_12_table, gi_bass_drum_12_length, gi_bass_drum_12_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 12.wav")
-gi_bass_drum_13_table, gi_bass_drum_13_length, gi_bass_drum_13_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 13.wav")
-gi_bass_drum_14_table, gi_bass_drum_14_length, gi_bass_drum_14_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 14.wav")
-gi_bass_drum_15_table, gi_bass_drum_15_length, gi_bass_drum_15_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 15.wav")
-gi_bass_drum_16_table, gi_bass_drum_16_length, gi_bass_drum_16_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 16.wav")
-gi_bass_drum_17_table, gi_bass_drum_17_length, gi_bass_drum_17_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 17.wav")
-gi_bass_drum_18_table, gi_bass_drum_18_length, gi_bass_drum_18_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 18.wav")
-gi_bass_drum_19_table, gi_bass_drum_19_length, gi_bass_drum_19_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 19.wav")
-gi_bass_drum_20_table, gi_bass_drum_20_length, gi_bass_drum_20_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 20.wav")
-gi_bass_drum_21_table, gi_bass_drum_21_length, gi_bass_drum_21_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 21.wav")
-gi_bass_drum_22_table, gi_bass_drum_22_length, gi_bass_drum_22_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 22.wav")
-gi_bass_drum_23_table, gi_bass_drum_23_length, gi_bass_drum_23_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 23.wav")
-gi_bass_drum_24_table, gi_bass_drum_24_length, gi_bass_drum_24_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 24.wav")
-
-gi_snare_drum_00_table, gi_snare_drum_00_length, gi_snare_drum_00_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/01.wav")
-gi_snare_drum_01_table, gi_snare_drum_01_length, gi_snare_drum_01_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/02.wav")
-gi_snare_drum_02_table, gi_snare_drum_02_length, gi_snare_drum_02_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/03.wav")
-gi_snare_drum_03_table, gi_snare_drum_03_length, gi_snare_drum_03_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/04.wav")
-gi_snare_drum_04_table, gi_snare_drum_04_length, gi_snare_drum_04_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/05.wav")
-gi_snare_drum_05_table, gi_snare_drum_05_length, gi_snare_drum_05_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/06.wav")
-gi_snare_drum_06_table, gi_snare_drum_06_length, gi_snare_drum_06_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/07.wav")
-gi_snare_drum_07_table, gi_snare_drum_07_length, gi_snare_drum_07_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/08.wav")
-gi_snare_drum_08_table, gi_snare_drum_08_length, gi_snare_drum_08_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/09.wav")
-gi_snare_drum_09_table, gi_snare_drum_09_length, gi_snare_drum_09_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/10.wav")
-gi_snare_drum_10_table, gi_snare_drum_10_length, gi_snare_drum_10_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/11.wav")
-gi_snare_drum_11_table, gi_snare_drum_11_length, gi_snare_drum_11_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/12.wav")
-gi_snare_drum_12_table, gi_snare_drum_12_length, gi_snare_drum_12_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/13.wav")
-gi_snare_drum_13_table, gi_snare_drum_13_length, gi_snare_drum_13_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/14.wav")
-gi_snare_drum_14_table, gi_snare_drum_14_length, gi_snare_drum_14_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/15.wav")
-gi_snare_drum_15_table, gi_snare_drum_15_length, gi_snare_drum_15_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/16.wav")
-gi_snare_drum_16_table, gi_snare_drum_16_length, gi_snare_drum_16_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/17.wav")
-gi_snare_drum_17_table, gi_snare_drum_17_length, gi_snare_drum_17_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/18.wav")
-gi_snare_drum_18_table, gi_snare_drum_18_length, gi_snare_drum_18_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/19.wav")
-gi_snare_drum_19_table, gi_snare_drum_19_length, gi_snare_drum_19_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/20.wav")
-gi_snare_drum_20_table, gi_snare_drum_20_length, gi_snare_drum_20_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/21.wav")
-gi_snare_drum_21_table, gi_snare_drum_21_length, gi_snare_drum_21_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/22.wav")
-gi_snare_drum_22_table, gi_snare_drum_22_length, gi_snare_drum_22_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/23.wav")
-gi_snare_drum_23_table, gi_snare_drum_23_length, gi_snare_drum_23_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/24.wav")
-gi_snare_drum_24_table, gi_snare_drum_24_length, gi_snare_drum_24_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/25.wav")
-gi_snare_drum_25_table, gi_snare_drum_25_length, gi_snare_drum_25_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/26.wav")
-gi_snare_drum_26_table, gi_snare_drum_26_length, gi_snare_drum_26_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/27.wav")
-gi_snare_drum_27_table, gi_snare_drum_27_length, gi_snare_drum_27_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/28.wav")
-gi_snare_drum_28_table, gi_snare_drum_28_length, gi_snare_drum_28_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/29.wav")
-gi_snare_drum_29_table, gi_snare_drum_29_length, gi_snare_drum_29_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/30.wav")
-gi_snare_drum_30_table, gi_snare_drum_30_length, gi_snare_drum_30_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/31.wav")
-gi_snare_drum_31_table, gi_snare_drum_31_length, gi_snare_drum_31_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/32.wav")
-gi_snare_drum_32_table, gi_snare_drum_32_length, gi_snare_drum_32_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/33.wav")
-gi_snare_drum_33_table, gi_snare_drum_33_length, gi_snare_drum_33_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/34.wav")
-gi_snare_drum_34_table, gi_snare_drum_34_length, gi_snare_drum_34_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/35.wav")
-gi_snare_drum_35_table, gi_snare_drum_35_length, gi_snare_drum_35_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/36.wav")
-gi_snare_drum_36_table, gi_snare_drum_36_length, gi_snare_drum_36_channel_count udo__load_sample strcat($SAMPLE_DIRECTORY, "snares+claps/37.wav")
+gi_ udo__load_sample 36, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 00.wav")
+gi_ udo__load_sample 37, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 01.wav")
+gi_ udo__load_sample 38, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 02.wav")
+gi_ udo__load_sample 39, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 03.wav")
+gi_ udo__load_sample 40, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 04.wav")
+gi_ udo__load_sample 41, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 05.wav")
+gi_ udo__load_sample 42, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 06.wav")
+gi_ udo__load_sample 43, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 07.wav")
+gi_ udo__load_sample 44, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 08.wav")
+gi_ udo__load_sample 45, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 09.wav")
+gi_ udo__load_sample 46, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 10.wav")
+gi_ udo__load_sample 47, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 11.wav")
+gi_ udo__load_sample 48, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 12.wav")
+gi_ udo__load_sample 49, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 13.wav")
+gi_ udo__load_sample 50, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 14.wav")
+gi_ udo__load_sample 51, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 15.wav")
+gi_ udo__load_sample 52, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 16.wav")
+gi_ udo__load_sample 53, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 17.wav")
+gi_ udo__load_sample 54, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 18.wav")
+gi_ udo__load_sample 55, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 19.wav")
+gi_ udo__load_sample 56, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 20.wav")
+gi_ udo__load_sample 57, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 21.wav")
+gi_ udo__load_sample 58, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 22.wav")
+gi_ udo__load_sample 59, strcat($SAMPLE_DIRECTORY, "bass-drums/6BD Analog 23.wav")
+gi_ udo__load_sample 60, strcat($SAMPLE_DIRECTORY, "snares+claps/01.wav")
+gi_ udo__load_sample 61, strcat($SAMPLE_DIRECTORY, "snares+claps/02.wav")
+gi_ udo__load_sample 62, strcat($SAMPLE_DIRECTORY, "snares+claps/03.wav")
+gi_ udo__load_sample 63, strcat($SAMPLE_DIRECTORY, "snares+claps/04.wav")
+gi_ udo__load_sample 64, strcat($SAMPLE_DIRECTORY, "snares+claps/05.wav")
+gi_ udo__load_sample 65, strcat($SAMPLE_DIRECTORY, "snares+claps/06.wav")
+gi_ udo__load_sample 66, strcat($SAMPLE_DIRECTORY, "snares+claps/07.wav")
+gi_ udo__load_sample 67, strcat($SAMPLE_DIRECTORY, "snares+claps/08.wav")
+gi_ udo__load_sample 68, strcat($SAMPLE_DIRECTORY, "snares+claps/09.wav")
+gi_ udo__load_sample 69, strcat($SAMPLE_DIRECTORY, "snares+claps/10.wav")
+gi_ udo__load_sample 70, strcat($SAMPLE_DIRECTORY, "snares+claps/11.wav")
+gi_ udo__load_sample 71, strcat($SAMPLE_DIRECTORY, "snares+claps/12.wav")
+gi_ udo__load_sample 72, strcat($SAMPLE_DIRECTORY, "snares+claps/13.wav")
+gi_ udo__load_sample 73, strcat($SAMPLE_DIRECTORY, "snares+claps/14.wav")
+gi_ udo__load_sample 74, strcat($SAMPLE_DIRECTORY, "snares+claps/15.wav")
+gi_ udo__load_sample 75, strcat($SAMPLE_DIRECTORY, "snares+claps/16.wav")
+gi_ udo__load_sample 76, strcat($SAMPLE_DIRECTORY, "snares+claps/17.wav")
+gi_ udo__load_sample 77, strcat($SAMPLE_DIRECTORY, "snares+claps/18.wav")
+gi_ udo__load_sample 78, strcat($SAMPLE_DIRECTORY, "snares+claps/19.wav")
+gi_ udo__load_sample 79, strcat($SAMPLE_DIRECTORY, "snares+claps/20.wav")
+gi_ udo__load_sample 80, strcat($SAMPLE_DIRECTORY, "snares+claps/21.wav")
+gi_ udo__load_sample 82, strcat($SAMPLE_DIRECTORY, "snares+claps/22.wav")
+gi_ udo__load_sample 83, strcat($SAMPLE_DIRECTORY, "snares+claps/23.wav")
+gi_ udo__load_sample 84, strcat($SAMPLE_DIRECTORY, "snares+claps/24.wav")
+gi_ udo__load_sample 85, strcat($SAMPLE_DIRECTORY, "snares+claps/25.wav")
+gi_ udo__load_sample 86, strcat($SAMPLE_DIRECTORY, "snares+claps/26.wav")
+gi_ udo__load_sample 87, strcat($SAMPLE_DIRECTORY, "snares+claps/27.wav")
+gi_ udo__load_sample 88, strcat($SAMPLE_DIRECTORY, "snares+claps/28.wav")
+gi_ udo__load_sample 89, strcat($SAMPLE_DIRECTORY, "snares+claps/29.wav")
+gi_ udo__load_sample 90, strcat($SAMPLE_DIRECTORY, "snares+claps/30.wav")
+gi_ udo__load_sample 91, strcat($SAMPLE_DIRECTORY, "snares+claps/31.wav")
+gi_ udo__load_sample 92, strcat($SAMPLE_DIRECTORY, "snares+claps/32.wav")
+gi_ udo__load_sample 93, strcat($SAMPLE_DIRECTORY, "snares+claps/33.wav")
+gi_ udo__load_sample 94, strcat($SAMPLE_DIRECTORY, "snares+claps/34.wav")
+gi_ udo__load_sample 95, strcat($SAMPLE_DIRECTORY, "snares+claps/35.wav")
+gi_ udo__load_sample 96, strcat($SAMPLE_DIRECTORY, "snares+claps/36.wav")
 
 /*
  *******************************************************************************
@@ -136,261 +143,12 @@ instr $MAIN_INSTRUMENT_NUMBER
     
 ;===============================================================================
 
-    ; MIDI Note Number
-	;---------------------------------------------------------------------------
-	i_midi_note_number = p4
-	
 	; Sample
 	;---------------------------------------------------------------------------
-	i_sample_table init 0
-	i_sample_length init 0
-	i_sample_channel_count init 0
-	
-	if 36 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_00_table
-    	i_sample_length = gi_bass_drum_00_length
-    	i_sample_channel_count = gi_bass_drum_00_channel_count
-	elseif 37 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_01_table
-    	i_sample_length = gi_bass_drum_01_length
-    	i_sample_channel_count = gi_bass_drum_01_channel_count
-	elseif 38 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_02_table
-    	i_sample_length = gi_bass_drum_02_length
-    	i_sample_channel_count = gi_bass_drum_02_channel_count
-	elseif 39 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_03_table
-    	i_sample_length = gi_bass_drum_03_length
-    	i_sample_channel_count = gi_bass_drum_03_channel_count
-	elseif 40 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_04_table
-    	i_sample_length = gi_bass_drum_04_length
-    	i_sample_channel_count = gi_bass_drum_04_channel_count
-	elseif 41 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_05_table
-    	i_sample_length = gi_bass_drum_05_length
-    	i_sample_channel_count = gi_bass_drum_05_channel_count
-	elseif 42 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_06_table
-    	i_sample_length = gi_bass_drum_06_length
-    	i_sample_channel_count = gi_bass_drum_06_channel_count
-	elseif 43 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_07_table
-    	i_sample_length = gi_bass_drum_07_length
-    	i_sample_channel_count = gi_bass_drum_07_channel_count
-	elseif 44 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_08_table
-    	i_sample_length = gi_bass_drum_08_length
-    	i_sample_channel_count = gi_bass_drum_08_channel_count
-	elseif 45 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_09_table
-    	i_sample_length = gi_bass_drum_09_length
-    	i_sample_channel_count = gi_bass_drum_09_channel_count
-	elseif 46 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_10_table
-    	i_sample_length = gi_bass_drum_10_length
-    	i_sample_channel_count = gi_bass_drum_10_channel_count
-	elseif 47 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_11_table
-    	i_sample_length = gi_bass_drum_11_length
-    	i_sample_channel_count = gi_bass_drum_11_channel_count
-	elseif 48 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_12_table
-    	i_sample_length = gi_bass_drum_12_length
-    	i_sample_channel_count = gi_bass_drum_12_channel_count
-	elseif 49 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_13_table
-    	i_sample_length = gi_bass_drum_13_length
-    	i_sample_channel_count = gi_bass_drum_13_channel_count
-	elseif 50 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_14_table
-    	i_sample_length = gi_bass_drum_14_length
-    	i_sample_channel_count = gi_bass_drum_14_channel_count
-	elseif 51 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_15_table
-    	i_sample_length = gi_bass_drum_15_length
-    	i_sample_channel_count = gi_bass_drum_15_channel_count
-	elseif 52 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_16_table
-    	i_sample_length = gi_bass_drum_16_length
-    	i_sample_channel_count = gi_bass_drum_16_channel_count
-	elseif 53 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_17_table
-    	i_sample_length = gi_bass_drum_17_length
-    	i_sample_channel_count = gi_bass_drum_17_channel_count
-	elseif 54 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_18_table
-    	i_sample_length = gi_bass_drum_18_length
-    	i_sample_channel_count = gi_bass_drum_18_channel_count
-	elseif 55 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_19_table
-    	i_sample_length = gi_bass_drum_19_length
-    	i_sample_channel_count = gi_bass_drum_19_channel_count
-	elseif 56 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_20_table
-    	i_sample_length = gi_bass_drum_20_length
-    	i_sample_channel_count = gi_bass_drum_20_channel_count
-	elseif 57 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_21_table
-    	i_sample_length = gi_bass_drum_21_length
-    	i_sample_channel_count = gi_bass_drum_21_channel_count
-	elseif 58 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_22_table
-    	i_sample_length = gi_bass_drum_22_length
-    	i_sample_channel_count = gi_bass_drum_22_channel_count
-	elseif 59 == i_midi_note_number then
-    	i_sample_table = gi_bass_drum_23_table
-    	i_sample_length = gi_bass_drum_23_length
-    	i_sample_channel_count = gi_bass_drum_23_channel_count
-    elseif 60 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_00_table
-    	i_sample_length = gi_snare_drum_00_length
-    	i_sample_channel_count = gi_snare_drum_00_channel_count
-    elseif 61 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_01_table
-    	i_sample_length = gi_snare_drum_01_length
-    	i_sample_channel_count = gi_snare_drum_01_channel_count
-    elseif 62 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_02_table
-    	i_sample_length = gi_snare_drum_02_length
-    	i_sample_channel_count = gi_snare_drum_02_channel_count
-    elseif 63 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_03_table
-    	i_sample_length = gi_snare_drum_03_length
-    	i_sample_channel_count = gi_snare_drum_03_channel_count
-    elseif 64 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_04_table
-    	i_sample_length = gi_snare_drum_04_length
-    	i_sample_channel_count = gi_snare_drum_04_channel_count
-    elseif 65 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_05_table
-    	i_sample_length = gi_snare_drum_05_length
-    	i_sample_channel_count = gi_snare_drum_05_channel_count
-    elseif 66 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_06_table
-    	i_sample_length = gi_snare_drum_06_length
-    	i_sample_channel_count = gi_snare_drum_06_channel_count
-    elseif 67 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_07_table
-    	i_sample_length = gi_snare_drum_07_length
-    	i_sample_channel_count = gi_snare_drum_07_channel_count
-    elseif 68 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_08_table
-    	i_sample_length = gi_snare_drum_08_length
-    	i_sample_channel_count = gi_snare_drum_08_channel_count
-    elseif 69 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_09_table
-    	i_sample_length = gi_snare_drum_09_length
-    	i_sample_channel_count = gi_snare_drum_09_channel_count
-    elseif 70 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_10_table
-    	i_sample_length = gi_snare_drum_10_length
-    	i_sample_channel_count = gi_snare_drum_10_channel_count
-    elseif 71 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_11_table
-    	i_sample_length = gi_snare_drum_11_length
-    	i_sample_channel_count = gi_snare_drum_11_channel_count
-    elseif 72 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_12_table
-    	i_sample_length = gi_snare_drum_12_length
-    	i_sample_channel_count = gi_snare_drum_12_channel_count
-    elseif 73 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_13_table
-    	i_sample_length = gi_snare_drum_13_length
-    	i_sample_channel_count = gi_snare_drum_13_channel_count
-    elseif 74 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_14_table
-    	i_sample_length = gi_snare_drum_14_length
-    	i_sample_channel_count = gi_snare_drum_14_channel_count
-    elseif 75 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_15_table
-    	i_sample_length = gi_snare_drum_15_length
-    	i_sample_channel_count = gi_snare_drum_15_channel_count
-    elseif 76 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_16_table
-    	i_sample_length = gi_snare_drum_16_length
-    	i_sample_channel_count = gi_snare_drum_16_channel_count
-    elseif 77 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_17_table
-    	i_sample_length = gi_snare_drum_17_length
-    	i_sample_channel_count = gi_snare_drum_17_channel_count
-    elseif 78 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_18_table
-    	i_sample_length = gi_snare_drum_18_length
-    	i_sample_channel_count = gi_snare_drum_18_channel_count
-    elseif 79 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_19_table
-    	i_sample_length = gi_snare_drum_19_length
-    	i_sample_channel_count = gi_snare_drum_19_channel_count
-    elseif 80 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_20_table
-    	i_sample_length = gi_snare_drum_20_length
-    	i_sample_channel_count = gi_snare_drum_20_channel_count
-    elseif 81 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_21_table
-    	i_sample_length = gi_snare_drum_21_length
-    	i_sample_channel_count = gi_snare_drum_21_channel_count
-    elseif 82 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_22_table
-    	i_sample_length = gi_snare_drum_22_length
-    	i_sample_channel_count = gi_snare_drum_22_channel_count
-    elseif 83 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_23_table
-    	i_sample_length = gi_snare_drum_23_length
-    	i_sample_channel_count = gi_snare_drum_23_channel_count
-    elseif 84 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_24_table
-    	i_sample_length = gi_snare_drum_24_length
-    	i_sample_channel_count = gi_snare_drum_24_channel_count
-    elseif 85 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_25_table
-    	i_sample_length = gi_snare_drum_25_length
-    	i_sample_channel_count = gi_snare_drum_25_channel_count
-    elseif 86 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_26_table
-    	i_sample_length = gi_snare_drum_26_length
-    	i_sample_channel_count = gi_snare_drum_26_channel_count
-    elseif 87 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_27_table
-    	i_sample_length = gi_snare_drum_27_length
-    	i_sample_channel_count = gi_snare_drum_27_channel_count
-    elseif 88 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_28_table
-    	i_sample_length = gi_snare_drum_28_length
-    	i_sample_channel_count = gi_snare_drum_28_channel_count
-    elseif 89 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_29_table
-    	i_sample_length = gi_snare_drum_29_length
-    	i_sample_channel_count = gi_snare_drum_29_channel_count
-    elseif 90 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_30_table
-    	i_sample_length = gi_snare_drum_30_length
-    	i_sample_channel_count = gi_snare_drum_30_channel_count
-    elseif 91 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_31_table
-    	i_sample_length = gi_snare_drum_31_length
-    	i_sample_channel_count = gi_snare_drum_31_channel_count
-    elseif 92 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_32_table
-    	i_sample_length = gi_snare_drum_32_length
-    	i_sample_channel_count = gi_snare_drum_32_channel_count
-    elseif 93 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_33_table
-    	i_sample_length = gi_snare_drum_33_length
-    	i_sample_channel_count = gi_snare_drum_33_channel_count
-    elseif 94 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_34_table
-    	i_sample_length = gi_snare_drum_34_length
-    	i_sample_channel_count = gi_snare_drum_34_channel_count
-    elseif 95 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_35_table
-    	i_sample_length = gi_snare_drum_35_length
-    	i_sample_channel_count = gi_snare_drum_35_channel_count
-    elseif 96 == i_midi_note_number then
-    	i_sample_table = gi_snare_drum_36_table
-    	i_sample_length = gi_snare_drum_36_length
-    	i_sample_channel_count = gi_snare_drum_36_channel_count
-	endif
+	i_midi_note_number = p4
+	i_sample_table init gi_Samples[i_midi_note_number][0]
+	i_sample_length init gi_Samples[i_midi_note_number][1]
+	i_sample_channel_count init gi_Samples[i_midi_note_number][2]
 
     if 0 == i_sample_length then
         goto ENDIN
