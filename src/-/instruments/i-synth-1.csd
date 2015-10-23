@@ -12,7 +12,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.102727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_1c"), range(-1, 1, 0, 1, .02) ; Pan
 	checkbox bounds(.118181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_1a") ; Hi-Pass:On/Off
 	checkbox bounds(.118181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_1b") ; Lo-Pass:On/Off
-	vslider bounds(.102727273, .690588235, .074545455, .247058824), channel("akai_midimix__slider_1"), range(0, 127, 0, 1, 1) ; Pan:Randomize
+	vslider bounds(.102727273, .720588235, .074545455, .207058824), channel("akai_midimix__slider_1"), range(0, 127, 0, 1, 1) ; Pan:Randomize
 
 	; Column 2
 	rslider bounds(.194545455, .115294118, .072727273, .094117647), channel("akai_midimix__knob_2a"), range(0, 1, 0, 1, .01) ; EQ:Q
@@ -20,7 +20,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.194545455, .408235294, .072727273, .094117647), channel("akai_midimix__knob_2c"), range(-1, 1, 0, 1, .02) ; EQ:dB
 	checkbox bounds(.21, .577647059, .043636364, .030588235), channel("akai_midimix__button_2a") ; EQ:On/Off
 	checkbox bounds(.21, .648235294, .043636364, .030588235), channel("akai_midimix__button_2b") ; EQ:2x
-	vslider bounds(.193636364, .690588235, .074545455, .247058824), channel("akai_midimix__slider_2"), range(0, 127, 0, 1, 1) ; EQ:Randomize
+	vslider bounds(.193636364, .720588235, .074545455, .207058824), channel("akai_midimix__slider_2"), range(0, 127, 0, 1, 1) ; EQ:Randomize
 
 	; Column 3
 	rslider bounds(.284545455, .115294118, .072727273, .094117647), channel("akai_midimix__knob_3a"), range(.01, 10, 1, 1, .01) ; A
@@ -28,7 +28,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.284545455, .408235294, .072727273, .094117647), channel("akai_midimix__knob_3c"), range(0, 1, 1, 1, .01) ; Osc.1:dB
 	checkbox bounds(.3, .577647059, .043636364, .030588235), channel("akai_midimix__button_3a"), value(1) ; Osc.1:On/Off
 	checkbox bounds(.3, .648235294, .043636364, .030588235), channel("akai_midimix__button_3b"), value(1) ; Osc.1:2x
-	vslider bounds(.283636364, .690588235, .074545455, .247058824), channel("akai_midimix__slider_3"), range(0, 127, 0, 1, 1) ; Osc.1:Randomize
+	vslider bounds(.283636364, .720588235, .074545455, .207058824), channel("akai_midimix__slider_3"), range(0, 127, 0, 1, 1) ; Osc.1:Randomize
 
 	; Column 4
 	rslider bounds(.373636364, .115294118, .072727273, .094117647), channel("akai_midimix__knob_4a"), range(.01, 10, 1, 1, .01) ; D
@@ -36,7 +36,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.373636364, .408235294, .072727273, .094117647), channel("akai_midimix__knob_4c"), range(0, 1, 1, 1, .01) ; Osc.2:dB
 	checkbox bounds(.389090909, .577647059, .043636364, .030588235), channel("akai_midimix__button_4a"), value(1) ; Osc.2:On/Off
 	checkbox bounds(.389090909, .648235294, .043636364, .030588235), channel("akai_midimix__button_4b"), value(1) ; Osc.2:2x
-	vslider bounds(.372727273, .690588235, .074545455, .247058824), channel("akai_midimix__slider_4"), range(0, 127, 0, 1, 1) ; Osc.2:Randomize
+	vslider bounds(.372727273, .720588235, .074545455, .207058824), channel("akai_midimix__slider_4"), range(0, 127, 0, 1, 1) ; Osc.2:Randomize
 
 	; Column 5
 	rslider bounds(.462727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_5a"), range(0, 1, .5, 1, .01) ; S
@@ -44,7 +44,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.462727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_5c"), range(0, 1, 1, 1, .01) ; Osc.3:dB
 	checkbox bounds(.478181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_5a"), value(1) ; Osc.3:On/Off
 	checkbox bounds(.478181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_5b"), value(1) ; Osc.3:2x
-	vslider bounds(.461818182, .690588235, .074545455, .247058824), channel("akai_midimix__slider_5"), range(0, 127, 0, 1, 1) ; Osc.3:Randomize
+	vslider bounds(.461818182, .720588235, .074545455, .207058824), channel("akai_midimix__slider_5"), range(0, 127, 0, 1, 1) ; Osc.3:Randomize
 
 	; Column 6
 	rslider bounds(.552727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_6a"), range(.01, 10, 1, 1, .01) ; R
@@ -52,7 +52,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.552727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_6c"), range(0, 1, 1, 1, .01) ; LFO.1:dB
 	checkbox bounds(.568181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_6a") ; LFO.1:On/Off
 	checkbox bounds(.568181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_6b"), value(1) ; 2x:5va/8va
-	vslider bounds(.551818182, .690588235, .074545455, .247058824), channel("akai_midimix__slider_6"), range(0, 127, 0, 1, 1) ; LFO.1:Randomize
+	vslider bounds(.551818182, .720588235, .074545455, .207058824), channel("akai_midimix__slider_6"), range(0, 127, 0, 1, 1) ; LFO.1:Randomize
 
 	; Column 7
 	rslider bounds(.642727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_7a"), range(.5, 1, .75, 1, .01) ; Reverb:Size
@@ -60,7 +60,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.642727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_7c"), range(0, 1, 1, 1, .01) ; LFO.2:dB
 	checkbox bounds(.658181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_7a") ; LFO.2:On/Off
 	checkbox bounds(.658181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_7b") ; Log Values
-	vslider bounds(.641818182, .690588235, .074545455, .247058824), channel("akai_midimix__slider_7"), range(0, 127, 0, 1, 1) ; LFO.2:Randomize
+	vslider bounds(.641818182, .720588235, .074545455, .207058824), channel("akai_midimix__slider_7"), range(0, 127, 0, 1, 1) ; LFO.2:Randomize
 
 	; Column 8
 	rslider bounds(.732727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_8a"), range(0, 24000, 24000, 1, 10) ; Reverb:Cutoff-Hz
@@ -68,10 +68,10 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 	rslider bounds(.732727273, .408235294, .072727273, .094117647), channel("akai_midimix__knob_8c"), range(0, 1, 1, 1, .01) ; LFO.3:dB
 	checkbox bounds(.748181818, .577647059, .043636364, .030588235), channel("akai_midimix__button_8a") ; LFO.3:On/Off
 	checkbox bounds(.748181818, .648235294, .043636364, .030588235), channel("akai_midimix__button_8b") ; Toggle Read MIDI
-	vslider bounds(.731818182, .690588235, .074545455, .247058824), channel("akai_midimix__slider_8"), range(0, 127, 0, 1, 1) ; LFO.2:Randomize
+	vslider bounds(.731818182, .720588235, .074545455, .207058824), channel("akai_midimix__slider_8"), range(0, 127, 0, 1, 1) ; LFO.2:Randomize
 
 	; Column 9
-	vslider bounds(.820909091, .690588235, .074545455, .247058824), channel("akai_midimix__slider_9"), range(0, 1, 1, 1, .01) ; Reverb:dB
+	vslider bounds(.820909091, .720588235, .074545455, .207058824), channel("akai_midimix__slider_9"), range(0, 1, 1, 1, .01) ; Reverb:dB
 
 	; Oscillator Combo-boxes
 	combobox bounds(.84, .270588235, .11, .017647059), channel("akai_midimix__osc_1_shape"), items("sine", "triangle", "square", "saw", "pulse"), value(3), colour("white"), fontcolour(127, 127, 0) ; Osc.1:Shape
