@@ -15,7 +15,7 @@ groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 1") {
     vslider bounds(.002, .125, .1, .78), channel("m_audio_prokeys__wheel_1"), range(0, 16383, 8191, 1, 1) ; Pitch Bend
     vslider bounds(.03175, .125, .1, .78), channel("m_audio_prokeys__wheel_2"), range(0, 127, 0, 1, 1) ; Modulation
     rslider bounds(.215, 0, .25, .25), channel("m_audio_prokeys__knob"), range(0, 1, 1, 1, .01) ; Volume
-    
+
 	checkbox bounds(.020909091, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_1__read_midi"), shape("circle")
 	checkbox bounds(.05, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_2__read_midi"), shape("circle")
 	checkbox bounds(.223636364, .186666667, .014545455, .106666667), channel("m_audio_prokeys__knob__read_midi"), shape("circle")
@@ -136,11 +136,11 @@ instr $MAIN_INSTRUMENT_NUMBER
 
     ; Always on.
 	;---------------------------------------------------------------------------
-    if (0 == i_note_id) then        
+    if (0 == i_note_id) then
         i_ udo__add_midi_control 7, "m_audio_prokeys__knob", 0, 1, 1
         goto ENDIN
     endif
-    
+
 ;===============================================================================
 
 	; Sample
@@ -153,10 +153,10 @@ instr $MAIN_INSTRUMENT_NUMBER
     if 0 == i_sample_length then
         goto ENDIN
     endif
-    
+
     ; Add extra time to play entire sample.
     xtratim i_sample_length
-    
+
     if (1 == i_sample_channel_count) then
         a_sample_left loscil 1, 1, i_sample_table, 1, 0
         a_sample_right = a_sample_left
