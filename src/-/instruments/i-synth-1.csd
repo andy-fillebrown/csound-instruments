@@ -4,7 +4,7 @@ form size(1100, 1000), caption("Synth-1"), pluginID("i001")
 ; Akai MIDIMix
 groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
     ; Background Image
-	image bounds(0, 0, 1, 1), file("/Users/andy/-/home/code/csound-instruments/overlays/instruments/synth-1--akai-midimix.jpg"), shape("sharp")
+	image bounds(0, 0, 1, 1), file("~/Projects/Csound-Instruments/overlays/instruments/synth-1--akai-midimix.jpg"), shape("sharp")
 
 	; Column 1
 	rslider bounds(.102727273, .115294118, .072727273, .094117647), channel("akai_midimix__knob_1a"), range(10, 9990, 0, 1, 10) ; Hi-Pass:Hz
@@ -140,7 +140,7 @@ groupbox bounds(0, 0, 1100, 850), plant("Akai MIDIMix 1") {
 ; M-Audio ProKeys Sono 61
 groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 1") {
     ; Background Image
-	image bounds(0, 0, 1, 1), file("/Users/andy/-/home/code/csound-instruments/overlays/templates/m-audio-prokeys.jpg"), shape("sharp")
+	image bounds(0, 0, 1, 1), file("~/Projects/Csound-Instruments/overlays/templates/m-audio-prokeys.jpg"), shape("sharp")
 
     ; Controls
     keyboard bounds(.08, .3, .54725, .6), value(36)
