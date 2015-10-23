@@ -144,9 +144,9 @@ groupbox bounds(0, 850, 1100, 150), plant("M-Audio ProKeys 1") {
 
     ; Controls
     keyboard bounds(.08, .3, .54725, .6), value(36)
-    vslider bounds(.002, .125, .1, .78), channel("m_audio_prokeys__wheel_1"), range(0, 16383, 8191, 1, 1) ; Pitch Bend
-    vslider bounds(.03175, .125, .1, .78), channel("m_audio_prokeys__wheel_2"), range(0, 127, 0, 1, 1) ; Modulation
-    rslider bounds(.215, 0, .25, .25), channel("m_audio_prokeys__knob"), range(0, 1, 1, 1, .01) ; Volume
+    vslider bounds(-.021, .25, .1, .65), channel("m_audio_prokeys__wheel_1"), range(0, 16383, 8191, 1, 1) ; Pitch Bend
+    vslider bounds( .009, .25, .1, .65), channel("m_audio_prokeys__wheel_2"), range(0, 127, 0, 1, 1) ; Modulation
+    rslider bounds( .215, 0, .25, .25), channel("m_audio_prokeys__knob"), range(0, 1, 1, 1, .01) ; Volume
 
 	checkbox bounds(.020909091, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_1__read_midi"), shape("circle")
 	checkbox bounds(.05, .866666667, .014545455, .106666667), channel("m_audio_prokeys__wheel_2__read_midi"), shape("circle")
