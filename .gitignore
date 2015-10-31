@@ -4,6 +4,7 @@
 *.vst
 ~$*.xlsx
 
+/bin
 /examples
 /samples
 /sequences/*.wav
