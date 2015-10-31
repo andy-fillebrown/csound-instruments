@@ -1,6 +1,6 @@
 
 sr = 44100
-kr = 882
+kr = 441
 nchnls = 2
 0dbfs = 1
 
