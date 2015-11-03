@@ -623,16 +623,11 @@ instr $MAIN_INSTRUMENT_NUMBER
 
 	; Envelope Log Output
 	;---------------------------------------------------------------------------
-	i_log_variables init 1
+	i_log_variables init 0
 	i_log_variables chnget "log_variables"
 	if (1 == i_log_variables) then
 		k_is_last_k_cycle udo__is_last_k_cycle i_volume_envelope_release_time
-		if (1 == i_note_id) then
-			i_ udo__write_k i_note_id, 0, k_pitch_midi_note_number, k_is_last_k_cycle, 3
-		endif
-		if (2 == i_note_id) then
-			i_ udo__write_k i_note_id, 1, k_pitch_midi_note_number, k_is_last_k_cycle, 3
-		endif
+		i_ udo__write_k i_note_id, 0, k_pitch_midi_note_number, k_is_last_k_cycle, 3
 	endif
 ENDIN:
 endin
