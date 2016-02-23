@@ -101,7 +101,7 @@ instr 1
 	endif
 	k_out_modulation_wheel chnget "modulation_wheel"
 
-	; k_out_volume  [range: 0,1]
+	; k_volume  [range: 0,1]
 	;===========================================================================
 	k_read_midi_volume chnget "read_midi_volume"
 	if (1 == k_read_midi_volume) then
@@ -113,15 +113,20 @@ instr 1
 	
 	; k_volume_envelope  [range: 0,1]
 	;===========================================================================
-	i_volume_envelope_attack_time chnget "volume_envelope_attack_time"
-	i_volume_envelope_decay_time chnget "volume_envelope_decay_time"
-	i_volume_envelope_sustain_level chnget "volume_envelope_sustain_level"
+	;i_volume_envelope_attack_time chnget "volume_envelope_attack_time"
+	;i_volume_envelope_decay_time chnget "volume_envelope_decay_time"
+	;i_volume_envelope_sustain_level chnget "volume_envelope_sustain_level"
 	i_volume_envelope_release_time chnget "volume_envelope_release_time"
-	k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
+	;k_volume_envelope madsr i_volume_envelope_attack_time, i_volume_envelope_decay_time, i_volume_envelope_sustain_level, i_volume_envelope_release_time
+	
+	; i_velocity  [range: 0,1]
+	;===========================================================================
+	i_velocity veloc 0, 1
+	
 	
 	; Output
 	;===========================================================================
-	k_out_volume = k_volume * k_volume_envelope
+	k_out_volume = k_volume * i_velocity
 	a1 oscili p5, k_out_pitch, 1
 	outs k_out_volume * a1, k_out_volume * a1
 	
